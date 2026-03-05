@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA Guide — ISHCMC Mathematics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0D1117; --ink-soft:#3D4450; --ink-muted:#7A8294;
+  --surface:#F0F6FF; --white:#FFFFFF; --rule:#D4E4F7;
+  --blue:#1A56A0; --blue-light:#E0F0FF; --blue-mid:#3B7DD8;
+  --gold:#B8860B; --gold-light:#FEF9E7;
+  --green:#1a5c3a; --green-light:#D1FAE5;
+  --red:#991B1B; --red-light:#FEE2E2;
+  --purple:#5B21B6; --purple-light:#EDE9FE;
+  --orange:#92400E; --orange-light:#FEF3C7;
+  --fd:'DM Serif Display',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:12px; --sh:0 2px 16px rgba(0,0,0,.07); --shh:0 8px 32px rgba(0,0,0,.12);
+  --max:1100px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:
+    radial-gradient(ellipse 70% 50% at 10% 5%, rgba(26,86,160,.09) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 90% 90%, rgba(26,86,160,.07) 0%, transparent 55%),
+    #F0F6FF}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:url('rhino.png') center/cover no-repeat;opacity:0.18;pointer-events:none}
+
+/* ══ HEADER ══ */
+header{position:sticky;top:0;z-index:300;background:rgba(240,246,255,.95);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.hi{max-width:var(--max);margin:0 auto;height:58px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem)}
+.back{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink-soft);font-size:.83rem;font-weight:500;transition:color .2s}
+.back:hover{color:var(--ink)}
+.back svg{width:15px;height:15px}
+.h-badge{display:flex;align-items:center;gap:8px;font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+.h-dot{width:8px;height:8px;border-radius:50%;background:var(--blue-mid)}
+
+/* ══ HERO ══ */
+.hero{padding:5rem clamp(1rem,4vw,2.5rem) 4rem;max-width:var(--max);margin:0 auto;position:relative}
+.hero-eyebrow{font-family:var(--fm);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-mid);margin-bottom:1.25rem}
+.hero h1{font-family:var(--fd);font-size:clamp(2.8rem,7vw,5rem);line-height:1.0;margin-bottom:1.5rem;color:var(--ink)}
+.hero h1 em{font-style:italic;color:var(--blue)}
+.hero-sub{font-size:1rem;color:var(--ink-soft);max-width:52ch;line-height:1.7;margin-bottom:2.5rem}
+.hero-stats{display:flex;gap:2rem;flex-wrap:wrap}
+.stat{display:flex;flex-direction:column}
+.stat-num{font-family:var(--fd);font-size:2rem;color:var(--blue);line-height:1}
+.stat-label{font-size:.75rem;color:var(--ink-muted);margin-top:.2rem}
+
+/* ══ SCORE TRACKER BAR ══ */
+.score-bar-section{background:var(--ink);color:white;padding:2rem clamp(1rem,4vw,2.5rem)}
+.score-bar-inner{max-width:var(--max);margin:0 auto}
+.score-bar-label{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;opacity:.45;margin-bottom:1rem}
+.score-bar-title{font-family:var(--fd);font-size:1.3rem;margin-bottom:1.5rem;opacity:.9}
+.criteria-bar{display:flex;gap:3px;border-radius:8px;overflow:hidden;height:52px}
+.cb-seg{display:flex;align-items:center;justify-content:center;flex-direction:column;cursor:pointer;transition:opacity .2s;position:relative}
+.cb-seg:hover{opacity:.85}
+.cb-seg-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;opacity:.7}
+.cb-seg-score{font-family:var(--fd);font-size:1.1rem;line-height:1}
+.cb-a{background:#2563EB;flex:4}
+.cb-b{background:#7C3AED;flex:4}
+.cb-c{background:#0F766E;flex:3}
+.cb-d{background:#B45309;flex:3}
+.cb-e{background:#9F1239;flex:6}
+.score-note{font-size:.75rem;opacity:.4;margin-top:.75rem}
+
+/* ══ MAIN NAV (sticky below header) ══ */
+.page-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:58px;z-index:200}
+.page-nav-inner{max-width:var(--max);margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem);display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.page-nav-inner::-webkit-scrollbar{display:none}
+.pn-btn{padding:.9rem 1.1rem;font-size:.82rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.pn-btn:hover{color:var(--ink)}
+.pn-btn.active{color:var(--ink);border-bottom-color:var(--blue)}
+
+/* ══ PANELS ══ */
+.panel{display:none;max-width:var(--max);margin:0 auto;padding:3rem clamp(1rem,4vw,2.5rem) 6rem}
+.panel.active{display:block}
+
+/* ══ SHARED COMPONENTS ══ */
+.section-head{margin-bottom:2.5rem}
+.section-head h2{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.5rem);line-height:1.1;margin-bottom:.5rem}
+.section-head p{font-size:.9rem;color:var(--ink-soft);max-width:58ch;line-height:1.7}
+
+.crit-pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;font-weight:500}
+.cp-a{background:#DBEAFE;color:#1D4ED8}
+.cp-b{background:#EDE9FE;color:#5B21B6}
+.cp-c{background:#CCFBF1;color:#0F766E}
+.cp-d{background:#FEF3C7;color:#B45309}
+.cp-e{background:#FFE4E6;color:#9F1239}
+
+.card{background:var(--white);border:1px solid var(--rule);border-radius:16px;padding:1.75rem;box-shadow:var(--sh)}
+.card+.card{margin-top:1.25rem}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+
+/* ══ SCORE LADDER ══ */
+.score-ladder{display:flex;flex-direction:column;gap:0}
+.sl-row{display:grid;grid-template-columns:60px 1fr;gap:0;border:1px solid var(--rule);border-bottom:none;overflow:hidden}
+.sl-row:first-child{border-radius:10px 10px 0 0}
+.sl-row:last-child{border-bottom:1px solid var(--rule);border-radius:0 0 10px 10px}
+.sl-score{display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;padding:.9rem .5rem;border-right:1px solid var(--rule)}
+.sl-desc{padding:.9rem 1rem;font-size:.82rem;color:var(--ink-soft);line-height:1.55}
+.sl-row.band-low .sl-score{background:#FEF2F2;color:#991B1B}
+.sl-row.band-mid .sl-score{background:#FFFBEB;color:#B45309}
+.sl-row.band-high .sl-score{background:#F0FDF4;color:#15803D}
+.sl-row.band-top .sl-score{background:#EFF6FF;color:#1D4ED8;font-size:1.5rem}
+
+/* ══ EXAMPLE BOXES ══ */
+.example-pair{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.ex-box{border-radius:10px;padding:1.1rem;font-size:.82rem;line-height:1.6}
+.ex-box-label{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.5rem;font-weight:600}
+.ex-weak{background:#FEF2F2;border:1px solid #FECACA}
+.ex-weak .ex-box-label{color:#991B1B}
+.ex-strong{background:#F0FDF4;border:1px solid #BBF7D0}
+.ex-strong .ex-box-label{color:#15803D}
+
+/* ══ TOPIC FINDER ══ */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem;margin-top:1.5rem}
+.topic-card{background:var(--white);border:1px solid var(--rule);border-radius:12px;padding:1.25rem;cursor:pointer;transition:box-shadow .2s,border-color .2s}
+.topic-card:hover{box-shadow:var(--shh);border-color:var(--blue)}
+.topic-icon{font-size:1.5rem;margin-bottom:.6rem}
+.topic-card h4{font-size:.9rem;font-weight:600;margin-bottom:.3rem}
+.topic-card p{font-size:.75rem;color:var(--ink-muted);line-height:1.5}
+.topic-maths{font-family:var(--fm);font-size:.62rem;color:var(--blue);margin-top:.5rem;padding-top:.5rem;border-top:1px solid var(--rule)}
+
+/* ══ FAILURE MODES ══ */
+.failure-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-top:1.5rem}
+.fc{border-radius:12px;padding:1.25rem;border:1px solid}
+.fc-1{background:#FEF2F2;border-color:#FECACA}
+.fc-2{background:#FFFBEB;border-color:#FDE68A}
+.fc-3{background:#F5F3FF;border-color:#DDD6FE}
+.fc h4{font-size:.88rem;font-weight:700;margin-bottom:.4rem}
+.fc p{font-size:.78rem;line-height:1.55;color:var(--ink-soft)}
+.fc-1 h4{color:#991B1B} .fc-2 h4{color:#92400E} .fc-3 h4{color:#5B21B6}
+.fc-num{font-family:var(--fd);font-size:2rem;opacity:.2;float:right;margin-top:-.3rem}
+
+/* ══ TIMELINE ══ */
+.timeline{display:flex;flex-direction:column;gap:0;margin:1.5rem 0}
+.tl-step{display:flex;gap:1.25rem;position:relative}
+.tl-step:not(:last-child)::before{content:'';position:absolute;left:19px;top:44px;width:2px;height:calc(100% - 4px);background:var(--rule)}
+.tl-dot{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.7rem;font-weight:500;flex-shrink:0;margin-top:.2rem;border:2px solid}
+.tl-dot-1{background:#DBEAFE;border-color:#3B82F6;color:#1D4ED8}
+.tl-dot-2{background:#EDE9FE;border-color:#8B5CF6;color:#5B21B6}
+.tl-dot-3{background:#F0FDF4;border-color:#22C55E;color:#15803D}
+.tl-content{padding-bottom:2rem;flex:1}
+.tl-content h4{font-size:.95rem;font-weight:600;margin-bottom:.3rem}
+.tl-content p{font-size:.82rem;color:var(--ink-soft);line-height:1.6}
+.tl-tag{display:inline-block;font-family:var(--fm);font-size:.56rem;letter-spacing:.07em;text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-right:.3rem;margin-bottom:.3rem}
+.tl-tag-blue{background:var(--blue-light);color:var(--blue)}
+.tl-tag-purple{background:#EDE9FE;color:#5B21B6}
+.tl-tag-green{background:var(--green-light);color:var(--green)}
+
+/* ══ REFLECTION DEPTH ══ */
+.depth-stack{display:flex;flex-direction:column;gap:.75rem;margin-top:1rem}
+.depth-item{border-radius:10px;padding:1rem 1.25rem;border-left:4px solid;font-size:.83rem;line-height:1.6}
+.depth-1{background:#FEF2F2;border-color:#F87171;color:var(--ink-soft)}
+.depth-2{background:#FFFBEB;border-color:#FBBF24;color:var(--ink-soft)}
+.depth-3{background:#F0FDF4;border-color:#34D399;color:var(--ink-soft)}
+.depth-4{background:#EFF6FF;border-color:#3B82F6;color:var(--ink-soft)}
+.depth-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:.3rem}
+.depth-1 .depth-label{color:#B91C1C}
+.depth-2 .depth-label{color:#B45309}
+.depth-3 .depth-label{color:#15803D}
+.depth-4 .depth-label{color:#1D4ED8}
+
+/* ══ SOPHISTICATION LADDER (Crit E) ══ */
+.soph-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:1rem}
+.soph-table th{text-align:left;padding:.65rem .85rem;background:var(--ink);color:white;font-family:var(--fm);font-size:.6rem;letter-spacing:.07em;text-transform:uppercase;font-weight:500}
+.soph-table th:first-child{border-radius:8px 0 0 0} .soph-table th:last-child{border-radius:0 8px 0 0}
+.soph-table td{padding:.65rem .85rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+.soph-table tr:nth-child(even) td{background:rgba(240,246,255,.5)}
+.course-tag{display:inline-block;padding:1px 7px;border-radius:20px;font-family:var(--fm);font-size:.58rem;white-space:nowrap}
+.ct-ai-sl{background:#DBEAFE;color:#1D4ED8}
+.ct-aa-sl{background:#EDE9FE;color:#5B21B6}
+.ct-ai-hl{background:#CCFBF1;color:#0F766E}
+.ct-aa-hl{background:#FFE4E6;color:#9F1239}
+
+/* ══ CHECKLIST ══ */
+.checklist{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-top:.75rem}
+.checklist li{display:flex;align-items:flex-start;gap:.75rem;font-size:.83rem;color:var(--ink-soft);line-height:1.5;padding:.5rem .75rem;background:rgba(240,246,255,.5);border-radius:8px;cursor:pointer;transition:background .15s}
+.checklist li:hover{background:var(--blue-light)}
+.checklist li.checked{background:var(--green-light);color:var(--green)}
+.check-box{width:18px;height:18px;border-radius:4px;border:1.5px solid var(--rule);flex-shrink:0;margin-top:.1rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.checklist li.checked .check-box{background:var(--green);border-color:var(--green);color:white}
+.check-box svg{display:none;width:11px;height:11px}
+.checklist li.checked .check-box svg{display:block}
+
+/* ══ PROGRESS RING ══ */
+.progress-ring-wrap{display:flex;flex-direction:column;align-items:center;gap:.5rem}
+.ring-label{font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);text-align:center}
+
+/* ══ BAND CARDS ══ */
+.band-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
+.band-card{border-radius:12px;padding:1.25rem;text-align:center}
+.band-card .band-range{font-family:var(--fd);font-size:2rem;line-height:1;margin-bottom:.3rem}
+.band-card .band-name{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.6rem;opacity:.7}
+.band-card p{font-size:.75rem;line-height:1.55;opacity:.85}
+.bc-1{background:#FEF2F2;color:#7F1D1D}
+.bc-2{background:#FFFBEB;color:#78350F}
+.bc-3{background:#F0FDF4;color:#14532D}
+.bc-4{background:#EFF6FF;color:#1E3A8A}
+
+/* ══ KEY QUESTION CARDS ══ */
+.kq-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+.kq{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:1.1rem 1.25rem}
+.kq-q{font-size:.85rem;font-weight:600;color:var(--ink);margin-bottom:.35rem;line-height:1.4}
+.kq-why{font-size:.75rem;color:var(--ink-muted);line-height:1.5}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:700px){
+  .two-col,.example-pair,.kq-grid{grid-template-columns:1fr}
+  .three-col{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:2.5rem}
+  .criteria-bar{height:40px}
+  .cb-seg-label{display:none}
+}
+@media(max-width:480px){
+  .three-col{grid-template-columns:1fr}
+  .band-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hi">
+    <a href="index.html" class="back">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Mathematics Hub
+    </a>
+    <div class="h-badge">
+      <div class="h-dot"></div>
+      DP Internal Assessment Guide
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">IB Mathematics · Internal Assessment</p>
+  <h1>Score <em>17–20</em><br>on your IA.</h1>
+  <p class="hero-sub">The complete guide to every criterion — what examiners actually look for, what separates a 14 from a 20, and how to build an investigation that is genuinely yours.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-num">20</span><span class="stat-label">Total marks available</span></div>
+    <div class="stat"><span class="stat-num">5</span><span class="stat-label">Criteria assessed</span></div>
+    <div class="stat"><span class="stat-num">12–20</span><span class="stat-label">Pages expected</span></div>
+    <div class="stat"><span class="stat-num">6–12</span><span class="stat-label">Weeks of work</span></div>
+  </div>
+</div>
+
+<!-- SCORE BAR -->
+<div class="score-bar-section">
+  <div class="score-bar-inner">
+    <p class="score-bar-label">Marks distribution across criteria</p>
+    <p class="score-bar-title">Where are the 20 marks?</p>
+    <div class="criteria-bar">
+      <div class="cb-seg cb-a" onclick="switchPanel('crit-a',event)">
+        <span class="cb-seg-label">A · Presentation</span>
+        <span class="cb-seg-score">4</span>
+      </div>
+      <div class="cb-seg cb-b" onclick="switchPanel('crit-b',event)">
+        <span class="cb-seg-label">B · Comm.</span>
+        <span class="cb-seg-score">4</span>
+      </div>
+      <div class="cb-seg cb-c" onclick="switchPanel('crit-c',event)">
+        <span class="cb-seg-label">C · Engage</span>
+        <span class="cb-seg-score">3</span>
+      </div>
+      <div class="cb-seg cb-d" onclick="switchPanel('crit-d',event)">
+        <span class="cb-seg-label">D · Reflection</span>
+        <span class="cb-seg-score">3</span>
+      </div>
+      <div class="cb-seg cb-e" onclick="switchPanel('crit-e',event)">
+        <span class="cb-seg-label">E · Mathematics</span>
+        <span class="cb-seg-score">6</span>
+      </div>
+    </div>
+    <p class="score-note">Click any segment to jump to that criterion. Criterion E (6 marks) is the gatekeeper — the highest-weighted criterion. A–D max out at 14; you need strong mathematics to reach 17–20.</p>
+  </div>
+</div>
+
+<!-- PAGE NAV -->
+<nav class="page-nav">
+  <div class="page-nav-inner">
+    <button class="pn-btn active" onclick="switchPanel('getting-started',event)">Getting Started</button>
+    <button class="pn-btn" onclick="switchPanel('crit-a',event)">A · Presentation</button>
+    <button class="pn-btn" onclick="switchPanel('crit-b',event)">B · Communication</button>
+    <button class="pn-btn" onclick="switchPanel('crit-c',event)">C · Engagement</button>
+    <button class="pn-btn" onclick="switchPanel('crit-d',event)">D · Reflection</button>
+    <button class="pn-btn" onclick="switchPanel('crit-e',event)">E · Mathematics</button>
+    <button class="pn-btn" onclick="switchPanel('process',event)">The Process</button>
+    <button class="pn-btn" onclick="switchPanel('checklist',event)">Final Checklist</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════
+     PANEL: GETTING STARTED
+══════════════════════════════════════ -->
+<div class="panel active" id="panel-getting-started">
+  <div class="section-head">
+    <h2>Finding your topic</h2>
+    <p>Most students pick a topic they like. That's necessary but not sufficient. The real question is whether your topic can sustain 12–20 pages of genuine mathematical investigation.</p>
+  </div>
+
+  <!-- THE THREE FILTER QUESTIONS -->
+  <div class="card" style="margin-bottom:2rem">
+    <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:1rem">The three-question filter</p>
+    <div class="kq-grid">
+      <div class="kq">
+        <p class="kq-q">1. Do I genuinely care about this?</p>
+        <p class="kq-why">Not "it's interesting." Real curiosity — something you've wondered about before maths class suggested it. Examiners read hundreds of IAs. Performed enthusiasm is obvious. Genuine curiosity is not.</p>
+      </div>
+      <div class="kq">
+        <p class="kq-q">2. Does the mathematics have at least two layers?</p>
+        <p class="kq-why">Layer 1: the surface finding. Layer 2: a deeper extension, generalisation, or unexpected connection. Topics with only one layer run out at 8 pages and force padding. Two layers give you a natural investigation arc.</p>
+      </div>
+      <div class="kq">
+        <p class="kq-q">3. Is there a concrete anchor?</p>
+        <p class="kq-why">A real dataset, a measurable real-world object, a historical result to verify. Abstract investigations that live entirely in symbolic manipulation struggle to demonstrate personal engagement — there's nothing to return to.</p>
+      </div>
+      <div class="kq">
+        <p class="kq-q">4. Can I drive this myself?</p>
+        <p class="kq-why">If your investigation exists as a tutorial online and you'd be replicating it step-by-step, the examiner will know. Your topic should require you to make genuine decisions about what to investigate next.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- FAILURE MODES -->
+  <h3 style="font-family:var(--fd);font-size:1.3rem;margin-bottom:.75rem">The three failure modes</h3>
+  <div class="failure-cards">
+    <div class="fc fc-1">
+      <span class="fc-num">1</span>
+      <h4>Too thin</h4>
+      <p>Interesting topic, but the mathematics runs out after 6 pages. Classic example: "the golden ratio in architecture." Compelling premise, shallow mathematical depth. You end up measuring things and noting they approximate φ — that's not investigation, it's observation.</p>
+    </div>
+    <div class="fc fc-2">
+      <span class="fc-num">2</span>
+      <h4>Too borrowed</h4>
+      <p>The student finds a method online and replicates it without understanding. The work may be mathematically correct but personal engagement collapses — there are no genuine decisions, no surprises, no authentic voice. Examiners see this pattern constantly.</p>
+    </div>
+    <div class="fc fc-3">
+      <span class="fc-num">3</span>
+      <h4>Too abstract</h4>
+      <p>Mathematically rich, but the student can't explain why they care. Usually happens when a student chooses a topic to impress rather than to explore. Without genuine interest, reflection reads as hollow and personal engagement is impossible to demonstrate.</p>
+    </div>
+  </div>
+
+  <!-- TOPIC IDEAS BY INTEREST -->
+  <h3 style="font-family:var(--fd);font-size:1.3rem;margin:2.5rem 0 .5rem">Starting points by interest area</h3>
+  <p style="font-size:.84rem;color:var(--ink-muted);margin-bottom:1rem">These are prompts, not titles. Your investigation question should be more specific than any of these.</p>
+  <div class="topic-grid">
+    <div class="topic-card">
+      <div class="topic-icon">🏎️</div>
+      <h4>Sport & Performance</h4>
+      <p>Modelling optimal race strategy, analysing score distributions, predicting outcomes using regression or probability.</p>
+      <p class="topic-maths">Statistics · Probability · Regression · Optimisation</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">🎵</div>
+      <h4>Music & Sound</h4>
+      <p>Mathematical structure of scales, Fourier series and waveforms, consonance and dissonance through frequency ratios.</p>
+      <p class="topic-maths">Trigonometry · Series · Number theory</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">📈</div>
+      <h4>Finance & Investment</h4>
+      <p>Modelling compound growth, comparing investment strategies, analysing risk through variance and standard deviation.</p>
+      <p class="topic-maths">Sequences · Exponentials · Statistics · Calculus</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">🌏</div>
+      <h4>Population & Environment</h4>
+      <p>Modelling population growth with logistic functions, analysing climate data trends, predicting using regression.</p>
+      <p class="topic-maths">Exponentials · Differential equations · Statistics</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">🎮</div>
+      <h4>Games & Strategy</h4>
+      <p>Expected value in card games, probability in board games, optimal strategy analysis, Monte Carlo simulation.</p>
+      <p class="topic-maths">Probability · Expected value · Combinatorics</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">🏗️</div>
+      <h4>Architecture & Design</h4>
+      <p>Curves in bridge design, optimising area under constraints, catenary curves, structural load distribution.</p>
+      <p class="topic-maths">Calculus · Optimisation · Geometry · Vectors</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">💊</div>
+      <h4>Medicine & Biology</h4>
+      <p>Drug concentration modelling, epidemic spread (SIR model), genetic probability, dosage optimisation.</p>
+      <p class="topic-maths">Exponentials · Differential equations · Probability</p>
+    </div>
+    <div class="topic-card">
+      <div class="topic-icon">🌐</div>
+      <h4>Networks & Social Systems</h4>
+      <p>Graph theory in social networks, shortest path problems, Euler paths, network optimisation.</p>
+      <p class="topic-maths">Graph theory · Combinatorics · Algorithms</p>
+    </div>
+  </div>
+
+  <!-- TURNING CURIOSITY INTO A QUESTION -->
+  <div class="card" style="margin-top:2rem">
+    <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">From curiosity to investigation question</p>
+    <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:1rem;line-height:1.65">A good investigation question is <strong>specific, mathematical, and open enough to surprise you</strong>. It should be answerable — but not obviously so.</p>
+    <div class="example-pair" style="margin-top:0">
+      <div class="ex-box ex-weak">
+        <div class="ex-box-label">❌ Too broad / not mathematical</div>
+        "How does music relate to mathematics?"<br><br>
+        "Is the stock market predictable?"<br><br>
+        "What is the golden ratio?"
+      </div>
+      <div class="ex-box ex-strong">
+        <div class="ex-box-label">✓ Specific, mathematical, investigable</div>
+        "To what extent does a sinusoidal model accurately represent the pitch variation in a Vietnamese tonal language?"<br><br>
+        "How well does an exponential regression model the cumulative race lap times of a Formula 1 strategy switch?"<br><br>
+        "What is the relationship between compound interest frequency and effective annual yield, and at what point does increasing frequency become negligible?"
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: CRITERION A — PRESENTATION
+══════════════════════════════════════ -->
+<div class="panel" id="panel-crit-a">
+  <div class="section-head">
+    <h2><span class="crit-pill cp-a" style="font-size:.7rem;padding:4px 12px;margin-right:.75rem">A · 4 marks</span>Presentation</h2>
+    <p>Is the exploration well-structured, with a clear title, introduction, and conclusion? Does it read as a coherent mathematical narrative rather than a collection of calculations?</p>
+  </div>
+
+  <div class="two-col" style="margin-bottom:1.5rem">
+    <div>
+      <div class="score-ladder">
+        <div class="sl-row band-low"><div class="sl-score">0–1</div><div class="sl-desc">No clear structure. The exploration reads as a list of calculations. No introduction or conclusion. Title present but uninformative.</div></div>
+        <div class="sl-row band-mid"><div class="sl-score">2–3</div><div class="sl-desc">Introduction and conclusion present. Sections are identifiable. Some flow between ideas. Minor structural gaps or abrupt transitions.</div></div>
+        <div class="sl-row band-top"><div class="sl-score">4</div><div class="sl-desc">The exploration reads as a coherent piece of mathematical writing. Each section connects to the next. Introduction sets up the question clearly. Conclusion answers it with reference to the investigation.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">What "coherent narrative" actually means</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.75rem">A reader who knows the topic should be able to read your IA and understand: <strong>why you investigated this, what you did, what you found, and what you concluded</strong> — without asking you a single question.</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65">This means every graph, table, and calculation is <em>introduced</em> before it appears and <em>referred to</em> after. You never drop a graph in and move on without explaining what it shows and why it matters to your investigation.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--fd);font-size:1.2rem;margin-bottom:1rem">The required structure</h3>
+  <div class="three-col" style="margin-bottom:1.5rem">
+    <div class="card" style="border-top:3px solid #2563EB">
+      <p style="font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#2563EB;margin-bottom:.5rem">Introduction</p>
+      <p style="font-size:.8rem;color:var(--ink-soft);line-height:1.6">State your topic, why you chose it, what your investigation question is, and what mathematical approach you'll take. Should be 1–2 pages maximum. Does <em>not</em> need to be long — it needs to be purposeful.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #7C3AED">
+      <p style="font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#7C3AED;margin-bottom:.5rem">Body</p>
+      <p style="font-size:.8rem;color:var(--ink-soft);line-height:1.6">The investigation itself. Each section should have a clear mathematical purpose. Calculations, graphs, and tables are embedded in prose — not just dumped. Transitions between sections explain why you're moving to the next stage.</p>
+    </div>
+    <div class="card" style="border-top:3px solid #0F766E">
+      <p style="font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:#0F766E;margin-bottom:.5rem">Conclusion</p>
+      <p style="font-size:.8rem;color:var(--ink-soft);line-height:1.6">Answers your investigation question directly. Connects to what you found. Does not introduce new mathematics — this is reflection and synthesis. Should reference specific results from your investigation, not just restate the method.</p>
+    </div>
+  </div>
+
+  <div class="example-pair">
+    <div class="ex-box ex-weak">
+      <div class="ex-box-label">❌ Weak presentation</div>
+      "Figure 3 shows the regression line. The R² value is 0.87. Next, I will look at residuals."<br><br>
+      <em>The graph appears with no explanation of what it shows, why 0.87 matters, or how this connects to the investigation question.</em>
+    </div>
+    <div class="ex-box ex-strong">
+      <div class="ex-box-label">✓ Strong presentation</div>
+      "Figure 3 shows the exponential regression fitted to my data. The R² value of 0.87 suggests a reasonably strong fit, though not perfect — this led me to examine the residuals in the next section to investigate whether the deviations are systematic or random, which would indicate whether a different model might be more appropriate."
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: CRITERION B — COMMUNICATION
+══════════════════════════════════════ -->
+<div class="panel" id="panel-crit-b">
+  <div class="section-head">
+    <h2><span class="crit-pill cp-b" style="font-size:.7rem;padding:4px 12px;margin-right:.75rem">B · 4 marks</span>Mathematical Communication</h2>
+    <p>Is mathematical language used correctly and precisely throughout? Are graphs fully labelled? Is notation consistent and appropriate to the level?</p>
+  </div>
+
+  <div class="two-col" style="margin-bottom:1.5rem">
+    <div>
+      <div class="score-ladder">
+        <div class="sl-row band-low"><div class="sl-score">0–1</div><div class="sl-desc">Significant notation errors. Graphs unlabelled or axes missing. Mathematical language used imprecisely or incorrectly throughout.</div></div>
+        <div class="sl-row band-mid"><div class="sl-score">2–3</div><div class="sl-desc">Mostly correct notation. Most graphs labelled. Some inconsistencies in notation or language. Working is generally clear but has gaps.</div></div>
+        <div class="sl-row band-top"><div class="sl-score">4</div><div class="sl-desc">Precise, consistent notation throughout. All graphs and tables fully labelled with titles, axis labels, and units. Mathematical language used correctly. Every claim is supported by working.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card">
+        <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">The examiner's test</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.75rem">Could an IB examiner who has never met you read your IA and follow every step of your reasoning without needing to ask for clarification?</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65">In DP examinations, a correct answer with no working shown typically receives zero marks. The same principle applies here. The mathematics must be <em>communicated</em>, not just performed.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--fd);font-size:1.2rem;margin-bottom:1rem">Common communication errors that cost marks</h3>
+  <div class="three-col" style="margin-bottom:1.5rem">
+    <div class="card">
+      <p style="font-weight:600;font-size:.85rem;margin-bottom:.4rem;color:#991B1B">Graphs without titles or axis labels</p>
+      <p style="font-size:.78rem;color:var(--ink-soft);line-height:1.55">Every graph must have a descriptive title, both axes labelled with variable names <em>and units</em>, and a consistent scale. A graph labelled only "Graph 1" with unlabelled axes loses Crit B marks every time.</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600;font-size:.85rem;margin-bottom:.4rem;color:#991B1B">Inconsistent notation</p>
+      <p style="font-size:.78rem;color:var(--ink-soft);line-height:1.55">Switching between f(x) and y= in the same exploration, using × and * interchangeably, or defining a variable as n in one section and k in another. Pick conventions and hold them for the entire IA.</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600;font-size:.85rem;margin-bottom:.4rem;color:#991B1B">Unsupported claims</p>
+      <p style="font-size:.78rem;color:var(--ink-soft);line-height:1.55">"The correlation is strong" — says who? Show the Pearson r value. "The model fits well" — your R² of 0.94 demonstrates this. Claims must be backed by specific mathematical evidence.</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600;font-size:.85rem;margin-bottom:.4rem;color:#991B1B">Rounding without acknowledgement</p>
+      <p style="font-size:.78rem;color:var(--ink-soft);line-height:1.55">If you round intermediate values, state your rounding convention early and apply it consistently. "I rounded all values to 3 significant figures throughout to match the precision of my measured data."</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600;font-size:.85rem;margin-bottom:.4rem;color:#991B1B">Technology screenshots without explanation</p>
+      <p style="font-size:.78rem;color:var(--ink-soft);line-height:1.55">A GDC or Desmos screenshot is not a substitute for showing key steps. Use technology to confirm or visualise — but document the mathematical process separately.</p>
+    </div>
+    <div class="card">
+      <p style="font-weight:600;font-size:.85rem;margin-bottom:.4rem;color:#991B1B">Appendix overloading</p>
+      <p style="font-size:.78rem;color:var(--ink-soft);line-height:1.55">Raw data, full calculation tables, and repetitive working belong in an appendix — but the <em>key steps</em> must appear in the body. Examiners are not required to read appendices.</p>
+    </div>
+  </div>
+
+  <div class="example-pair">
+    <div class="ex-box ex-weak">
+      <div class="ex-box-label">❌ Weak communication</div>
+      "I used the formula and got 0.83. This means there is correlation so the model works."<br><br>
+      <em>Which formula? 0.83 of what? What kind of correlation? How does this confirm the model?</em>
+    </div>
+    <div class="ex-box ex-strong">
+      <div class="ex-box-label">✓ Strong communication</div>
+      "Using technology, I calculated Pearson's correlation coefficient r = 0.83 for the linear regression of reaction time (ms) against caffeine dose (mg). This value indicates a moderately strong positive linear relationship, suggesting that my linear model captures a meaningful proportion of the variation in the data, though the remaining 31% (1 − r²) suggests other variables may also be influential."
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: CRITERION C — PERSONAL ENGAGEMENT
+══════════════════════════════════════ -->
+<div class="panel" id="panel-crit-c">
+  <div class="section-head">
+    <h2><span class="crit-pill cp-c" style="font-size:.7rem;padding:4px 12px;margin-right:.75rem">C · 3 marks</span>Personal Engagement</h2>
+    <p>The most misunderstood criterion. Examiners are not looking for a paragraph saying you love your topic. They are looking for evidence <em>inside the mathematics</em> that you are genuinely driving the investigation.</p>
+  </div>
+
+  <div class="two-col" style="margin-bottom:1.5rem">
+    <div>
+      <div class="score-ladder">
+        <div class="sl-row band-low"><div class="sl-score">0–1</div><div class="sl-desc">The investigation follows a prescribed path with no evidence of personal decision-making. Could have been written by anyone using the same source material.</div></div>
+        <div class="sl-row band-mid"><div class="sl-score">2</div><div class="sl-desc">Some evidence of personal interest. The student makes some of their own decisions. At least one genuine moment of curiosity or surprise is visible in the work.</div></div>
+        <div class="sl-row band-top"><div class="sl-score">3</div><div class="sl-desc">Authentic voice throughout. The student demonstrably chose their direction. Genuine engagement is visible in how they respond to results — following up surprises, changing approach, making connections to their own experience.</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">What engagement looks like inside the maths</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem">✓ <strong>Asking your own follow-up questions</strong> — "This result surprised me. I expected [X] but found [Y], so I decided to also investigate whether..."</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem">✓ <strong>Making genuine decisions</strong> — "I initially planned to use linear regression, but after examining the scatter plot, I decided to test an exponential model instead because..."</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem">✓ <strong>Connecting to your own context</strong> — "As someone who has raced karts, I was curious whether the optimal overtaking strategy in F1 is consistent with what I've observed at [track]..."</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65">✓ <strong>Showing dead ends</strong> — A student who tried something that didn't work and explains why demonstrates more genuine engagement than one with a suspiciously perfect path.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:1.5rem;border-left:4px solid #0F766E">
+    <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#0F766E;margin-bottom:.6rem">The iterative process and personal engagement</p>
+    <p style="font-size:.85rem;color:var(--ink-soft);line-height:1.7;margin-bottom:.5rem">An IA that reads as written in a single sitting scores low on Criterion C. An IA that shows the student <strong>changed direction, extended their scope, or revisited an earlier result</strong> based on a later finding reads as genuinely personal.</p>
+    <p style="font-size:.85rem;color:var(--ink-soft);line-height:1.7">This is why the iterative process matters for Criterion C specifically. Each draft cycle is an opportunity to discover something that genuinely surprises you — and respond to it in the writing. That response is personal engagement made visible.</p>
+  </div>
+
+  <div class="example-pair">
+    <div class="ex-box ex-weak">
+      <div class="ex-box-label">❌ Performed engagement (scores 0–1)</div>
+      "I chose this topic because I am passionate about Formula 1 racing and have always been fascinated by the mathematics behind it. This topic is personally meaningful to me."<br><br>
+      <em>This is in the introduction and never appears again. The investigation itself follows a textbook method with no evidence of the student's own thinking.</em>
+    </div>
+    <div class="ex-box ex-strong">
+      <div class="ex-box-label">✓ Genuine engagement (scores 2–3)</div>
+      "When I fitted the linear model to my first dataset, the residual plot showed a clear pattern — residuals increased with x — suggesting my linear assumption was wrong. Rather than forcing a better-looking R² by removing outliers as I initially planned, I re-examined the raw data and noticed the relationship looked curved. This led me to test a quadratic model, which I hadn't originally planned to include."
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1.5rem">
+    <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">Questions to unlock genuine engagement in your writing</p>
+    <div class="kq-grid">
+      <div class="kq"><p class="kq-q">What result surprised you most?</p><p class="kq-why">Write about it as a surprise. What did you expect? What did you find? What did that make you investigate next?</p></div>
+      <div class="kq"><p class="kq-q">When did you change your plan?</p><p class="kq-why">Every good IA has at least one moment where the investigation changed direction. Make that visible. Explain what caused the change and what you decided to do instead.</p></div>
+      <div class="kq"><p class="kq-q">What connection did you make that wasn't suggested to you?</p><p class="kq-why">Did something from your IA connect to another subject, a personal experience, or something you'd read? That connection — if it's genuine — is high-scoring engagement.</p></div>
+      <div class="kq"><p class="kq-q">What would you investigate if you had more time?</p><p class="kq-why">A student who knows exactly what they'd explore next is demonstrating that they've genuinely engaged with the limits of their own investigation. This is also Criterion D material.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: CRITERION D — REFLECTION
+══════════════════════════════════════ -->
+<div class="panel" id="panel-crit-d">
+  <div class="section-head">
+    <h2><span class="crit-pill cp-d" style="font-size:.7rem;padding:4px 12px;margin-right:.75rem">D · 3 marks</span>Reflection</h2>
+    <p>Reflection is not a concluding paragraph. It is an ongoing process throughout the exploration. The difference between a 2 and a 3 on this criterion is almost always about <em>where</em> reflection appears — and how mathematically specific it is — not just <em>whether</em> it appears.</p>
+  </div>
+
+  <div class="two-col" style="margin-bottom:1.5rem">
+    <div>
+      <div class="score-ladder">
+        <div class="sl-row band-low"><div class="sl-score">0–1</div><div class="sl-desc">Little or no reflection present. Any reflection that exists is superficial ("this was an interesting investigation") or appears only at the very end.</div></div>
+        <div class="sl-row band-mid"><div class="sl-score">2</div><div class="sl-desc">Reflection is present, mostly at the end. The student identifies limitations but doesn't connect them to specific mathematical consequences. Some reflection on the process is evident.</div></div>
+        <div class="sl-row band-top"><div class="sl-score">3</div><div class="sl-desc">Reflection appears throughout — in the body, not just the conclusion. The student questions assumptions while using them. Limitations are connected to specific mathematical consequences. The conclusion proposes meaningful extensions.</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">Where to embed reflection</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem"><strong>While choosing a method:</strong> "I chose Pearson's r here, which assumes a linear relationship. If the relationship were non-linear, this coefficient would underestimate the true correlation strength."</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem"><strong>When a result is unexpected:</strong> "This value was lower than predicted. I considered whether this was due to the sample size (n=12) introducing significant sampling error, or whether my exponential model was misspecified."</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65"><strong>At the conclusion:</strong> Revisit your original question. Answer it with specific reference to your results. Then ask: what would the next investigation look like?</p>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--fd);font-size:1.2rem;margin-bottom:.75rem">The reflection depth spectrum</h3>
+  <p style="font-size:.83rem;color:var(--ink-muted);margin-bottom:1rem">These four levels apply to the same limitation — "my sample size was small." Notice how depth increases.</p>
+  <div class="depth-stack">
+    <div class="depth-item depth-1"><div class="depth-label">Level 1 — Superficial (scores 0–1)</div>"My sample size was small, which is a limitation."</div>
+    <div class="depth-item depth-2"><div class="depth-label">Level 2 — Identified (scores 2)</div>"My sample size of n=12 is a limitation. A larger sample would produce more reliable results."</div>
+    <div class="depth-item depth-4"><div class="depth-label">Level 3 — Mathematically grounded (scores 3)</div>"My sample size of n=12 is a significant limitation. Using the Fisher z-transformation, the 95% confidence interval for my r=0.84 spans approximately [0.50, 0.96], meaning I cannot rule out the possibility that the true relationship is only moderately strong. To narrow this interval to ±0.10, I would need approximately n=85 observations — a meaningful target for a follow-up investigation with more access to race timing data."</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: CRITERION E — USE OF MATHEMATICS
+══════════════════════════════════════ -->
+<div class="panel" id="panel-crit-e">
+  <div class="section-head">
+    <h2><span class="crit-pill cp-e" style="font-size:.7rem;padding:4px 12px;margin-right:.75rem">E · 6 marks</span>Use of Mathematics</h2>
+    <p>The gatekeeper criterion. Criterion E is assessed relative to your course level. What counts as "sophisticated" for AI SL is different from AA HL. But the principle is the same: the mathematics must be <em>correct, relevant, and demonstrate genuine understanding</em> — not just the ability to execute a procedure.</p>
+  </div>
+
+  <div class="two-col" style="margin-bottom:2rem">
+    <div>
+      <div class="score-ladder">
+        <div class="sl-row band-low"><div class="sl-score">0–1</div><div class="sl-desc">Mostly incorrect mathematics. Procedures applied without understanding. Errors are significant and affect the conclusions.</div></div>
+        <div class="sl-row band-low"><div class="sl-score">2</div><div class="sl-desc">Some correct mathematics. But limited in scope or sophistication relative to the course level. Mostly procedural with little evidence of understanding.</div></div>
+        <div class="sl-row band-mid"><div class="sl-score">3</div><div class="sl-desc">Correct and appropriately complex mathematics for the course level. Some evidence that the student understands what they're doing, not just how to do it.</div></div>
+        <div class="sl-row band-high"><div class="sl-score">4</div><div class="sl-desc">Correct, well-chosen, and sufficiently sophisticated mathematics. The student clearly understands the mathematics being used and makes appropriate choices.</div></div>
+        <div class="sl-row band-high"><div class="sl-score">5</div><div class="sl-desc">Correct, well-chosen, and sufficiently sophisticated. The student clearly understands the mathematics and makes appropriate choices. Evidence of mathematical insight beyond procedure.</div></div>
+        <div class="sl-row band-top"><div class="sl-score">6</div><div class="sl-desc">Correct, sophisticated, and <em>precise</em>. The mathematics drives the exploration rather than supporting it. The student demonstrates mastery — making connections, identifying edge cases, choosing methods with evident understanding of alternatives. For HL: rigour and elegance are evident.</div></div>
+      </div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:1rem;border-left:4px solid #9F1239">
+        <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:#9F1239;margin-bottom:.6rem">Why Criterion E is the gatekeeper</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem">A perfect score on A–D — presentation (4), communication (4), engagement (3), reflection (3) — gives you 14 out of 20. To reach 17–20, you need E=3 or higher. <strong>There is no path to a top score without strong mathematics.</strong></p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65">If your mathematics is only worth E=2, your ceiling is 16 regardless of how well-written your IA is. This is why topic choice matters so much — you need a question rich enough to sustain mathematics that is correct, relevant, and sophisticated for your level.</p>
+      </div>
+      <div class="card">
+        <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.6rem">Procedural vs. conceptual</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.5rem"><strong>Procedural:</strong> Substituting values into a formula, reading a regression output from a calculator, applying a rule that was taught.</p>
+        <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65"><strong>Conceptual:</strong> Explaining <em>why</em> the formula applies, interpreting what the regression output means for your specific context, making a judgment about which method to use and why it's more appropriate than alternatives.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--fd);font-size:1.2rem;margin-bottom:1rem">Sophistication by course level</h3>
+  <table class="soph-table">
+    <thead>
+      <tr>
+        <th>Course</th>
+        <th>Minimum sophistication for E=3–4</th>
+        <th>What pushes to E=5–6</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="course-tag ct-ai-sl">AI SL</span></td>
+        <td><strong>E=3–4:</strong> Correct statistical analysis — regression, Pearson r, standard deviation — with appropriate model selection and meaningful interpretation of technology outputs in context. The student understands what the outputs mean, not just how to produce them.</td>
+        <td><strong>E=5–6:</strong> Multiple statistical tools used in combination and compared analytically. Student justifies why one model is more appropriate than another using mathematical reasoning (e.g. comparing R² and residual patterns across models). Uncertainty is quantified. At E=6, results are interpreted with precision and the student demonstrates awareness of the conditions under which the chosen method is valid.</td>
+      </tr>
+      <tr>
+        <td><span class="course-tag ct-aa-sl">AA SL</span></td>
+        <td><strong>E=3–4:</strong> Correct use of AA SL content — functions, differentiation, integration, or trigonometry — applied analytically, not just via GDC. At least one technique that goes beyond substitution into a given formula. The student shows they understand the mathematical structure, not just the procedure.</td>
+        <td><strong>E=5–6:</strong> Derivations or proofs of key results used in the exploration. Connections between topic areas (e.g. using calculus to find an optimum that feeds a probability model). Non-routine problem solved analytically with full justification. At E=6, the mathematics is self-directed — the student is not applying a taught template but constructing an argument.</td>
+      </tr>
+      <tr>
+        <td><span class="course-tag ct-ai-hl">AI HL</span></td>
+        <td><strong>E=3–4:</strong> Statistical inference correctly applied — hypothesis testing, confidence intervals, or complex modelling — with evidence that the student understands the conditions under which each method is valid (e.g. checking normality before a t-test, stating H₀ and H₁ clearly).</td>
+        <td><strong>E=5–6:</strong> Markov chains, transition matrices, Poisson or binomial distributions used in a genuinely investigative — not template — way. Confidence intervals constructed and interpreted with mathematical justification for the chosen level of significance. At E=6, the student is making original decisions about analytical approach and demonstrating that the HL extension content is genuinely understood and applied with rigour.</td>
+      </tr>
+      <tr>
+        <td><span class="course-tag ct-aa-hl">AA HL</span></td>
+        <td><strong>E=3–4:</strong> Correct use of HL content — complex numbers, vectors, differential equations, proof by induction, or series — where genuinely relevant to the investigation. The mathematics is substantially beyond AA SL in scope and technique.</td>
+        <td><strong>E=5–6:</strong> Original proof or derivation that the student constructs rather than recalls. Use of HL techniques (e.g. Maclaurin series, vector cross products, second-order differential equations) to answer a non-standard question. At E=6, mathematical elegance and rigour are both present — the student anticipates edge cases, states domains and conditions, and justifies every claim. The exploration reads as mathematics, not a worked example.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="example-pair" style="margin-top:1.5rem">
+    <div class="ex-box ex-weak">
+      <div class="ex-box-label">❌ Procedural (scores E=2)</div>
+      "I entered the data into my GDC and obtained the regression line y = 2.3x + 14.1 with R² = 0.91. This shows the model fits the data well."<br><br>
+      <em>Correct, but procedural. No evidence of understanding what R² means, why linear regression was chosen, or whether the assumptions of the model are met.</em>
+    </div>
+    <div class="ex-box ex-strong">
+      <div class="ex-box-label">✓ Conceptual (scores E=4–6 depending on course)</div>
+      "Before applying linear regression, I verified two key assumptions: that the relationship appeared linear on the scatter plot, and that the residuals were approximately normally distributed. Having confirmed both (Figure 4 and Figure 5), I fitted the model y = 2.3x + 14.1. The R² = 0.91 indicates that 91% of the variance in [y] is explained by [x], though R² alone cannot confirm causation — other lurking variables may be influential, which I explore in Section 4."
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: THE ITERATIVE PROCESS
+══════════════════════════════════════ -->
+<div class="panel" id="panel-process">
+  <div class="section-head">
+    <h2>The iterative process</h2>
+    <p>A 17–20 IA is not written in one sitting. It is built across multiple cycles of investigation, reflection, and revision. Here is what each stage should produce.</p>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-step">
+      <div class="tl-dot tl-dot-1">1</div>
+      <div class="tl-content">
+        <h4>The exploration draft — write to find out</h4>
+        <p><span class="tl-tag tl-tag-blue">Weeks 1–2</span><span class="tl-tag tl-tag-blue">Crit C</span><span class="tl-tag tl-tag-blue">Crit E</span></p>
+        <p>Don't write an IA. Investigate. Follow your curiosity. Try things. Let the mathematics lead. If a result surprises you, follow it. If something doesn't work, note why and try differently. The goal of this stage is not a draft — it's genuine mathematical experience that becomes the raw material of your IA.</p>
+        <div class="card" style="margin-top:.75rem;background:var(--blue-light);border-color:#BFDBFE">
+          <p style="font-size:.8rem;color:#1E3A8A;line-height:1.6"><strong>What you should have at the end of this stage:</strong> A collection of findings, graphs, calculations, and dead ends. At least one result that surprised you. A sense of what the most interesting part of your investigation is — which may be different from what you started with.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot tl-dot-2">2</div>
+      <div class="tl-content">
+        <h4>The structure draft — shape it as an exploration</h4>
+        <p><span class="tl-tag tl-tag-purple">Weeks 3–4</span><span class="tl-tag tl-tag-purple">Crit A</span><span class="tl-tag tl-tag-purple">Crit B</span><span class="tl-tag tl-tag-purple">Crit D</span></p>
+        <p>Now write the IA. Build the narrative arc. Introduce your investigation question. Show your mathematical work in logical sequence. Critically: identify where genuine engagement happened in your exploration and make it visible in the writing. Add reflection at the key turning points — not just the conclusion. Every graph gets a title and labels. Every claim gets evidence.</p>
+        <div class="card" style="margin-top:.75rem;background:#EDE9FE;border-color:#DDD6FE">
+          <p style="font-size:.8rem;color:#3B0764;line-height:1.6"><strong>What you should have at the end of this stage:</strong> A complete draft, 12–20 pages, with introduction, body, and conclusion. All five criteria are addressed. The writing has your voice. Reflection is woven through the body, not just at the end.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tl-step">
+      <div class="tl-dot tl-dot-3">3</div>
+      <div class="tl-content">
+        <h4>The precision draft — eliminate every communication error</h4>
+        <p><span class="tl-tag tl-tag-green">Weeks 5–6</span><span class="tl-tag tl-tag-green">Crit A</span><span class="tl-tag tl-tag-green">Crit B</span></p>
+        <p>Read your IA as an examiner who has never met you. Does every graph have a title and labelled axes? Is every notation consistent from first use to last? Is every claim backed by a specific result? Are all equations formatted correctly? Does the introduction set up exactly what the conclusion answers? This is the stage that turns a 14 into a 17.</p>
+        <div class="card" style="margin-top:.75rem;background:var(--green-light);border-color:#86EFAC">
+          <p style="font-size:.8rem;color:#14532D;line-height:1.6"><strong>What you should have at the end of this stage:</strong> A submission-ready exploration where every page has been examined with a critical eye. Use the Final Checklist (last tab) as your exit criteria.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:1rem;border-left:4px solid var(--blue)">
+    <p style="font-family:var(--fm);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--blue);margin-bottom:.6rem">The feedback loop — how to use teacher feedback at each stage</p>
+    <div class="three-col">
+      <div>
+        <p style="font-size:.78rem;font-weight:600;margin-bottom:.3rem;color:var(--ink)">After draft 1: Ask about the mathematics</p>
+        <p style="font-size:.75rem;color:var(--ink-soft);line-height:1.55">"Is the mathematics I've chosen rich enough for the course level? Is there a more interesting direction I haven't considered?"</p>
+      </div>
+      <div>
+        <p style="font-size:.78rem;font-weight:600;margin-bottom:.3rem;color:var(--ink)">After draft 2: Ask about structure and reflection</p>
+        <p style="font-size:.75rem;color:var(--ink-soft);line-height:1.55">"Does my reflection feel genuine and mathematical? Is the narrative clear? Can you follow the investigation without asking me questions?"</p>
+      </div>
+      <div>
+        <p style="font-size:.78rem;font-weight:600;margin-bottom:.3rem;color:var(--ink)">After draft 3: Ask about communication precision</p>
+        <p style="font-size:.75rem;color:var(--ink-soft);line-height:1.55">"Are there any notation inconsistencies or unlabelled graphs I've missed? Is every claim supported by evidence in the text?"</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PANEL: FINAL CHECKLIST
+══════════════════════════════════════ -->
+<div class="panel" id="panel-checklist">
+  <div class="section-head">
+    <h2>Final submission checklist</h2>
+    <p>Click each item to mark it complete. Every item here is a mark on one of the five criteria. Don't submit until this list is finished.</p>
+  </div>
+
+  <div class="two-col">
+    <div>
+      <h3 style="font-family:var(--fd);font-size:1.1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem"><span class="crit-pill cp-a">A</span> Presentation</h3>
+      <ul class="checklist" id="cl-a">
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>The exploration has a clear, descriptive title</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Introduction states the investigation question clearly</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Introduction explains why this topic was chosen (genuine reason)</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Each section flows logically into the next</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Conclusion directly answers the investigation question</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Conclusion references specific results from the investigation</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Page length is within 12–20 pages</li>
+      </ul>
+
+      <h3 style="font-family:var(--fd);font-size:1.1rem;margin-bottom:.75rem;margin-top:1.5rem;display:flex;align-items:center;gap:.5rem"><span class="crit-pill cp-b">B</span> Communication</h3>
+      <ul class="checklist" id="cl-b">
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Every graph has a descriptive title</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Every graph has both axes labelled with variable names and units</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Every table has a title and column headers with units</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Notation is consistent throughout (no switching between f(x) and y=, etc.)</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Every graph and table is introduced in the text before it appears</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Every graph and table is referred to and interpreted after it appears</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Every claim is supported by specific mathematical evidence</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Rounding convention stated and applied consistently</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Key mathematical steps shown in body (not hidden in appendix)</li>
+      </ul>
+    </div>
+
+    <div>
+      <h3 style="font-family:var(--fd);font-size:1.1rem;margin-bottom:.75rem;display:flex;align-items:center;gap:.5rem"><span class="crit-pill cp-c">C</span> Personal Engagement</h3>
+      <ul class="checklist" id="cl-c">
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>At least one moment of genuine surprise or redirection is visible</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Student-driven decisions are visible (not just following a template)</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Personal connection to topic is shown through the mathematics, not just stated</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>The investigation has an authentic voice that reads as the student's own</li>
+      </ul>
+
+      <h3 style="font-family:var(--fd);font-size:1.1rem;margin-bottom:.75rem;margin-top:1.5rem;display:flex;align-items:center;gap:.5rem"><span class="crit-pill cp-d">D</span> Reflection</h3>
+      <ul class="checklist" id="cl-d">
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Reflection appears in the body of the exploration, not just the conclusion</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>At least one assumption is questioned while being used</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Limitations are connected to specific mathematical consequences</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>At least one unexpected result is discussed and interrogated</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Conclusion proposes a meaningful and specific extension (not vague "future research")</li>
+      </ul>
+
+      <h3 style="font-family:var(--fd);font-size:1.1rem;margin-bottom:.75rem;margin-top:1.5rem;display:flex;align-items:center;gap:.5rem"><span class="crit-pill cp-e">E</span> Use of Mathematics <span style="font-family:var(--fm);font-size:.6rem;opacity:.5;margin-left:.4rem">6 marks</span></h3>
+      <ul class="checklist" id="cl-e">
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>All mathematics is correct — every step checked</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>The mathematics is appropriately sophisticated for the course level</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Method choices are explained, not just applied</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Evidence of understanding beyond procedure — the student can explain why, not just how</li>
+        <li onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 11 11" fill="none"><path d="M2 5.5L4.5 8L9 3" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>Technology use is documented and key steps shown independently</li>
+      </ul>
+
+      <!-- SCORE ESTIMATOR -->
+      <div class="card" style="margin-top:1.5rem;background:var(--ink);color:white;border-color:var(--ink)">
+        <p style="font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;opacity:.4;margin-bottom:.5rem">Progress tracker</p>
+        <p id="score-estimate" style="font-family:var(--fd);font-size:2rem;line-height:1">0 / 30 items</p>
+        <p id="score-label" style="font-size:.8rem;opacity:.5;margin-top:.3rem">Complete checklist items to track your progress</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── Panel switching ──
+function switchPanel(name, e) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.pn-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (e && e.currentTarget && e.currentTarget.classList.contains('pn-btn')) {
+    e.currentTarget.classList.add('active');
+  } else {
+    // Called from score bar — find matching nav button by text
+    document.querySelectorAll('.pn-btn').forEach(b => {
+      if (b.textContent.toLowerCase().includes(name.replace('crit-',''))) {
+        b.classList.add('active');
+      }
+    });
+  }
+  window.scrollTo({top: document.querySelector('.page-nav').offsetTop - 10, behavior: 'smooth'});
+}
+
+// ── Checklist ──
+function toggleCheck(li) {
+  li.classList.toggle('checked');
+  updateScore();
+}
+
+function updateScore() {
+  const total = document.querySelectorAll('.checklist li').length;
+  const done = document.querySelectorAll('.checklist li.checked').length;
+  const el = document.getElementById('score-estimate');
+  const lbl = document.getElementById('score-label');
+  if (el) {
+    el.textContent = done + ' / ' + total + ' items';
+    const pct = done / total;
+    if (pct === 1) lbl.textContent = 'Ready to submit. Well done.';
+    else if (pct >= 0.8) lbl.textContent = 'Almost there — check remaining items carefully.';
+    else if (pct >= 0.5) lbl.textContent = 'Good progress. Keep going.';
+    else lbl.textContent = 'Complete checklist items to track your progress.';
+  }
+}
+</script>
+</body>
+</html>

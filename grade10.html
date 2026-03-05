@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 10 Mathematics — ISHCMC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --g10:#7EC8F0; --g10-dark:#0a4a8a; --g10-light:#e0f2fe;
+  --ink:#111318; --ink-soft:#4A4F5E; --ink-muted:#8A8F9E;
+  --surface:#F0F6FF; --white:#FFFFFF; --rule:#D4E4F7;
+  --std:#6B7280; --ext:#92600A; --fur:#1a5c3a;
+  --std-bg:#F3F4F6; --ext-bg:#FEF3C7; --fur-bg:#D1FAE5;
+  --fd:'DM Serif Display',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:14px; --sh:0 2px 12px rgba(0,0,0,.07); --shh:0 6px 24px rgba(0,0,0,.11);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-2;background:radial-gradient(ellipse 80% 60% at 15% 10%,rgba(26,86,160,.10) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 85% 80%,rgba(26,86,160,.08) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 50% 50%,rgba(255,255,255,.95) 0%,transparent 100%)}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:url('rhino.png') center/cover no-repeat;opacity:0.18;pointer-events:none}
+
+header{position:sticky;top:0;z-index:200;background:rgba(240,246,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.hi{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-soft);font-size:.85rem;font-weight:500;transition:color .2s}
+.back:hover{color:var(--ink)}
+.hbadge{display:flex;align-items:center;gap:10px}
+.grade-dot{width:12px;height:12px;border-radius:50%;background:var(--g10)}
+.hgrade{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+.stream-picker{background:var(--ink);color:white;padding:3rem clamp(1rem,4vw,3rem);position:relative;overflow:hidden}
+.sp-inner{max-width:1200px;margin:0 auto}
+.sp-label{font-family:var(--fm);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:1.25rem}
+.sp-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;margin-bottom:.5rem}
+.sp-sub{font-size:.9rem;opacity:.55;margin-bottom:2rem;max-width:52ch}
+.sp-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.sp-btn{padding:.65rem 1.4rem;border-radius:40px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:white;font-family:var(--fb);font-size:.875rem;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.sp-btn:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.sp-btn.active{background:white;color:var(--ink);border-color:white}
+.sp-btn .pip{width:8px;height:8px;border-radius:50%}
+.pip-std{background:#9CA3AF} .pip-ext{background:#F59E0B} .pip-fur{background:#10B981}
+.rhino-portal{position:absolute;right:-10px;bottom:-15px;width:200px;height:auto;opacity:.12;pointer-events:none;z-index:0;filter:grayscale(20%) brightness(1.8)}
+
+/* DP CALLOUT in picker */
+.dp-year-note{margin-top:1.5rem;padding:.85rem 1.1rem;background:rgba(126,200,240,.12);border:1px solid rgba(126,200,240,.3);border-radius:10px;font-size:.82rem;opacity:.9;max-width:52ch;line-height:1.6}
+.dp-year-note strong{color:var(--g10)}
+
+.tab-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:60px;z-index:100}
+.tab-nav-inner{max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem);display:flex;overflow-x:auto;scrollbar-width:none}
+.tab-nav-inner::-webkit-scrollbar{display:none}
+.tab-btn{padding:1rem 1.25rem;font-size:.875rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--g10-dark)}
+
+main{max-width:1200px;margin:0 auto;padding:2.5rem clamp(1rem,4vw,3rem) 5rem}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+.stream-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.sb-std{background:var(--std-bg);color:var(--std)}
+.sb-ext{background:var(--ext-bg);color:var(--ext)}
+.sb-fur{background:var(--fur-bg);color:var(--fur)}
+.sb-all{background:#EFF6FF;color:#1e40af}
+
+.units-grid{display:flex;flex-direction:column;gap:1.5rem}
+.unit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+.unit-header{padding:1.5rem 1.5rem 1rem;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.unit-header:hover .unit-toggle{background:var(--ink);color:white;border-color:var(--ink)}
+.unit-header-left{flex:1}
+.unit-meta{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap}
+.unit-num{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+.unit-concept{font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;padding:2px 8px;border-radius:20px;background:var(--g10-light);color:var(--g10-dark);border:1px solid var(--g10)}
+.unit-title{font-family:var(--fd);font-size:1.35rem;line-height:1.2;margin-bottom:.4rem}
+.unit-soi{font-size:.82rem;color:var(--ink-soft);font-style:italic;line-height:1.5;max-width:60ch}
+.unit-toggle{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;color:var(--ink-soft)}
+.unit-toggle svg{transition:transform .25s}
+.unit-card.open .unit-toggle svg{transform:rotate(180deg)}
+.unit-crits{display:flex;gap:4px;margin-top:.75rem}
+.uc{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.62rem;font-weight:500;background:var(--surface);border:1px solid var(--rule);color:var(--ink-muted)}
+.uc.on{background:var(--ink);border-color:var(--ink);color:white}
+
+.unit-body{display:none;border-top:1px solid var(--rule)}
+.unit-card.open .unit-body{display:block}
+
+.stream-tabs{display:flex;border-bottom:1px solid var(--rule);background:rgba(240,246,255,.6);padding:0 1.5rem;overflow-x:auto;scrollbar-width:none}
+.stab-btn{padding:.7rem 1rem;font-size:.8rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.stab-btn:hover{color:var(--ink)}
+.stab-btn.active.std{color:var(--std);border-bottom-color:var(--std)}
+.stab-btn.active.ext{color:var(--ext);border-bottom-color:var(--ext)}
+.stab-btn.active.fur{color:var(--fur);border-bottom-color:var(--fur)}
+.stab-panel{display:none;padding:1.5rem}
+.stab-panel.active{display:block}
+
+.skills-summary ul{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+.skills-summary li{display:flex;align-items:flex-start;gap:.6rem;font-size:.875rem;color:var(--ink-soft);line-height:1.5}
+.skills-summary li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g10-dark);flex-shrink:0;margin-top:.5rem}
+.expand-btn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:500;color:var(--g10-dark);background:none;border:none;cursor:pointer;padding:0;transition:opacity .2s}
+.expand-btn:hover{opacity:.7}
+.expand-btn svg{width:12px;height:12px;transition:transform .2s}
+.expand-btn.open svg{transform:rotate(180deg)}
+.skills-full{display:none;margin-top:.75rem}
+.skills-full.open{display:block}
+.skills-full ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.skills-full li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--ink-muted);line-height:1.5;padding-left:.5rem;border-left:2px solid var(--rule)}
+.skills-full li.ext-item{border-left-color:var(--g10-dark)}
+.ext-label{display:inline-block;font-family:var(--fm);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:20px;background:var(--g10-light);color:var(--g10-dark);margin-bottom:.3rem}
+
+.unit-meta-strip{display:flex;flex-wrap:wrap;gap:.75rem;padding:1rem 1.5rem;background:rgba(240,246,255,.7);border-top:1px solid var(--rule);font-size:.75rem;color:var(--ink-muted)}
+.meta-key{font-family:var(--fm);letter-spacing:.05em;text-transform:uppercase;font-size:.6rem}
+
+/* DP BRIDGE */
+.dp-bridge{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;font-size:.82rem;color:#1e3a5f;line-height:1.6}
+.dp-bridge strong{color:#1e40af}
+.dp-bridge-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#3B82F6;margin-bottom:.3rem}
+
+/* CRITERIA */
+.section-head{margin-bottom:1.75rem}
+.section-head h2{font-family:var(--fd);font-size:1.6rem;margin-bottom:.3rem}
+.section-head p{font-size:.875rem;color:var(--ink-soft);max-width:56ch;line-height:1.6}
+.crit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+.crit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh)}
+.crit-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.crit-letter{width:40px;height:40px;border-radius:10px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;flex-shrink:0}
+.crit-title-block{display:flex;flex-direction:column}
+.crit-name{font-family:var(--fd);font-size:1rem;line-height:1.2}
+.crit-subtitle{font-size:.72rem;color:var(--ink-muted)}
+.crit-body{font-size:.83rem;color:var(--ink-soft);line-height:1.65}
+.crit-body p{margin-bottom:.6rem}
+.crit-body strong{color:var(--ink);font-weight:600}
+.level-compare{margin-top:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.level-box{border-radius:8px;padding:.75rem;font-size:.78rem;line-height:1.5}
+.level-box.l6{background:#FEF3C7;border:1px solid #FDE68A;color:#78350F}
+.level-box.l8{background:#D1FAE5;border:1px solid #6EE7B7;color:#064E3B}
+.level-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;opacity:.7}
+
+/* DP BRIDGE TAB */
+.dp-bridge-tab{display:flex;flex-direction:column;gap:1.5rem}
+.dp-section-title{font-family:var(--fd);font-size:1.3rem;margin-bottom:.75rem}
+.dp-pathway-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem;margin-bottom:2rem}
+.dp-pathway-card{border-radius:var(--r);padding:1.25rem;color:white;display:flex;flex-direction:column;gap:.5rem;box-shadow:var(--sh)}
+.dp-pathway-card h4{font-family:var(--fd);font-size:1.1rem;line-height:1.2}
+.dp-pathway-card p{font-size:.78rem;opacity:.8;line-height:1.5}
+.dp-pathway-card .from{font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;opacity:.6;margin-bottom:.25rem}
+.bg-ai-sl{background:#1A56A0} .bg-aa-sl{background:#1565C0} .bg-ai-hl{background:#0D47A1} .bg-aa-hl{background:#0A2F6B} .bg-applied{background:#5B8FD4}
+
+.ia-timeline{display:flex;flex-direction:column;gap:0;margin:1rem 0 2rem}
+.ia-step{display:flex;gap:1rem;position:relative}
+.ia-step:not(:last-child)::before{content:'';position:absolute;left:15px;top:36px;width:2px;height:calc(100% + 0px);background:var(--rule)}
+.ia-dot{width:32px;height:32px;border-radius:50%;background:var(--g10-light);border:2px solid var(--g10);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.6rem;font-weight:500;color:var(--g10-dark);flex-shrink:0;margin-top:.25rem}
+.ia-content{padding-bottom:1.5rem;flex:1}
+.ia-content h4{font-size:.9rem;font-weight:600;margin-bottom:.25rem}
+.ia-content p{font-size:.8rem;color:var(--ink-soft);line-height:1.55}
+.ia-content .grade-tag{font-family:var(--fm);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--g10-dark);background:var(--g10-light);padding:1px 7px;border-radius:20px;margin-right:.4rem}
+
+.ia-criteria-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:.5rem}
+.ia-criteria-table th{text-align:left;padding:.6rem .75rem;background:var(--surface);border:1px solid var(--rule);font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-muted);font-weight:500}
+.ia-criteria-table td{padding:.6rem .75rem;border:1px solid var(--rule);color:var(--ink-soft);line-height:1.5;vertical-align:top}
+.ia-criteria-table tr:nth-child(even) td{background:rgba(240,246,255,.4)}
+
+/* SKILLS BANK */
+.search-bar{display:flex;align-items:center;gap:.75rem;background:var(--white);border:1.5px solid var(--rule);border-radius:40px;padding:.6rem 1.25rem;margin-bottom:2rem;max-width:480px;box-shadow:var(--sh)}
+.search-bar svg{color:var(--ink-muted);flex-shrink:0;width:16px;height:16px}
+.search-bar input{border:none;background:transparent;font-family:var(--fb);font-size:.9rem;color:var(--ink);flex:1;outline:none}
+.search-bar input::placeholder{color:var(--ink-muted)}
+.skill-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:.35rem .9rem;border-radius:20px;border:1.5px solid var(--rule);background:var(--white);font-size:.75rem;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--g10-dark);color:var(--g10-dark)}
+.filter-btn.active{background:var(--g10-dark);border-color:var(--g10-dark);color:white}
+.skills-bank-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.skill-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh);transition:box-shadow .2s}
+.skill-card:hover{box-shadow:var(--shh)}
+.skill-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.skill-topic{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.skill-card h4{font-size:.95rem;font-weight:600;margin-bottom:.4rem;line-height:1.3}
+.skill-card .skill-desc{font-size:.8rem;color:var(--ink-soft);line-height:1.55;margin-bottom:.75rem}
+.skill-example{background:var(--surface);border-radius:8px;padding:.75rem;font-size:.78rem;border-left:3px solid var(--g10-dark)}
+.skill-example .ex-label{font-family:var(--fm);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g10-dark);margin-bottom:.3rem}
+
+/* stream visibility */
+body[data-stream="std"] .stab-btn[data-tab="ext"],
+body[data-stream="std"] .stab-btn[data-tab="fur"]{display:none}
+body[data-stream="ext"] .stab-btn[data-tab="std"],
+body[data-stream="ext"] .stab-btn[data-tab="fur"]{display:none}
+body[data-stream="fur"] .stab-btn[data-tab="std"],
+body[data-stream="fur"] .stab-btn[data-tab="ext"]{display:none}
+body[data-stream="std"] .skill-card[data-stream="ext"],
+body[data-stream="std"] .skill-card[data-stream="fur"]{display:none}
+body[data-stream="ext"] .skill-card[data-stream="std"],
+body[data-stream="ext"] .skill-card[data-stream="fur"]{display:none}
+body[data-stream="fur"] .skill-card[data-stream="std"],
+body[data-stream="fur"] .skill-card[data-stream="ext"]{display:none}
+
+@media(max-width:600px){.level-compare{grid-template-columns:1fr}.crit-grid{grid-template-columns:1fr}.dp-pathway-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" class="back">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Mathematics Hub
+    </a>
+    <div class="hbadge">
+      <div class="grade-dot"></div>
+      <span class="hgrade">Grade 10 · 2025–26</span>
+    </div>
+  </div>
+</header>
+
+<div class="stream-picker">
+  <div class="sp-inner">
+    <p class="sp-label">Grade 10 Mathematics</p>
+    <h1 class="sp-title">Which class<br>are you in?</h1>
+    <p class="sp-sub">Your final MYP year. Select your stream — and check the DP Bridge tab to see where you're heading in Year 11.</p>
+    <div class="sp-btns">
+      <button class="sp-btn" data-stream="std" onclick="setStream('std')"><span class="pip pip-std"></span>Standard</button>
+      <button class="sp-btn" data-stream="ext" onclick="setStream('ext')"><span class="pip pip-ext"></span>Extended</button>
+      <button class="sp-btn" data-stream="fur" onclick="setStream('fur')"><span class="pip pip-fur"></span>Further</button>
+      <button class="sp-btn" data-stream="all" onclick="setStream('all')" style="opacity:.6;font-size:.8rem">Show all streams</button>
+    </div>
+    <div class="dp-year-note">
+      <strong>This is your bridge year.</strong> Everything in Grade 10 connects directly to a DP course. Use the <strong>DP Bridge</strong> tab to see exactly which units feed which Year 11 pathway.
+    </div>
+  </div>
+  <img src="rhino.png" class="rhino-portal" alt="">
+</div>
+
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('units',event)">Units</button>
+    <button class="tab-btn" onclick="switchTab('criteria',event)">Criteria Guide</button>
+    <button class="tab-btn" onclick="switchTab('skills',event)">Skills Bank</button>
+    <button class="tab-btn" onclick="switchTab('bridge',event)">DP Bridge ↗</button>
+  </div>
+</nav>
+
+<main>
+
+  <!-- ══════════════════════════
+       TAB 1 — UNITS
+  ══════════════════════════ -->
+  <div class="tab-panel active" id="tab-units">
+    <div class="section-head">
+      <h2>Your Units</h2>
+      <p>Four units across the year. Every unit this year has a direct connection to Year 11 — see the DP Bridge tab for the full picture.</p>
+    </div>
+    <div class="units-grid">
+
+      <!-- ═══ UNIT 1 — FINANCE MATTERS ═══ -->
+      <div class="unit-card" id="unit1">
+        <div class="unit-header" onclick="toggleUnit('unit1')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 1</span>
+              <span class="unit-concept">Relationships</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Finance Matters</h3>
+            <p class="unit-soi">Understanding the relationships within systems allow us to imagine a hopeful future.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span><span class="uc on">B</span><span class="uc on">C</span><span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit1','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit1','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit1','fur',this)">Further</button>
+          </div>
+
+          <!-- STD -->
+          <div class="stab-panel active" id="unit1-std">
+            <div class="skills-summary"><ul>
+              <li>Graph linear and quadratic functions; identify key features; use function notation f(x); determine domain and range</li>
+              <li>Solve quadratic equations by factorising (any a), using the formula, graphically, by completing the square (a=1), and with technology</li>
+              <li>Give answers to specified accuracy using surd notation; solve worded quadratic problems</li>
+              <li>Recognise linear patterns; find missing terms and sums of arithmetic sequences including with sigma notation (technology)</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u1-std-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u1-std-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Complete the square for any value of a</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Functions and quadratics here feed directly into <strong>AI SL Topic 2</strong> and <strong>AA SL Topic 2</strong>. Sigma notation introduced now is used formally throughout DP — particularly in <strong>AI SL statistics</strong> and <strong>AA HL sequences</strong>.</div>
+          </div>
+
+          <!-- EXT -->
+          <div class="stab-panel" id="unit1-ext">
+            <div class="skills-summary"><ul>
+              <li>Identify arithmetic, geometric, linear, quadratic, and other sequences; solve problems using a variety of methods (numerical and contextual)</li>
+              <li>Use sigma notation to represent series and simplify sigma expressions; apply sequences to finance, compound interest, repayment, recurring decimals</li>
+              <li>Extend geometric series to infinity; understand convergence properties</li>
+              <li>Apply laws of integer, fraction, and negative exponents; use scientific notation; solve exponential equations (same base and reducible to same base)</li>
+              <li>Apply rules of logarithms; convert between log and exponential forms; solve exponential equations with different bases using logs; use technology for regression functions</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u1-ext-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u1-ext-f"><ul>
+              <li>Solve logarithmic and exponential equations expressed as word problems</li>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Proof by induction</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Logarithms, exponential equations, and infinite geometric series are <strong>AA SL Topic 1 and 2</strong> core content. Students who work through these in Grade 10 Extended enter Year 11 with the conceptual foundation already built.</div>
+          </div>
+
+          <!-- FUR -->
+          <div class="stab-panel" id="unit1-fur">
+            <div class="skills-summary"><ul>
+              <li>Identify all sequence types (arithmetic, geometric, linear, quadratic, Fibonacci); find general term rules; solve problems with and without technology</li>
+              <li>Use sigma notation fluently; simplify sigma expressions; apply to finance, compound interest, repayment, recurring decimals, divisibility</li>
+              <li>Find sum of arithmetic sequences and geometric series to infinity; examine convergence/divergence by analysing r</li>
+              <li>Apply all laws of exponents (integer, fraction, negative); use scientific notation; solve exponential equations (same base, different base via logs, change of base rule)</li>
+              <li>Apply all log laws; convert between log and exponential forms; solve worded log and exponential problems; apply proof by induction</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u1-fur-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u1-fur-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Explore power series</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Further students cover the complete <strong>AA SL/HL Topic 1</strong> sequence and series content, plus logarithms from Topic 2. Proof by induction is an <strong>AA HL</strong> examination topic. Entering Year 11, these students are revising — not learning for the first time.</div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div><span class="meta-key">Related:</span> Models · System</div>
+            <div><span class="meta-key">Global Context:</span> Fairness and Development</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ UNIT 2 — FUNCTIONAL RELATIONSHIPS ═══ -->
+      <div class="unit-card" id="unit2">
+        <div class="unit-header" onclick="toggleUnit('unit2')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 2</span>
+              <span class="unit-concept">Relationships</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Functional Relationships <span style="font-family:var(--fb);font-size:.85rem;font-weight:400;color:var(--ink-muted)">/ Log On (Std)</span></h3>
+            <p class="unit-soi">Modelling relationships help understand change, evolution and adaptation.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span><span class="uc">B</span><span class="uc on">C</span><span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit2','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit2','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit2','fur',this)">Further</button>
+          </div>
+
+          <!-- STD — Log On -->
+          <div class="stab-panel active" id="unit2-std">
+            <div style="font-family:var(--fm);font-size:.65rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">Standard: Log On (Exponentials)</div>
+            <div class="skills-summary"><ul>
+              <li>Identify and continue arithmetic and geometric sequences; find general terms; model real-life situations including financial problems</li>
+              <li>Apply laws of integer and rational exponents; use scientific notation; understand the term "function" and exponential function language (argument, base, exponent)</li>
+              <li>Sketch exponential functions (intercepts and asymptotes); model using exponential functions (e.g. population growth); determine domain and range; identify transformations</li>
+              <li>Solve exponential equations by equating exponents, taking logarithms, or graphically with technology; graph using technology; find exponential regression</li>
+              <li>Solve simple logarithmic equations using log laws and the definition of a logarithm</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u2-std-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u2-std-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Sketch and identify key features of transformed exponential functions; introduction to sketching rational functions</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Exponential functions, logarithms, and sequences here map to <strong>AI SL Topics 1 and 2</strong>. The modelling approach — fitting real data with exponential regression — is the exact method used in <strong>AI SL Paper 2</strong> modelling questions.</div>
+          </div>
+
+          <!-- EXT -->
+          <div class="stab-panel" id="unit2-ext">
+            <div class="skills-summary"><ul>
+              <li>Understand the meaning of "function"; apply combinations of graph transformations; understand that order matters in transformations</li>
+              <li>Solve inequalities using algebra; solve problems involving absolute value (modulus) functions; write and use piecewise functions</li>
+              <li>Use technology to fit curves and find regression lines; justify choice and accuracy of regression model</li>
+              <li>Solve quadratic inequalities with sign diagrams; solve equations analytically and graphically; sketch functions by finding key points</li>
+              <li>Use Desmos to visualise transformations and composite functions</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u2-ext-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u2-ext-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Sketch and solve problems using rational functions</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Function transformations, absolute value, and piecewise functions are core <strong>AA SL Topic 2</strong>. Sign diagrams for quadratic inequalities appear in <strong>AA SL/HL</strong> examinations. Extended students are already thinking the way DP expects.</div>
+          </div>
+
+          <!-- FUR -->
+          <div class="stab-panel" id="unit2-fur">
+            <div class="skills-summary"><ul>
+              <li>Understand "function" formally; apply combinations of transformations; understand significance of transformation order</li>
+              <li>Solve inequalities involving functions; apply knowledge of odd and even functions; solve problems involving absolute value and rational functions</li>
+              <li>Use piecewise functions; sketch functions by finding key points; use technology for regression and justify choice and accuracy</li>
+              <li>Solve quadratic inequalities with sign diagrams; solve equations analytically and graphically</li>
+              <li>Use Desmos to visualise and confirm function transformations and composite functions</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u2-fur-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u2-fur-f"><ul>
+              <li>Solve problems involving rational functions fully</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Rational functions, odd/even function properties, and composite function analysis are <strong>AA HL Topic 2</strong> content. Further students encountering these in Grade 10 enter Year 11 with conceptual familiarity that typically only develops mid-Year 11 for other students.</div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div><span class="meta-key">Related:</span> Change · Model · Pattern · Representation</div>
+            <div><span class="meta-key">Global Context:</span> Orientation in Space and Time</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ UNIT 3 — LIES, DAMNED LIES AND STATISTICS ═══ -->
+      <div class="unit-card" id="unit3">
+        <div class="unit-header" onclick="toggleUnit('unit3')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 3</span>
+              <span class="unit-concept">Relationships / Form</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Lies, Damned Lies and Statistics</h3>
+            <p class="unit-soi">People create systems to collect and represent data that require analysis and validation.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span><span class="uc">B</span><span class="uc on">C</span><span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit3','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit3','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit3','fur',this)">Further</button>
+          </div>
+
+          <!-- STD -->
+          <div class="stab-panel active" id="unit3-std">
+            <div class="skills-summary"><ul>
+              <li>Calculate measures of dispersion and central tendency; interpret and calculate standard deviation using technology</li>
+              <li>Interpret correlation coefficient and calculate using technology; create and interpret cumulative frequency graphs and box plots</li>
+              <li>Create and interpret scatter diagrams, two-way tables, and histograms; analyse and interpret grouped data</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u3-std-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u3-std-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Use IQR to draw and interpret box plots; test for outliers</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Standard deviation, cumulative frequency, and correlation coefficient are assessed in <strong>AI SL Topic 4</strong> from the very first weeks of Year 11. This unit is direct DP preparation.</div>
+          </div>
+
+          <!-- EXT -->
+          <div class="stab-panel" id="unit3-ext">
+            <div class="skills-summary"><ul>
+              <li>Find measures of central tendency and spread including from grouped data; calculate and interpret standard deviation</li>
+              <li>Draw and interpret cumulative frequency diagrams, two-way tables, and scatter graphs; calculate correlation coefficient and linear regression (y on x and x on y) with technology; hand-draw scatter graph and line of best fit through the mean point</li>
+              <li>Understand and use interpolation and extrapolation; construct histograms (equal class intervals); choose appropriate bin widths for discrete and continuous data</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u3-ext-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u3-ext-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Draw and interpret box plots; calculate IQR and test for outliers</li>
+            </ul></div>
+          </div>
+
+          <!-- FUR -->
+          <div class="stab-panel" id="unit3-fur">
+            <div class="skills-summary"><ul>
+              <li>Apply various sampling techniques; differentiate between data types; represent data using the full range of statistical forms</li>
+              <li>Histograms (equal and unequal class intervals); standard deviation (population and sample); cumulative frequency tables and graphs; quartiles and percentiles; scatter graphs with Pearson's r and regression lines (technology); two-way tables; stem and leaf; box plots</li>
+              <li>Normal and skewed distributions; quantify skewness; IQR and outlier identification; understand bias and potential misuse of data including infographics</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u3-fur-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u3-fur-f"><ul>
+              <li>Compare data sets using central tendency, quartiles, standard deviation, range, and IQR</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Further students cover the full <strong>AI SL Topic 4</strong> statistics toolkit including normal distributions, sampling, and bias. In <strong>AI HL</strong>, this extends to hypothesis testing. The Grade 10 Further statistics unit is essentially a pre-DP statistics course.</div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div><span class="meta-key">Related:</span> Systems · Validity · Pattern · Representation</div>
+            <div><span class="meta-key">Global Context:</span> Fairness and Development · Scientific &amp; Technical Innovation</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ UNIT 4 — TRIANGLES, CIRCLES AND PERIODICITY ═══ -->
+      <div class="unit-card" id="unit4">
+        <div class="unit-header" onclick="toggleUnit('unit4')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 4</span>
+              <span class="unit-concept">Logic</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Triangles, Circles and Periodicity</h3>
+            <p class="unit-soi">Logic and model representation lead to understanding of patterns in space.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span><span class="uc on">B</span><span class="uc on">C</span><span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit4','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit4','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit4','fur',this)">Further</button>
+          </div>
+
+          <!-- STD -->
+          <div class="stab-panel active" id="unit4-std">
+            <div class="skills-summary"><ul>
+              <li>Apply Pythagoras' theorem and trig ratios in right-angled triangles</li>
+              <li>Apply sine rule, cosine rule, and area rule for non-right-angled triangles</li>
+              <li>Understand and apply trig functions to solve worded problems</li>
+              <li>Introduction to radians and the unit circle</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u4-std-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u4-std-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Introduction to trigonometric equations</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Sine rule, cosine rule, and radian measure are <strong>AI SL Topic 3</strong> core content. Students who meet radians first in Grade 10 find the transition to DP trigonometry significantly smoother.</div>
+          </div>
+
+          <!-- EXT -->
+          <div class="stab-panel" id="unit4-ext">
+            <div class="skills-summary"><ul>
+              <li>Use and understand radian measure and unit circle; use the unit circle to solve trig equations; use technology for trig equations</li>
+              <li>Review right-angled trig; solve non-right-angled problems (sine rule, cosine rule, area of triangle)</li>
+              <li>Understand key features of sin, cos, and tan graphs and their transformations</li>
+              <li>Use trig identities: sin A/cos A = tan A and cos²A + sin²A = 1</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u4-ext-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u4-ext-f"><ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Use trig identities to solve trig equations</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Trig graph transformations and the Pythagorean identity are assessed in <strong>AA SL Topic 3</strong>. Extended students who work through these fluently in Grade 10 are positioned for AA SL or AI SL in Year 11.</div>
+          </div>
+
+          <!-- FUR -->
+          <div class="stab-panel" id="unit4-fur">
+            <div class="skills-summary"><ul>
+              <li>Review and apply circle theorems (intersecting chord, tangent theorems); solve coordinate geometry problems (gradient-intercept, point-gradient, general form, parallel/perpendicular, midpoint, distance, Voronoi diagrams)</li>
+              <li>Use gradient as tan of an angle; understand vectors (magnitude, direction, directed line segments, notation, components, worded velocity problems, add/subtract, scalar multiplication)</li>
+              <li>Review trig functions and identities; apply double angle and compound angle relationships to solve trig equations</li>
+              <li>Review unit circle in radians; use to solve trig equations</li>
+            </ul></div>
+            <button class="expand-btn" onclick="toggleFull('u4-fur-f',this)"><svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show full skills list</button>
+            <div class="skills-full" id="u4-fur-f"><ul>
+              <li>Voronoi diagram application via coordinate geometry</li>
+            </ul></div>
+            <div class="dp-bridge"><div class="dp-bridge-label">↗ DP Bridge</div>Vectors, double angle identities, and Voronoi diagrams are <strong>AA HL Topics 3 and 4</strong> content. Further students finish Grade 10 having touched nearly every DP AA HL topic at least once. Year 11 deepens and formalises — but the landscape is already familiar.</div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div><span class="meta-key">Related:</span> Pattern · Representation · Models · Space</div>
+            <div><span class="meta-key">Global Context:</span> Scientific &amp; Technical Innovation</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       TAB 2 — CRITERIA GUIDE
+  ══════════════════════════ -->
+  <div class="tab-panel" id="tab-criteria">
+    <div class="section-head">
+      <h2>Criteria Guide</h2>
+      <p>Grade 10 is your final MYP assessment year. The bar is higher — and the habits you build now are the ones you carry into DP.</p>
+    </div>
+    <div class="crit-grid">
+      <div class="crit-card">
+        <div class="crit-header"><div class="crit-letter">A</div><div class="crit-title-block"><span class="crit-name">Knowing &amp; Understanding</span><span class="crit-subtitle">Select, apply, and justify</span></div></div>
+        <div class="crit-body">
+          <p>Grade 10 Crit A tests whether you can <strong>select the right tool for unfamiliar problems</strong>. With four years of techniques now available — from linear equations to logarithms to vectors — the challenge is knowing which approach fits a new situation, not just executing a familiar one.</p>
+          <p>Key expectation at Level 7–8: you <strong>explain your method choice</strong> and <strong>check your answer makes sense</strong> in context. In Finance Matters, that means checking compound interest answers against reasonable estimates. In Triangles and Circles, it means checking whether an angle answer is geometrically plausible.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6"><div class="level-label">Level 5–6</div>Solves familiar and some unfamiliar problems. Shows method clearly. Selects appropriate techniques with minor inefficiencies.</div>
+          <div class="level-box l8"><div class="level-label">Level 7–8</div>Solves unfamiliar multi-step problems. Selects the most efficient method, justifies it, and verifies the answer is reasonable in context.</div>
+        </div>
+      </div>
+
+      <div class="crit-card">
+        <div class="crit-header"><div class="crit-letter">B</div><div class="crit-title-block"><span class="crit-name">Investigating Patterns</span><span class="crit-subtitle">Generalise, verify, and justify formally</span></div></div>
+        <div class="crit-body">
+          <p>By Grade 10, Crit B justifications are expected to be <strong>algebraic or formally reasoned</strong>, not informal. "I checked five cases" is not Level 8 justification. A proof — even a simple one — or a clear algebraic argument for why the rule holds in general, is.</p>
+          <p>Finance Matters (sequence generalisation) and Triangles and Circles (geometric pattern investigation) are the key Crit B units. In Further, proof by induction is the formal method — this is the same technique DP AA HL examiners test.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6"><div class="level-label">Level 5–6</div>Correct general rule. Verified with new cases. Justification present but may be informal or rely on examples rather than reasoning.</div>
+          <div class="level-box l8"><div class="level-label">Level 7–8</div>Correct general rule. Rigorously verified. Justification is formal — algebraic, deductive, or by induction (Further). Explains why the rule must be true, not just that it is.</div>
+        </div>
+      </div>
+
+      <div class="crit-card">
+        <div class="crit-header"><div class="crit-letter">C</div><div class="crit-title-block"><span class="crit-name">Communicating</span><span class="crit-subtitle">Precision in language, notation, and structure</span></div></div>
+        <div class="crit-body">
+          <p>Grade 10 Crit C is assessed across all four units and expects <strong>professional mathematical communication</strong>. Logarithm notation, vector notation, sigma notation, set notation — each has precise conventions that must be followed.</p>
+          <p>The standard question: <em>"Could an external examiner read this solution and follow every step without asking you a question?"</em> If the answer is no — if you skipped steps, used ambiguous notation, or forgot units — those are Crit C marks lost.</p>
+          <p>This is also direct DP preparation. DP mark schemes award "method marks" only when working is shown clearly. A correct answer with no working gets zero in many DP questions.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6"><div class="level-label">Level 5–6</div>Correct notation most of the time. Working is logical and mostly complete. Diagrams present and labelled. Conclusions reference context.</div>
+          <div class="level-box l8"><div class="level-label">Level 7–8</div>Precise notation throughout. Complete working with no unexplained jumps. All diagrams fully labelled. Conclusions mathematically precise and contextually grounded.</div>
+        </div>
+      </div>
+
+      <div class="crit-card">
+        <div class="crit-header"><div class="crit-letter">D</div><div class="crit-title-block"><span class="crit-name">Applying in Real Life</span><span class="crit-subtitle">Model, interpret, and evaluate critically</span></div></div>
+        <div class="crit-body">
+          <p>Grade 10 Crit D is the closest you get to a DP Internal Assessment before Year 11. The Finance Matters and Statistics units both require you to <strong>build a model, apply it to real data, and evaluate its validity</strong>.</p>
+          <p>At Level 7–8, your evaluation should address: What did you assume? How accurate is the model? What are the limitations? What would you change? These questions are <strong>the same five IA criteria</strong> in different language.</p>
+          <p>A student who writes strong Crit D reflections in Grade 10 is practising exactly the thinking DP IA examiners reward at Criterion E (Evaluation) and Criterion D (Reflection).</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6"><div class="level-label">Level 5–6</div>Applies correct mathematics to a real context. Interprets results in terms of the situation. Identifies assumptions and at least one limitation.</div>
+          <div class="level-box l8"><div class="level-label">Level 7–8</div>Builds a complete model with explicitly stated assumptions. Interprets all results precisely in context. Evaluates the model critically — addresses accuracy, limitations, and improvements with mathematical specificity.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       TAB 3 — SKILLS BANK
+  ══════════════════════════ -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="section-head">
+      <h2>Skills Bank</h2>
+      <p>Search or filter to find any Grade 10 skill without knowing which unit it's in.</p>
+    </div>
+    <div class="search-bar">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <input type="text" id="skillSearch" placeholder="Search skills…" oninput="filterSkills(this.value)">
+    </div>
+    <div class="skill-filters">
+      <button class="filter-btn active" onclick="filterTopic('all',this)">All topics</button>
+      <button class="filter-btn" onclick="filterTopic('sequences',this)">Sequences &amp; Series</button>
+      <button class="filter-btn" onclick="filterTopic('functions',this)">Functions</button>
+      <button class="filter-btn" onclick="filterTopic('statistics',this)">Statistics</button>
+      <button class="filter-btn" onclick="filterTopic('trigonometry',this)">Trigonometry</button>
+    </div>
+    <div class="skills-bank-grid" id="skillsGrid">
+
+      <!-- SEQUENCES -->
+      <div class="skill-card" data-stream="all" data-topic="sequences" data-keywords="arithmetic geometric sequence general term nth">
+        <div class="skill-card-meta"><span class="skill-topic">Sequences</span><span class="stream-badge sb-all" style="font-size:.55rem">All streams</span></div>
+        <h4>Arithmetic &amp; Geometric Sequences</h4>
+        <p class="skill-desc">Arithmetic: common difference d. General term: uₙ = u₁ + (n−1)d. Geometric: common ratio r. General term: uₙ = u₁ × rⁿ⁻¹.</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          Geometric: u₁ = 3, r = 2 → u₅ = 3 × 2⁴ = <strong>48</strong><br>
+          Arithmetic: u₁ = 5, d = 3 → u₁₀ = 5 + 9×3 = <strong>32</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="sequences" data-keywords="sum series sigma notation geometric infinite convergent">
+        <div class="skill-card-meta"><span class="skill-topic">Sequences</span><span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span></div>
+        <h4>Sum of a Geometric Series to Infinity</h4>
+        <p class="skill-desc">S∞ = u₁ / (1−r) when |r| &lt; 1 (converging). If |r| ≥ 1 the series diverges and has no finite sum.</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          u₁ = 10, r = 0.5: S∞ = 10 / (1−0.5) = <strong>20</strong><br>
+          Check: |0.5| &lt; 1 ✓ converges
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="sequences" data-keywords="logarithm log laws exponential solve equation">
+        <div class="skill-card-meta"><span class="skill-topic">Sequences</span><span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span></div>
+        <h4>Logarithms &amp; Exponential Equations</h4>
+        <p class="skill-desc">Key log laws: log(ab) = log a + log b, log(a/b) = log a − log b, log(aⁿ) = n log a. To solve equations with different bases, take logs of both sides.</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          Solve 3ˣ = 20: x log 3 = log 20<br>
+          x = log 20 / log 3 ≈ <strong>2.73</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="fur" data-topic="sequences" data-keywords="proof induction sigma mathematical induction">
+        <div class="skill-card-meta"><span class="skill-topic">Sequences</span><span class="stream-badge sb-fur" style="font-size:.55rem">Further</span></div>
+        <h4>Proof by Induction</h4>
+        <p class="skill-desc">Three steps: (1) Base case — prove true for n=1. (2) Inductive step — assume true for n=k, prove true for n=k+1. (3) Conclude by the principle of mathematical induction.</p>
+        <div class="skill-example"><div class="ex-label">Structure</div>
+          "Assume true for n = k: [statement].<br>Show true for n = k+1: [algebra].<br>Therefore true for all n ∈ ℤ⁺ by PMI."
+        </div>
+      </div>
+
+      <!-- FUNCTIONS -->
+      <div class="skill-card" data-stream="all" data-topic="functions" data-keywords="function domain range notation f(x) transformation">
+        <div class="skill-card-meta"><span class="skill-topic">Functions</span><span class="stream-badge sb-all" style="font-size:.55rem">All streams</span></div>
+        <h4>Function Transformations</h4>
+        <p class="skill-desc">f(x) + a shifts up, f(x+a) shifts left, af(x) stretches vertically, f(ax) compresses horizontally. Order matters when applying multiple transformations.</p>
+        <div class="skill-example"><div class="ex-label">Quick reference</div>
+          y = 2f(x−3) + 1: right 3, stretch ×2 vertically, up 1
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="functions" data-keywords="exponential growth decay asymptote intercept sketch">
+        <div class="skill-card-meta"><span class="skill-topic">Functions</span><span class="stream-badge sb-all" style="font-size:.55rem">All streams</span></div>
+        <h4>Exponential Functions</h4>
+        <p class="skill-desc">y = aˣ: always positive, passes through (0,1), has horizontal asymptote at y = 0. Growth when a &gt; 1, decay when 0 &lt; a &lt; 1.</p>
+        <div class="skill-example"><div class="ex-label">Key features</div>
+          y = 2ˣ: passes (0,1), (1,2), (2,4) — asymptote y = 0<br>
+          y = (0.5)ˣ: same but decreasing — asymptote y = 0
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="functions" data-keywords="absolute value modulus piecewise function inequality">
+        <div class="skill-card-meta"><span class="skill-topic">Functions</span><span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span></div>
+        <h4>Absolute Value Functions</h4>
+        <p class="skill-desc">|x| = x when x ≥ 0, and −x when x &lt; 0. The graph forms a V-shape. To solve |f(x)| = k, solve f(x) = k and f(x) = −k separately.</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          Solve |2x−3| = 5:<br>
+          2x−3 = 5 → x = 4, or 2x−3 = −5 → <strong>x = −1</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="fur" data-topic="functions" data-keywords="rational function asymptote sign diagram inequality">
+        <div class="skill-card-meta"><span class="skill-topic">Functions</span><span class="stream-badge sb-fur" style="font-size:.55rem">Further</span></div>
+        <h4>Rational Functions &amp; Sign Diagrams</h4>
+        <p class="skill-desc">Rational functions have vertical asymptotes where the denominator = 0 and horizontal asymptotes determined by degree comparison. Sign diagrams show where expressions are positive or negative.</p>
+        <div class="skill-example"><div class="ex-label">Key skill</div>
+          For (x−2)/(x+1) &gt; 0: critical values x = 2, x = −1<br>
+          Sign diagram → solution: x &lt; −1 or x &gt; 2
+        </div>
+      </div>
+
+      <!-- STATISTICS -->
+      <div class="skill-card" data-stream="all" data-topic="statistics" data-keywords="standard deviation mean spread population sample">
+        <div class="skill-card-meta"><span class="skill-topic">Statistics</span><span class="stream-badge sb-all" style="font-size:.55rem">All streams</span></div>
+        <h4>Standard Deviation</h4>
+        <p class="skill-desc">Measures spread around the mean. Use technology to calculate. Population σ uses n; sample s uses n−1. A larger standard deviation means data is more spread out.</p>
+        <div class="skill-example"><div class="ex-label">Interpreting</div>
+          σ = 2 → most data within 2 of the mean<br>
+          σ = 15 → data much more spread out
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="statistics" data-keywords="cumulative frequency quartile percentile box plot median">
+        <div class="skill-card-meta"><span class="skill-topic">Statistics</span><span class="stream-badge sb-all" style="font-size:.55rem">All streams</span></div>
+        <h4>Cumulative Frequency &amp; Box Plots</h4>
+        <p class="skill-desc">Cumulative frequency graphs let you estimate median (50th percentile), Q1 (25th), Q3 (75th), and IQR. Box plots display the five-number summary visually.</p>
+        <div class="skill-example"><div class="ex-label">Five-number summary</div>
+          Min · Q1 · Median · Q3 · Max<br>
+          IQR = Q3 − Q1 · Outlier if &gt; Q3 + 1.5×IQR
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="fur" data-topic="statistics" data-keywords="normal distribution skewness sampling bias">
+        <div class="skill-card-meta"><span class="skill-topic">Statistics</span><span class="stream-badge sb-fur" style="font-size:.55rem">Further</span></div>
+        <h4>Normal &amp; Skewed Distributions</h4>
+        <p class="skill-desc">Normal distribution: bell-shaped, symmetric, mean = median = mode. Positive skew: tail to right, mean &gt; median. Negative skew: tail to left, mean &lt; median. Quantify skewness to describe formally.</p>
+        <div class="skill-example"><div class="ex-label">Quick test</div>
+          Mean &gt; Median → positive skew (tail right)<br>
+          Mean &lt; Median → negative skew (tail left)
+        </div>
+      </div>
+
+      <!-- TRIGONOMETRY -->
+      <div class="skill-card" data-stream="all" data-topic="trigonometry" data-keywords="sine rule cosine rule non-right area triangle">
+        <div class="skill-card-meta"><span class="skill-topic">Trigonometry</span><span class="stream-badge sb-all" style="font-size:.55rem">All streams</span></div>
+        <h4>Sine Rule, Cosine Rule &amp; Area</h4>
+        <p class="skill-desc">Sine rule: a/sin A = b/sin B. Cosine rule: a² = b² + c² − 2bc cos A. Area: ½ab sin C. Use sine rule for angle-side pairs; cosine rule for two sides and included angle or all three sides.</p>
+        <div class="skill-example"><div class="ex-label">Which rule?</div>
+          Know 2 sides + included angle → cosine rule<br>
+          Know 2 angles + 1 side → sine rule<br>
+          Know 2 sides + included angle → area = ½ab sin C
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="trigonometry" data-keywords="trig graph sin cos tan transformation period amplitude">
+        <div class="skill-card-meta"><span class="skill-topic">Trigonometry</span><span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span></div>
+        <h4>Trig Graphs &amp; Transformations</h4>
+        <p class="skill-desc">y = a sin(bx + c) + d: amplitude |a|, period 2π/b, horizontal shift −c/b, vertical shift d. These transformations map directly to DP Topic 3.</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          y = 3 sin(2x) + 1:<br>
+          Amplitude 3 · Period π · Midline y = 1
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="fur" data-topic="trigonometry" data-keywords="double angle compound angle identity vectors">
+        <div class="skill-card-meta"><span class="skill-topic">Trigonometry</span><span class="stream-badge sb-fur" style="font-size:.55rem">Further</span></div>
+        <h4>Double Angle Identities</h4>
+        <p class="skill-desc">sin 2A = 2 sin A cos A. cos 2A = cos²A − sin²A = 2cos²A − 1 = 1 − 2sin²A. Use to simplify expressions and solve equations that can't be solved directly.</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          Simplify 2 sin 30° cos 30°:<br>
+          = sin(2×30°) = sin 60° = <strong>√3/2</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="fur" data-topic="trigonometry" data-keywords="vectors magnitude direction add subtract scalar multiply">
+        <div class="skill-card-meta"><span class="skill-topic">Trigonometry</span><span class="stream-badge sb-fur" style="font-size:.55rem">Further</span></div>
+        <h4>Vectors</h4>
+        <p class="skill-desc">Vectors have magnitude and direction. Written as column vectors or with i/j notation. Add by adding components; multiply by scalar by scaling each component. Magnitude: |v| = √(x²+y²).</p>
+        <div class="skill-example"><div class="ex-label">Worked example</div>
+          v = (3,4): |v| = √(9+16) = <strong>5</strong><br>
+          v + w = (3,4)+(1,−2) = <strong>(4,2)</strong>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ══════════════════════════
+       TAB 4 — DP BRIDGE
+  ══════════════════════════ -->
+  <div class="tab-panel" id="tab-bridge">
+    <div class="section-head">
+      <h2>DP Bridge</h2>
+      <p>Grade 10 is the last stop before the IB Diploma. Here's exactly where you're heading — and how your MYP work has been preparing you since Grade 7.</p>
+    </div>
+
+    <div class="dp-bridge-tab">
+
+      <!-- PATHWAY MAP -->
+      <div>
+        <h3 class="dp-section-title">Which DP course fits your stream?</h3>
+        <div class="dp-pathway-grid">
+          <div class="dp-pathway-card bg-applied">
+            <div class="from">From: Standard (typically)</div>
+            <h4>Applied Mathematics</h4>
+            <p>ISHCMC's own practical maths course. Foundational and applications-focused. Non-IB pathway.</p>
+          </div>
+          <div class="dp-pathway-card bg-ai-sl">
+            <div class="from">From: Standard or Extended</div>
+            <h4>Math AI SL</h4>
+            <p>Statistics, modelling, financial maths, and technology-driven problem solving. Ideal for students who engaged well with the real-life units.</p>
+          </div>
+          <div class="dp-pathway-card bg-aa-sl">
+            <div class="from">From: Extended (typically)</div>
+            <h4>Math AA SL</h4>
+            <p>Functions, algebra, trigonometry, calculus, and proof. For students who enjoyed the structure and precision of Extended maths.</p>
+          </div>
+          <div class="dp-pathway-card bg-ai-hl">
+            <div class="from">From: Extended or Further</div>
+            <h4>Math AI HL</h4>
+            <p>Extended statistical inference, complex modelling, and calculus applications. Requires strong Extended foundation.</p>
+          </div>
+          <div class="dp-pathway-card bg-aa-hl">
+            <div class="from">From: Further (strongly recommended)</div>
+            <h4>Math AA HL</h4>
+            <p>The most rigorous IB mathematics course. Proof, complex numbers, vectors, differential equations. Further students are the primary pipeline.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- IA PREPARATION TIMELINE -->
+      <div>
+        <h3 class="dp-section-title">Your IA preparation — Grade 7 to Year 11</h3>
+        <p style="font-size:.85rem;color:var(--ink-soft);margin-bottom:1.5rem;max-width:60ch">The DP Internal Assessment (IA) is a 12–20 page mathematical exploration. You haven't been waiting until Year 11 to prepare for it — you've been building the skills since Grade 7.</p>
+        <div class="ia-timeline">
+          <div class="ia-step">
+            <div class="ia-dot">G7</div>
+            <div class="ia-content">
+              <h4>First real-life modelling (Crit D)</h4>
+              <p><span class="grade-tag">More Money More Problems</span><span class="grade-tag">Social Entrepreneurs</span>First structured attempt at building a mathematical model for a real situation. Identifying a context, applying mathematics, interpreting results.</p>
+            </div>
+          </div>
+          <div class="ia-step">
+            <div class="ia-dot">G8</div>
+            <div class="ia-content">
+              <h4>IDU modelling + statistical investigation</h4>
+              <p><span class="grade-tag">Carbon Conundrum</span>First cross-disciplinary investigation with real data. Formulating questions, collecting data, analysing for patterns, communicating findings. This is IA structure in embryonic form.</p>
+            </div>
+          </div>
+          <div class="ia-step">
+            <div class="ia-dot">G9</div>
+            <div class="ia-content">
+              <h4>Deeper modelling + assumptions</h4>
+              <p><span class="grade-tag">Get Triggy With It</span><span class="grade-tag">What Are the Chances?</span>Crit D reflections now require stated assumptions and specific limitation analysis. This is the IA's Criterion E (Evaluation) in MYP language.</p>
+            </div>
+          </div>
+          <div class="ia-step">
+            <div class="ia-dot">G10</div>
+            <div class="ia-content">
+              <h4>Full model + critical evaluation</h4>
+              <p><span class="grade-tag">Finance Matters</span><span class="grade-tag">Lies, Damned Lies</span>Grade 10 Crit D tasks require building a complete model, interpreting all results, and critically evaluating accuracy and limitations with mathematical specificity. This is what DP IA Criteria D and E assess.</p>
+            </div>
+          </div>
+          <div class="ia-step">
+            <div class="ia-dot">Y11</div>
+            <div class="ia-content">
+              <h4>The DP Internal Assessment</h4>
+              <p>A 12–20 page independent mathematical exploration on a topic of your choice. Assessed on: Presentation · Mathematical Communication · Personal Engagement · Reflection · Use of Mathematics. Everything above has been practice.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IA CRITERIA MAPPING -->
+      <div>
+        <h3 class="dp-section-title">How MYP criteria map to DP IA criteria</h3>
+        <table class="ia-criteria-table">
+          <thead>
+            <tr>
+              <th>DP IA Criterion</th>
+              <th>What it asks</th>
+              <th>MYP preparation</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>A — Presentation</strong></td>
+              <td>Is the exploration well-structured and coherent?</td>
+              <td>Crit C: logical working, clear conclusions, appropriate notation throughout Grades 6–10</td>
+            </tr>
+            <tr>
+              <td><strong>B — Mathematical Communication</strong></td>
+              <td>Is mathematical language used correctly and precisely?</td>
+              <td>Crit C: notation precision, diagram labelling, formal mathematical language</td>
+            </tr>
+            <tr>
+              <td><strong>C — Personal Engagement</strong></td>
+              <td>Does the student show genuine interest and independent thinking?</td>
+              <td>Crit B: investigation quality, originality of approach, going beyond what's given</td>
+            </tr>
+            <tr>
+              <td><strong>D — Reflection</strong></td>
+              <td>Does the student reflect critically on results and the mathematical process?</td>
+              <td>Crit D: reflection on model accuracy, assumptions, and limitations (Grades 8–10)</td>
+            </tr>
+            <tr>
+              <td><strong>E — Use of Mathematics</strong></td>
+              <td>Is the mathematics correct, relevant, and sufficiently sophisticated?</td>
+              <td>Crit A: selecting and applying appropriate mathematics correctly across all units</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+function setStream(s) {
+  document.body.setAttribute('data-stream', s);
+  localStorage.setItem('g10stream', s);
+  document.querySelectorAll('.sp-btn').forEach(b => b.classList.toggle('active', b.dataset.stream === s));
+  if (s !== 'all') {
+    document.querySelectorAll('.unit-card').forEach(card => {
+      const btn = card.querySelector(`.stab-btn[data-tab="${s}"]`);
+      if (btn) activateStreamTab(card.id, s, btn);
+    });
+  }
+}
+function activateStreamTab(unitId, stream, btn) {
+  const card = document.getElementById(unitId);
+  card.querySelectorAll('.stab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.stab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const panel = document.getElementById(`${unitId}-${stream}`);
+  if (panel) panel.classList.add('active');
+}
+function switchStreamTab(unitId, stream, btn) {
+  const card = document.getElementById(unitId);
+  card.querySelectorAll('.stab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.stab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(`${unitId}-${stream}`).classList.add('active');
+}
+function toggleUnit(id) { document.getElementById(id).classList.toggle('open'); }
+function toggleFull(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  const nodes = btn.childNodes;
+  for (let n of nodes) {
+    if (n.nodeType === 3) { n.textContent = ' ' + (open ? 'Show less' : 'Show full skills list'); break; }
+  }
+}
+function switchTab(name, e) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+let activeTopicFilter = 'all';
+function filterSkills(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const kw = (card.dataset.keywords + ' ' + card.textContent).toLowerCase();
+    const topicMatch = activeTopicFilter === 'all' || card.dataset.topic === activeTopicFilter;
+    card.style.display = (kw.includes(q) && topicMatch) ? '' : 'none';
+  });
+}
+function filterTopic(topic, btn) {
+  activeTopicFilter = topic;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterSkills(document.getElementById('skillSearch').value.toLowerCase());
+}
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('g10stream');
+  if (saved) setStream(saved);
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 8 Mathematics — ISHCMC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --g8:#EFE07A; --g8-dark:#b8a800; --g8-light:#fdf9d0;
+  --ink:#111318; --ink-soft:#4A4F5E; --ink-muted:#8A8F9E;
+  --surface:#F0F6FF; --white:#FFFFFF; --rule:#D4E4F7;
+  --std:#6B7280; --ext:#92600A; --fur:#1a5c3a;
+  --std-bg:#F3F4F6; --ext-bg:#FEF3C7; --fur-bg:#D1FAE5;
+  --fd:'DM Serif Display',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:14px; --sh:0 2px 12px rgba(0,0,0,.07); --shh:0 6px 24px rgba(0,0,0,.11);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ═══ HEADER ═══ */
+header{position:sticky;top:0;z-index:200;background:rgba(240,246,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.hi{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-soft);font-size:.85rem;font-weight:500;transition:color .2s}
+.back:hover{color:var(--ink)}
+.back svg{width:16px;height:16px}
+.hbadge{display:flex;align-items:center;gap:10px}
+.grade-dot{width:12px;height:12px;border-radius:50%;background:var(--g8)}
+.hgrade{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ═══ STREAM PICKER ═══ */
+.stream-picker{background:var(--ink);color:white;padding:3rem clamp(1rem,4vw,3rem)}
+.sp-inner{max-width:1200px;margin:0 auto}
+.sp-label{font-family:var(--fm);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:1.25rem}
+.sp-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;margin-bottom:.5rem}
+.sp-sub{font-size:.9rem;opacity:.55;margin-bottom:2rem;max-width:52ch}
+.sp-btns{display:flex;gap:.75rem;flex-wrap:wrap}
+.sp-btn{padding:.65rem 1.4rem;border-radius:40px;border:1.5px solid rgba(255,255,255,.2);background:transparent;color:white;font-family:var(--fb);font-size:.875rem;font-weight:500;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px}
+.sp-btn:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.08)}
+.sp-btn.active{background:white;color:var(--ink);border-color:white}
+.sp-btn .pip{width:8px;height:8px;border-radius:50%}
+.pip-std{background:#9CA3AF} .pip-ext{background:#F59E0B} .pip-fur{background:#10B981}
+
+/* ═══ TAB NAV ═══ */
+.tab-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:60px;z-index:100}
+.tab-nav-inner{max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem);display:flex;gap:0;overflow-x:auto;scrollbar-width:none}
+.tab-nav-inner::-webkit-scrollbar{display:none}
+.tab-btn{padding:1rem 1.25rem;font-size:.875rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--g8-dark)}
+
+/* ═══ MAIN LAYOUT ═══ */
+main{max-width:1200px;margin:0 auto;padding:2.5rem clamp(1rem,4vw,3rem) 5rem}
+
+/* ═══ TAB PANELS ═══ */
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ═══ STREAM BADGE ═══ */
+.stream-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;text-transform:uppercase;font-weight:500}
+.sb-std{background:var(--std-bg);color:var(--std)}
+.sb-ext{background:var(--ext-bg);color:var(--ext)}
+.sb-fur{background:var(--fur-bg);color:var(--fur)}
+.sb-all{background:#EFF6FF;color:#1e40af}
+
+/* ═══ UNIT CARDS ═══ */
+.units-grid{display:flex;flex-direction:column;gap:1.5rem}
+
+.unit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+
+.unit-header{padding:1.5rem 1.5rem 1rem;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.unit-header:hover .unit-toggle{background:var(--ink);color:white;border-color:var(--ink)}
+
+.unit-header-left{flex:1}
+.unit-meta{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap}
+.unit-num{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+.unit-concept{font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;padding:2px 8px;border-radius:20px;background:var(--g8-light);color:var(--g8-dark);border:1px solid var(--g8)}
+
+.unit-title{font-family:var(--fd);font-size:1.35rem;line-height:1.2;margin-bottom:.4rem}
+.unit-soi{font-size:.82rem;color:var(--ink-soft);font-style:italic;line-height:1.5;max-width:60ch}
+
+.unit-toggle{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;color:var(--ink-soft)}
+.unit-toggle svg{transition:transform .25s}
+.unit-card.open .unit-toggle svg{transform:rotate(180deg)}
+
+/* IDU badge */
+.idu-tag{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:20px;background:#FDF4FF;border:1px solid #E9D5FF;color:#7C3AED;font-family:var(--fm);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase}
+
+/* Criteria badges in unit */
+.unit-crits{display:flex;gap:4px;margin-top:.75rem}
+.uc{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.62rem;font-weight:500;background:var(--surface);border:1px solid var(--rule);color:var(--ink-muted)}
+.uc.on{background:var(--ink);border-color:var(--ink);color:white}
+
+/* Unit body — collapsible */
+.unit-body{display:none;border-top:1px solid var(--rule)}
+.unit-card.open .unit-body{display:block}
+
+/* Stream tabs inside unit */
+.stream-tabs{display:flex;border-bottom:1px solid var(--rule);background:rgba(240,246,255,.6);padding:0 1.5rem;gap:0;overflow-x:auto}
+.stab-btn{padding:.7rem 1rem;font-size:.8rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.stab-btn:hover{color:var(--ink)}
+.stab-btn.active.std{color:var(--std);border-bottom-color:var(--std)}
+.stab-btn.active.ext{color:var(--ext);border-bottom-color:var(--ext)}
+.stab-btn.active.fur{color:var(--fur);border-bottom-color:var(--fur)}
+.stab-btn.active.all{color:#1e40af;border-bottom-color:#1e40af}
+
+.stab-panel{display:none;padding:1.5rem}
+.stab-panel.active{display:block}
+
+/* Skills list */
+.skills-summary{margin-bottom:1rem}
+.skills-summary ul{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.skills-summary li{display:flex;align-items:flex-start;gap:.6rem;font-size:.875rem;color:var(--ink-soft);line-height:1.5}
+.skills-summary li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g8-dark);flex-shrink:0;margin-top:.5rem}
+
+.expand-btn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:500;color:var(--g8-dark);background:none;border:none;cursor:pointer;padding:0;transition:opacity .2s}
+.expand-btn:hover{opacity:.7}
+.expand-btn svg{width:12px;height:12px;transition:transform .2s}
+.expand-btn.open svg{transform:rotate(180deg)}
+
+.skills-full{display:none;margin-top:.75rem}
+.skills-full.open{display:block}
+.skills-full ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.skills-full li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--ink-muted);line-height:1.5;padding-left:.5rem;border-left:2px solid var(--rule)}
+.skills-full li.ext-item{border-left-color:var(--g8-dark)}
+
+.ext-label{display:inline-block;font-family:var(--fm);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:20px;background:var(--g8-light);color:var(--g8-dark);margin-bottom:.3rem}
+
+/* Related / GC strip */
+.unit-meta-strip{display:flex;flex-wrap:wrap;gap:.75rem;padding:1rem 1.5rem;background:rgba(240,246,255,.7);border-top:1px solid var(--rule);font-size:.75rem;color:var(--ink-muted)}
+.meta-item{display:flex;gap:.3rem}
+.meta-key{font-family:var(--fm);letter-spacing:.05em;text-transform:uppercase;font-size:.6rem}
+
+/* ═══ CRITERIA GUIDE TAB ═══ */
+.crit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+.crit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh)}
+.crit-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.crit-letter{width:40px;height:40px;border-radius:10px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;flex-shrink:0}
+.crit-title-block{display:flex;flex-direction:column}
+.crit-name{font-family:var(--fd);font-size:1rem;line-height:1.2}
+.crit-subtitle{font-size:.72rem;color:var(--ink-muted)}
+.crit-body{font-size:.83rem;color:var(--ink-soft);line-height:1.65}
+.crit-body p{margin-bottom:.6rem}
+.crit-body strong{color:var(--ink);font-weight:600}
+
+.level-compare{margin-top:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.level-box{border-radius:8px;padding:.75rem;font-size:.78rem;line-height:1.5}
+.level-box.l6{background:#FEF3C7;border:1px solid #FDE68A;color:#78350F}
+.level-box.l8{background:#D1FAE5;border:1px solid #6EE7B7;color:#064E3B}
+.level-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;opacity:.7}
+
+/* ═══ SKILLS BANK TAB ═══ */
+.search-bar{display:flex;align-items:center;gap:.75rem;background:var(--white);border:1.5px solid var(--rule);border-radius:40px;padding:.6rem 1.25rem;margin-bottom:2rem;max-width:480px;box-shadow:var(--sh)}
+.search-bar svg{color:var(--ink-muted);flex-shrink:0;width:16px;height:16px}
+.search-bar input{border:none;background:transparent;font-family:var(--fb);font-size:.9rem;color:var(--ink);flex:1;outline:none}
+.search-bar input::placeholder{color:var(--ink-muted)}
+
+.skill-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:.35rem .9rem;border-radius:20px;border:1.5px solid var(--rule);background:var(--white);font-size:.75rem;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--g8-dark);color:var(--g8-dark)}
+.filter-btn.active{background:var(--g8-dark);border-color:var(--g8-dark);color:white}
+
+.skills-bank-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.skill-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh);transition:box-shadow .2s}
+.skill-card:hover{box-shadow:var(--shh)}
+.skill-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.skill-topic{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.skill-card h4{font-size:.95rem;font-weight:600;margin-bottom:.4rem;line-height:1.3}
+.skill-card .skill-desc{font-size:.8rem;color:var(--ink-soft);line-height:1.55;margin-bottom:.75rem}
+.skill-example{background:var(--surface);border-radius:8px;padding:.75rem;font-size:.78rem;border-left:3px solid var(--g8-dark)}
+.skill-example .ex-label{font-family:var(--fm);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g8-dark);margin-bottom:.3rem}
+.skill-hidden{display:none}
+
+/* ═══ SECTION TITLE ═══ */
+.section-head{margin-bottom:1.75rem}
+.section-head h2{font-family:var(--fd);font-size:1.6rem;margin-bottom:.3rem}
+.section-head p{font-size:.875rem;color:var(--ink-soft);max-width:56ch;line-height:1.6}
+
+/* ═══ STREAM-AWARE VISIBILITY ═══ */
+/* controlled by JS — hide/show stream tabs inside units */
+body[data-stream="std"] .stab-btn[data-tab="ext"],
+body[data-stream="std"] .stab-btn[data-tab="fur"]{ display:none }
+body[data-stream="ext"] .stab-btn[data-tab="std"],
+body[data-stream="ext"] .stab-btn[data-tab="fur"]{ display:none }
+body[data-stream="fur"] .stab-btn[data-tab="std"],
+body[data-stream="fur"] .stab-btn[data-tab="ext"]{ display:none }
+
+/* hide stream-specific skill cards */
+body[data-stream="std"] .skill-card[data-stream="ext"],
+body[data-stream="std"] .skill-card[data-stream="fur"]{ display:none }
+body[data-stream="ext"] .skill-card[data-stream="std"],
+body[data-stream="ext"] .skill-card[data-stream="fur"]{ display:none }
+body[data-stream="fur"] .skill-card[data-stream="std"],
+body[data-stream="fur"] .skill-card[data-stream="ext"]{ display:none }
+
+/* ═══ RESPONSIVE ═══ */
+@media(max-width:600px){
+  .level-compare{grid-template-columns:1fr}
+  .crit-grid{grid-template-columns:1fr}
+}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 15% 10%,rgba(26,86,160,.10) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 85% 80%,rgba(26,86,160,.08) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 50% 50%,rgba(255,255,255,.95) 0%,transparent 100%);backdrop-filter:blur(0px)}
+
+.stream-picker{position:relative;overflow:hidden;}
+
+
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:url('rhino.png') center/cover no-repeat;
+  opacity:0.18;
+  pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<header>
+  <div class="hi">
+    <a href="ishcmc-math-hub-landing.html" class="back">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Mathematics Hub
+    </a>
+    <div class="hbadge">
+      <div class="grade-dot"></div>
+      <span class="hgrade">Grade 8 · 2025–26</span>
+    </div>
+  </div>
+</header>
+
+<!-- ═══ STREAM PICKER ═══ -->
+<div class="stream-picker" id="streamPicker">
+  <div class="sp-inner">
+    <p class="sp-label">Grade 8 Mathematics</p>
+    <h1 class="sp-title">Which class<br>are you in?</h1>
+    <p class="sp-sub">Select your stream to filter content. You can change this anytime using the button in the top right.</p>
+    <div class="sp-btns">
+      <button class="sp-btn" data-stream="std" onclick="setStream('std')">
+        <span class="pip pip-std"></span> Standard
+      </button>
+      <button class="sp-btn" data-stream="ext" onclick="setStream('ext')">
+        <span class="pip pip-ext"></span> Extended
+      </button>
+      <button class="sp-btn" data-stream="fur" onclick="setStream('fur')">
+        <span class="pip pip-fur"></span> Further
+      </button>
+      <button class="sp-btn" data-stream="all" onclick="setStream('all')" style="opacity:.6;font-size:.8rem">
+        Show all streams
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TAB NAV ═══ -->
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('units')">Units</button>
+    <button class="tab-btn" onclick="switchTab('criteria')">Criteria Guide</button>
+    <button class="tab-btn" onclick="switchTab('skills')">Skills Bank</button>
+  </div>
+</nav>
+
+<!-- ═══ MAIN ═══ -->
+<main>
+
+  <!-- ══════════════════════════════════════
+       TAB 1 — UNITS
+  ══════════════════════════════════════ -->
+  <div class="tab-panel active" id="tab-units">
+    <div class="section-head">
+      <h2>Your Units</h2>
+      <p>Four units across the year. Click any unit to expand the full content for your stream.</p>
+    </div>
+
+    <div class="units-grid">
+
+      <!-- ═══════════════════════════════════════
+           UNIT 1 — ART OF MATHS 1
+      ═══════════════════════════════════════ -->
+      <div class="unit-card" id="unit1">
+        <div class="unit-header" onclick="toggleUnit('unit1')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 1</span>
+              <span class="unit-concept">Relationships</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Art of Maths 1</h3>
+            <p class="unit-soi">Geometric art can be beautifully represented through both visual and numeric models.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span>
+              <span class="uc">B</span>
+              <span class="uc">C</span>
+              <span class="uc">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div class="unit-body">
+          <!-- Stream tabs -->
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit1','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit1','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit1','fur',this)">Further</button>
+          </div>
+
+          <!-- STANDARD -->
+          <div class="stab-panel active" id="unit1-std">
+            <div class="skills-summary">
+              <ul>
+                <li>Use symbolic notation and simplify expressions (collecting like terms, expanding brackets)</li>
+                <li>Rearrange and substitute into formulae</li>
+                <li>Solve linear equations including x on both sides and in a denominator</li>
+                <li>Find gradient and y-intercept; determine equation of a line (y = mx + c)</li>
+                <li>Graph linear functions and identify parallel lines by comparing gradients</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit1-std-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit1-std-full">
+              <ul>
+                <li>Understand the concept of a linear function</li>
+                <li>Determine the equation of a line from a gradient and a point</li>
+                <li>Identify, extend, and generalise a linear sequence</li>
+                <li>Understand the meaning of an exponent</li>
+                <li class="ext-item" style="list-style:none"><span class="ext-label">Extension</span><br>Apply different forms of equations: general form, point-gradient, gradient-intercept</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- EXTENDED -->
+          <div class="stab-panel" id="unit1-ext">
+            <div class="skills-summary">
+              <ul>
+                <li>Use algebraic language accurately; solve multi-step linear equations and inequalities including fractions and unknown in denominator</li>
+                <li>Rearrange and substitute into formulae; represent solutions to inequalities (number line, interval notation)</li>
+                <li>Solve compound inequalities; solve equations by expanding or factorising</li>
+                <li>Draw linear graphs using intercept or gradient-intercept method; connect to direct proportion (k = m)</li>
+                <li>Solve simultaneous equations using elimination, substitution, and graphically; graph and solve two linear inequalities</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit1-ext-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit1-ext-full">
+              <ul>
+                <li>Solve problems with parallel and perpendicular lines (given gradient and point)</li>
+                <li>Apply different methods to represent the equation of a line: intercept form, point-gradient, general form</li>
+                <li>Interpret linear programming graphs (constraints as equations, read graphical solutions)</li>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Solve problems through linear programming</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FURTHER -->
+          <div class="stab-panel" id="unit1-fur">
+            <div class="skills-summary">
+              <ul>
+                <li>Form and solve multi-step linear equations and inequations including rationals; reflect on the accuracy of solutions</li>
+                <li>Form equations from word problems; apply rules to solve and represent inequalities (number line, interval notation, compound inequalities)</li>
+                <li>Solve by expanding monomials or factorising; draw linear graphs (intercept and gradient-intercept method; connect k = m)</li>
+                <li>Solve parallel and perpendicular line problems (given gradient and point); solve linear simultaneous equations (elimination, substitution, graphically; extend to linear-quadratic and circles via substitution)</li>
+                <li>Represent equations of a line using multiple forms; develop intercept form to equation of a circle and general form</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit1-fur-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit1-fur-full">
+              <ul>
+                <li>Solve absolute value equations graphically or by ± method</li>
+                <li>Linear programming: represent constraints, interpret solutions, rearrange formulae</li>
+                <li>Use square root and cube root symbols; know that √2 is irrational</li>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Discussion of equations of ellipses</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div class="meta-item"><span class="meta-key">Related:</span> Representation · Systems · Models</div>
+            <div class="meta-item"><span class="meta-key">Global Context:</span> Personal &amp; Cultural Expression</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+           UNIT 2 — PACK IT IN
+      ═══════════════════════════════════════ -->
+      <div class="unit-card" id="unit2">
+        <div class="unit-header" onclick="toggleUnit('unit2')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 2</span>
+              <span class="unit-concept">Logic</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Pack it In — It's a Piece of Cake!</h3>
+            <p class="unit-soi">Using 2D and 3D models informs logical decision making and our understanding of our effect on the world around us.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span>
+              <span class="uc on">B</span>
+              <span class="uc on">C</span>
+              <span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit2','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit2','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit2','fur',this)">Further</button>
+          </div>
+
+          <!-- STANDARD -->
+          <div class="stab-panel active" id="unit2-std">
+            <div class="skills-summary">
+              <ul>
+                <li>Determine circumference and area of circles</li>
+                <li>Use Pythagoras' Theorem to calculate missing sides; proof of Pythagoras</li>
+                <li>Find the distance between two points using the distance formula</li>
+                <li>Calculate volume of cuboids, prisms, and cylinders</li>
+                <li>Model approximations of real object volumes using geometric shapes</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit2-std-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit2-std-full">
+              <ul>
+                <li>Calculate perimeter and area of composite shapes (triangles, quadrilaterals, circles)</li>
+                <li>Revision: rearrange and substitute into formulae</li>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Apply Pythagorean Theorem in area/perimeter problems; write answers using surd notation; deductive reasoning in geometric problem-solving; volume of composite shapes</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- EXTENDED -->
+          <div class="stab-panel" id="unit2-ext">
+            <div class="skills-summary">
+              <ul>
+                <li>Proof of Pythagoras' Theorem; apply theorem and distance formula to find distances and midpoints</li>
+                <li>Explore circumference-diameter relationship; calculate area and circumference of circles</li>
+                <li>Calculate area of sectors and length of arcs</li>
+                <li>Determine volume and surface area of cylinders and prisms</li>
+                <li>Revision: rearrange and substitute into formulae</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit2-ext-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit2-ext-full">
+              <ul>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Write answers using surd notation; calculate with surds; rationalise a denominator; find points on a line segment given ratio information</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FURTHER -->
+          <div class="stab-panel" id="unit2-fur">
+            <div class="skills-summary">
+              <ul>
+                <li>Proof of Pythagoras; use theorem and distance formula to find distance and midpoint between points; introduction to irrational numbers; simplify, multiply, add, subtract, divide surds; rationalise denominators</li>
+                <li>Discover circumference-diameter relationship (π); find area and circumference of circles; generalise formulae for sectors (area and arc length)</li>
+                <li>Volume and surface area of cuboids and triangular prisms; develop understanding of cylinders, spheres, cones, pyramids</li>
+                <li>Perform translations, reflections, rotations (with centre), dilations/enlargements (with centre of enlargement); describe all four transformation types</li>
+                <li>Find the point on a directed line segment that partitions it in a given ratio</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit2-fur-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit2-fur-full">
+              <ul>
+                <li>Reflections, rotations, translations, and dilations about the origin</li>
+                <li>3D midpoint</li>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Difference between volume and capacity; enlargements with fractional scale factor (centre inside and outside the object)</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div class="meta-item"><span class="meta-key">Related:</span> Generalisation · Model · Space</div>
+            <div class="meta-item"><span class="meta-key">Global Context:</span> Globalisation &amp; Sustainability</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+           UNIT 3 — CARBON CONUNDRUM (IDU)
+      ═══════════════════════════════════════ -->
+      <div class="unit-card" id="unit3">
+        <div class="unit-header" onclick="toggleUnit('unit3')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 3</span>
+              <span class="unit-concept">Communication</span>
+              <span class="stream-badge sb-all">All streams</span>
+              <span class="idu-tag">
+                <svg width="8" height="8" viewBox="0 0 8 8" fill="none"><circle cx="4" cy="4" r="3" stroke="#7C3AED" stroke-width="1.2"/><path d="M4 3v2" stroke="#7C3AED" stroke-width="1.2" stroke-linecap="round"/></svg>
+                IDU · Science
+              </span>
+            </div>
+            <h3 class="unit-title">The Carbon Conundrum</h3>
+            <p class="unit-soi">Communication of environmental patterns between communities enables wider sustainable practices.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span>
+              <span class="uc on">B</span>
+              <span class="uc on">C</span>
+              <span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit3','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit3','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit3','fur',this)">Further</button>
+          </div>
+
+          <!-- STANDARD -->
+          <div class="stab-panel active" id="unit3-std">
+            <div class="skills-summary">
+              <ul>
+                <li>Formulate survey questions; understand and identify bias in data collection</li>
+                <li>Calculate mean, median, IQR; draw and interpret box plots; identify outliers</li>
+                <li>Draw and describe scatter plots; informally describe linear trends (rate of change, line of best fit by eye)</li>
+                <li>Use linear models for prediction (interpolation and extrapolation; linear regression)</li>
+                <li>Construct and interpret two-way tables and relative frequencies</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit3-std-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit3-std-full">
+              <ul>
+                <li>Use pivot tables to extract and analyse data</li>
+                <li>Choose appropriate units, scale, and level of accuracy</li>
+                <li>Define appropriate quantities for descriptive modelling</li>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Clean data in Google Sheets; cite a spreadsheet or graph academically; calculate Pearson's Correlation Coefficient; coefficient of determination</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- EXTENDED -->
+          <div class="stab-panel" id="unit3-ext">
+            <div class="skills-summary">
+              <ul>
+                <li>Formulate effective survey questions; understand bias</li>
+                <li>Calculate measures of central tendency with grouped data; calculate percentiles and quartiles; calculate range and IQR</li>
+                <li>Draw and interpret box and whisker plots, stem and leaf diagrams, and scatter plots; test for outliers</li>
+                <li>Find Pearson's Correlation Coefficient using technology; determine linear regression line; interpolate and extrapolate</li>
+                <li>Identify correct units and possible accuracy limitations</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit3-ext-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit3-ext-full">
+              <ul>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Chi-square test of independence</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FURTHER -->
+          <div class="stab-panel" id="unit3-fur">
+            <div class="skills-summary">
+              <ul>
+                <li>Form survey questions; write and administer survey; understand potential bias; use pivot tables to extract relationships</li>
+                <li>Discuss bias, skewness, and outliers; correctly use vocabulary to describe data (units, accuracy, limitations)</li>
+                <li>Find measures of central tendency with grouped data; measures of dispersion (range, IQR) alongside MoCT; calculate percentiles and quartiles; calculate standard deviation</li>
+                <li>Draw and interpret histograms (equal and unequal intervals), frequency polygons, box and whisker plots, stem and leaf, scatter plots; test for outliers</li>
+                <li>Find Pearson's Correlation Coefficient using technology; find linear regression line; interpolate and extrapolate; chi-squared and introduction to statistical hypotheses</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit3-fur-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit3-fur-full">
+              <ul>
+                <li>Make links from analysis to secondary sources and hypothesis</li>
+                <li>Histograms with frequency density; two-way tables; understand anomalies</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div class="meta-item"><span class="meta-key">Related:</span> Environment · Patterns</div>
+            <div class="meta-item"><span class="meta-key">Global Context:</span> Globalisation &amp; Sustainability</div>
+            <div class="meta-item"><span class="meta-key">IDU Partner:</span> Science</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══════════════════════════════════════
+           UNIT 4 — ART OF MATHS 2
+      ═══════════════════════════════════════ -->
+      <div class="unit-card" id="unit4">
+        <div class="unit-header" onclick="toggleUnit('unit4')">
+          <div class="unit-header-left">
+            <div class="unit-meta">
+              <span class="unit-num">Unit 4</span>
+              <span class="unit-concept">Relationships</span>
+              <span class="stream-badge sb-all">All streams</span>
+            </div>
+            <h3 class="unit-title">Art of Maths 2</h3>
+            <p class="unit-soi">Geometric art can be beautifully represented through both visual and numeric models.</p>
+            <div class="unit-crits">
+              <span class="uc on">A</span>
+              <span class="uc on">B</span>
+              <span class="uc on">C</span>
+              <span class="uc on">D</span>
+            </div>
+          </div>
+          <div class="unit-toggle">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+        </div>
+
+        <div class="unit-body">
+          <div class="stream-tabs">
+            <button class="stab-btn active std" data-tab="std" onclick="switchStreamTab('unit4','std',this)">Standard</button>
+            <button class="stab-btn ext" data-tab="ext" onclick="switchStreamTab('unit4','ext',this)">Extended</button>
+            <button class="stab-btn fur" data-tab="fur" onclick="switchStreamTab('unit4','fur',this)">Further</button>
+          </div>
+
+          <!-- STANDARD -->
+          <div class="stab-panel active" id="unit4-std">
+            <div class="skills-summary">
+              <ul>
+                <li>Identify and analyse quadratic patterns; identify y = x² as a parabola</li>
+                <li>Expand monomials and binomials; factorise using grouping, common factor, identities, and trinomials</li>
+                <li>Solve quadratic equations by factorising when a = 1; solve using the quadratic formula (calculator allowed, no surds required)</li>
+                <li>Draw quadratic graphs; use and apply 6 laws of exponentials (integer exponents)</li>
+                <li>Solve simple exponential equations with prime bases; apply direct and inverse proportionality using a proportionality constant</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit4-std-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit4-std-full">
+              <ul>
+                <li>Review simultaneous linear equations; systems of linear inequalities; parallel and perpendicular lines (carried from Unit 1 if needed)</li>
+                <li>Know and apply properties of integer exponents to generate equivalent numerical expressions</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- EXTENDED -->
+          <div class="stab-panel" id="unit4-ext">
+            <div class="skills-summary">
+              <ul>
+                <li>Identify and analyse quadratic patterns; expand monomials and binomials</li>
+                <li>Factorise polynomials using grouping, common factor, identities, and trinomials</li>
+                <li>Solve quadratic equations by factorising (not completing the square); solve using quadratic formula (with and without technology; simplify surds e.g. √200)</li>
+                <li>Solve graphically; draw quadratic graphs with all intercepts and vertex labelled (x = −b/2a)</li>
+                <li>Apply 6 laws of exponentials (integer exponents); solve exponential equations with prime bases; apply direct and inverse proportionality</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit4-ext-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit4-ext-full">
+              <ul>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Find the nth term rule for a quadratic sequence; solve quadratic equations by completing the square</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- FURTHER -->
+          <div class="stab-panel" id="unit4-fur">
+            <div class="skills-summary">
+              <ul>
+                <li>Apply 6 laws of exponents (including rational exponents); solve exponential equations with prime bases</li>
+                <li>Identify, extend, and generalise a quadratic pattern by finding a constant second difference</li>
+                <li>Expand binomials (by multiplication, not Binomial Theorem); factorise trinomials for any a value</li>
+                <li>Find roots, y-intercepts, vertex, and axis of symmetry; plot quadratic graphs; complete the square to find vertex when a ≠ 1; link transformations to completing the square</li>
+                <li>Recurrence relationships; optimisation problems; apply direct and inverse proportionality using a proportionality constant</li>
+              </ul>
+            </div>
+            <button class="expand-btn" onclick="toggleFull('unit4-fur-full', this)">
+              <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+              Show full skills list
+            </button>
+            <div class="skills-full" id="unit4-fur-full">
+              <ul>
+                <li class="ext-item"><span class="ext-label">Extension</span><br>Generalise the rule for a quadratic sequence from first principles; identify, extend, and generalise a cubic pattern by inspection</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="unit-meta-strip">
+            <div class="meta-item"><span class="meta-key">Related:</span> Representation · Systems · Models</div>
+            <div class="meta-item"><span class="meta-key">Global Context:</span> Personal &amp; Cultural Expression</div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /units-grid -->
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 2 — CRITERIA GUIDE
+  ══════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-criteria">
+    <div class="section-head">
+      <h2>Criteria Guide</h2>
+      <p>What A, B, C, and D actually mean in Grade 8 — with examples from your units, not just rubric language.</p>
+    </div>
+
+    <div class="crit-grid">
+
+      <!-- CRITERION A -->
+      <div class="crit-card">
+        <div class="crit-header">
+          <div class="crit-letter">A</div>
+          <div class="crit-title-block">
+            <span class="crit-name">Knowing &amp; Understanding</span>
+            <span class="crit-subtitle">Select and apply mathematical knowledge</span>
+          </div>
+        </div>
+        <div class="crit-body">
+          <p>This is the <strong>"can you do the maths?"</strong> criterion. In Grade 8, this mostly means solving equations, drawing graphs, applying Pythagoras, and working with quadratics correctly.</p>
+          <p>A correct answer alone isn't enough. You need to show <strong>which method you used and why it works</strong>. A right answer with no working can score 0 on Crit A.</p>
+          <p>Common mark losses: right answer, wrong method shown; arithmetic slip in the final step; using a valid but less efficient approach when a better one was taught.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6">
+            <div class="level-label">Level 5–6</div>
+            Solves familiar problems correctly most of the time. Method is shown but may have gaps. Selects appropriate techniques with some guidance.
+          </div>
+          <div class="level-box l8">
+            <div class="level-label">Level 7–8</div>
+            Solves both familiar and unfamiliar problems with full, clear working. Selects the most efficient method and reflects on whether the solution makes sense.
+          </div>
+        </div>
+      </div>
+
+      <!-- CRITERION B -->
+      <div class="crit-card">
+        <div class="crit-header">
+          <div class="crit-letter">B</div>
+          <div class="crit-title-block">
+            <span class="crit-name">Investigating Patterns</span>
+            <span class="crit-subtitle">Observe, generalise, and justify</span>
+          </div>
+        </div>
+        <div class="crit-body">
+          <p>Crit B is about <strong>mathematical thinking, not just answers</strong>. In Grade 8 this appears in <em>Pack it In</em> (3D pattern generalisation) and <em>Art of Maths 2</em> (quadratic sequences).</p>
+          <p>The key stages: <strong>Notice → Organise → Describe → Generalise → Verify → Justify.</strong> Most students stop at "describe." Level 7–8 requires you to write a general rule and explain <em>why</em> it works for any case, not just check it for three examples.</p>
+          <p>Important: Crit B tasks have <strong>no single right answer</strong>. The quality of your investigation matters more than what pattern you find.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6">
+            <div class="level-label">Level 5–6</div>
+            Identifies a pattern and describes it clearly. Writes a general rule. Tests the rule with at least one new case.
+          </div>
+          <div class="level-box l8">
+            <div class="level-label">Level 7–8</div>
+            Writes a correct general rule, verifies it with cases not used to find the pattern, and provides a mathematical reason for why the rule works (not just "it fits").
+          </div>
+        </div>
+      </div>
+
+      <!-- CRITERION C -->
+      <div class="crit-card">
+        <div class="crit-header">
+          <div class="crit-letter">C</div>
+          <div class="crit-title-block">
+            <span class="crit-name">Communicating</span>
+            <span class="crit-subtitle">Use mathematical language and notation</span>
+          </div>
+        </div>
+        <div class="crit-body">
+          <p>The most underrated criterion. Students drop marks here without understanding why — because the maths was right but the <strong>communication was unclear or incomplete</strong>.</p>
+          <p>In Grade 8, Crit C means: correct notation for equations, graphs fully labelled (axes, scale, intercepts), working written in logical steps, and conclusions written in sentences that connect maths to the situation.</p>
+          <p>Ask yourself: <strong>"Would a classmate who missed this lesson understand my solution?"</strong> If yes, you're probably at Level 6+.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6">
+            <div class="level-label">Level 5–6</div>
+            Uses correct notation most of the time. Graphs are labelled. Working is mostly logical. Conclusions reference the context.
+          </div>
+          <div class="level-box l8">
+            <div class="level-label">Level 7–8</div>
+            Precise notation throughout. All diagrams fully labelled. Working flows logically with clear reasoning at each step. Conclusions are precise and mathematically justified.
+          </div>
+        </div>
+      </div>
+
+      <!-- CRITERION D -->
+      <div class="crit-card">
+        <div class="crit-header">
+          <div class="crit-letter">D</div>
+          <div class="crit-title-block">
+            <span class="crit-name">Applying in Real Life</span>
+            <span class="crit-subtitle">Model real situations mathematically</span>
+          </div>
+        </div>
+        <div class="crit-body">
+          <p>Crit D asks you to move between the real world and mathematics — in both directions. In Grade 8 this appears in <em>Pack it In</em> (3D volumes and real packaging) and <em>Carbon Conundrum</em> (real environmental data).</p>
+          <p>Four stages: <strong>Identify the situation → Build the model → Interpret results → Reflect.</strong> Most students interpret their results but never reflect. <em>Reflection</em> means asking whether your model was accurate, what you assumed, and what the limitations are.</p>
+          <p>"My answer was correct" is not reflection. "I assumed the containers were perfect cylinders, but real cans have seams which would reduce capacity slightly" — that is reflection.</p>
+        </div>
+        <div class="level-compare">
+          <div class="level-box l6">
+            <div class="level-label">Level 5–6</div>
+            Applies appropriate mathematics to the situation. Interprets results in context. Mentions at least one limitation of the approach.
+          </div>
+          <div class="level-box l8">
+            <div class="level-label">Level 7–8</div>
+            Builds a complete model with stated assumptions. Interprets all results precisely in context. Reflects critically on accuracy, limitations, and possible improvements — with specific mathematical reference.
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /crit-grid -->
+  </div>
+
+  <!-- ══════════════════════════════════════
+       TAB 3 — SKILLS BANK
+  ══════════════════════════════════════ -->
+  <div class="tab-panel" id="tab-skills">
+    <div class="section-head">
+      <h2>Skills Bank</h2>
+      <p>Find any skill without knowing which unit it's in. Filter by topic or search by keyword.</p>
+    </div>
+
+    <div class="search-bar">
+      <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+      <input type="text" placeholder="Search skills…" oninput="filterSkills(this.value)" id="skillSearch">
+    </div>
+
+    <div class="skill-filters">
+      <button class="filter-btn active" onclick="filterTopic('all', this)">All topics</button>
+      <button class="filter-btn" onclick="filterTopic('algebra', this)">Algebra</button>
+      <button class="filter-btn" onclick="filterTopic('geometry', this)">Geometry</button>
+      <button class="filter-btn" onclick="filterTopic('statistics', this)">Statistics</button>
+      <button class="filter-btn" onclick="filterTopic('quadratics', this)">Quadratics</button>
+    </div>
+
+    <div class="skills-bank-grid" id="skillsGrid">
+
+      <!-- ─── Algebra ─── -->
+      <div class="skill-card" data-stream="all" data-topic="algebra" data-keywords="linear equation solve rearrange formula">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Algebra</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Solving Linear Equations</h4>
+        <p class="skill-desc">Rearrange and solve equations with unknowns on both sides, including those requiring expansion or factorisation first.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Solve: 3(2x − 1) = 4x + 7<br>
+          → 6x − 3 = 4x + 7 → 2x = 10 → <strong>x = 5</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="algebra" data-keywords="gradient slope intercept equation line">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Algebra</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Equation of a Line</h4>
+        <p class="skill-desc">Find the equation of a line given gradient and y-intercept, or a gradient and a point. Recognise parallel lines by comparing gradients.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Gradient = 2, passes through (1, 5):<br>
+          y − 5 = 2(x − 1) → <strong>y = 2x + 3</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="algebra" data-keywords="simultaneous equations elimination substitution">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Algebra</span>
+          <span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span>
+        </div>
+        <h4>Simultaneous Equations</h4>
+        <p class="skill-desc">Solve pairs of linear equations using elimination, substitution, and graphically. Identify when systems have no solution or infinite solutions.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          2x + y = 8 and x − y = 1<br>
+          Add: 3x = 9 → x = 3, y = 2 → <strong>(3, 2)</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="algebra" data-keywords="inequality number line interval notation">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Algebra</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Linear Inequalities</h4>
+        <p class="skill-desc">Solve inequalities and represent solutions on a number line and in interval notation. Remember: multiplying or dividing by a negative flips the inequality sign.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Solve −2x + 3 &gt; 7<br>
+          → −2x &gt; 4 → <strong>x &lt; −2</strong>  (sign flips!)
+        </div>
+      </div>
+
+      <!-- ─── Geometry ─── -->
+      <div class="skill-card" data-stream="all" data-topic="geometry" data-keywords="pythagoras theorem right angle triangle">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Geometry</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Pythagoras' Theorem</h4>
+        <p class="skill-desc">Find missing sides in right-angled triangles. Also applies to find distance between two points on a coordinate grid using the distance formula.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Legs 3 and 4: c² = 3² + 4² = 25 → <strong>c = 5</strong><br>
+          Distance (1,2) to (4,6): √(9+16) = <strong>5</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="geometry" data-keywords="circle area circumference sector arc">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Geometry</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Circles — Area &amp; Circumference</h4>
+        <p class="skill-desc">Calculate area (πr²) and circumference (2πr) of circles. Extended and Further students also calculate arc lengths and sector areas.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Radius = 5 cm:<br>
+          Area = π(5²) ≈ <strong>78.5 cm²</strong> · Circumference = 2π(5) ≈ <strong>31.4 cm</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="geometry" data-keywords="volume surface area cylinder prism cuboid">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Geometry</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Volume of 3D Solids</h4>
+        <p class="skill-desc">Calculate volume of cuboids, prisms, and cylinders. Further students extend to spheres, cones, and pyramids.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Cylinder r = 3, h = 10:<br>
+          V = π(3²)(10) = 90π ≈ <strong>283 cm³</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="geometry" data-keywords="surds irrational rationalise denominator">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Geometry</span>
+          <span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span>
+        </div>
+        <h4>Surds</h4>
+        <p class="skill-desc">Simplify, add, subtract, multiply, and divide surds. Rationalise denominators. Know that √2 is irrational.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Simplify √50: √(25×2) = <strong>5√2</strong><br>
+          Rationalise 1/√3: × √3/√3 = <strong>√3/3</strong>
+        </div>
+      </div>
+
+      <!-- ─── Statistics ─── -->
+      <div class="skill-card" data-stream="all" data-topic="statistics" data-keywords="mean median IQR quartile outlier box plot">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Statistics</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Measures of Central Tendency &amp; Spread</h4>
+        <p class="skill-desc">Calculate mean, median, mode, and IQR. Draw and interpret box-and-whisker plots. Identify and consider outliers.</p>
+        <div class="skill-example">
+          <div class="ex-label">Key rule</div>
+          Outlier test: value &lt; Q1 − 1.5×IQR or &gt; Q3 + 1.5×IQR<br>
+          IQR = Q3 − Q1
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="statistics" data-keywords="scatter plot correlation regression line of best fit">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Statistics</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Scatter Plots &amp; Correlation</h4>
+        <p class="skill-desc">Draw and describe scatter graphs. Identify direction and strength of correlation. Draw a line of best fit; use it to interpolate and extrapolate.</p>
+        <div class="skill-example">
+          <div class="ex-label">Key language</div>
+          Strong positive · Weak negative · No correlation<br>
+          Interpolation = within data range · Extrapolation = outside it
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="ext" data-topic="statistics" data-keywords="pearson correlation coefficient regression technology">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Statistics</span>
+          <span class="stream-badge sb-ext" style="font-size:.55rem">Extended+</span>
+        </div>
+        <h4>Pearson's Correlation Coefficient</h4>
+        <p class="skill-desc">Use technology (GDC or Google Sheets) to calculate r. Interpret r: values close to ±1 indicate strong correlation, close to 0 indicate weak or no correlation.</p>
+        <div class="skill-example">
+          <div class="ex-label">Interpreting r</div>
+          r = 0.92 → strong positive correlation<br>
+          r = −0.15 → very weak negative correlation
+        </div>
+      </div>
+
+      <!-- ─── Quadratics ─── -->
+      <div class="skill-card" data-stream="all" data-topic="quadratics" data-keywords="expand binomial factorise quadratic expression">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Quadratics</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Expanding &amp; Factorising</h4>
+        <p class="skill-desc">Expand single and double brackets. Factorise using common factor, difference of two squares, and trinomials. Standard works with a = 1; Extended and Further work with any value of a.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          Expand: (2x+3)(x−4) = <strong>2x²−5x−12</strong><br>
+          Factorise: x²+5x+6 = <strong>(x+2)(x+3)</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="quadratics" data-keywords="quadratic formula solve equation roots">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Quadratics</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Quadratic Formula</h4>
+        <p class="skill-desc">Solve any quadratic equation using x = (−b ± √(b²−4ac)) / 2a. Standard uses a calculator; Extended and Further simplify surds in the answer.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          x²+5x+3 = 0 → x = (−5 ± √13) / 2<br>
+          ≈ <strong>−0.70 or −4.30</strong>
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="all" data-topic="quadratics" data-keywords="parabola vertex intercept graph quadratic">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Quadratics</span>
+          <span class="stream-badge sb-all" style="font-size:.55rem">All streams</span>
+        </div>
+        <h4>Sketching Quadratic Graphs</h4>
+        <p class="skill-desc">Draw a parabola by finding x-intercepts, y-intercept, and vertex. Vertex x-coordinate: x = −b/2a. Label all key points clearly.</p>
+        <div class="skill-example">
+          <div class="ex-label">Key steps</div>
+          1. y-intercept: set x = 0<br>
+          2. x-intercepts: factorise or use formula<br>
+          3. Vertex: x = −b/2a, then find y
+        </div>
+      </div>
+
+      <div class="skill-card" data-stream="fur" data-topic="quadratics" data-keywords="complete the square vertex form quadratic">
+        <div class="skill-card-meta">
+          <span class="skill-topic">Quadratics</span>
+          <span class="stream-badge sb-fur" style="font-size:.55rem">Further</span>
+        </div>
+        <h4>Completing the Square</h4>
+        <p class="skill-desc">Rewrite ax²+bx+c in the form a(x+h)²+k to find the vertex directly. Links to vertical and horizontal transformations of the parabola.</p>
+        <div class="skill-example">
+          <div class="ex-label">Worked example</div>
+          x²+6x+5 = (x+3)²−4<br>
+          → Vertex at <strong>(−3, −4)</strong>
+        </div>
+      </div>
+
+    </div><!-- /skills-bank-grid -->
+  </div>
+
+</main>
+
+<script>
+/* ═══════════════════════════════════════════
+   STREAM MANAGEMENT
+═══════════════════════════════════════════ */
+function setStream(s) {
+  document.body.setAttribute('data-stream', s);
+  localStorage.setItem('g8stream', s);
+
+  // update picker buttons
+  document.querySelectorAll('.sp-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.stream === s);
+  });
+
+  // for each open unit, activate the correct stream tab
+  document.querySelectorAll('.unit-card').forEach(card => {
+    const unitId = card.id;
+    if (s !== 'all') {
+      // auto-switch internal stream tabs to match
+      const targetBtn = card.querySelector(`.stab-btn[data-tab="${s}"]`);
+      if (targetBtn) activateStreamTab(unitId, s, targetBtn);
+    }
+  });
+}
+
+function activateStreamTab(unitId, stream, btn) {
+  const card = document.getElementById(unitId);
+  card.querySelectorAll('.stab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.stab-panel').forEach(p => p.classList.remove('active'));
+  if (btn) {
+    btn.classList.add('active');
+    const panel = document.getElementById(`${unitId}-${stream}`);
+    if (panel) panel.classList.add('active');
+  }
+}
+
+function switchStreamTab(unitId, stream, btn) {
+  const card = document.getElementById(unitId);
+  card.querySelectorAll('.stab-btn').forEach(b => b.classList.remove('active'));
+  card.querySelectorAll('.stab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  const panel = document.getElementById(`${unitId}-${stream}`);
+  if (panel) panel.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   UNIT ACCORDION
+═══════════════════════════════════════════ */
+function toggleUnit(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+/* ═══════════════════════════════════════════
+   EXPAND FULL SKILLS LIST
+═══════════════════════════════════════════ */
+function toggleFull(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.childNodes[1].textContent = ' ' + (open ? 'Show less' : 'Show full skills list');
+}
+
+/* ═══════════════════════════════════════════
+   MAIN TAB SWITCHER
+═══════════════════════════════════════════ */
+function switchTab(name) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+
+/* ═══════════════════════════════════════════
+   SKILLS BANK — SEARCH & FILTER
+═══════════════════════════════════════════ */
+let activeTopicFilter = 'all';
+
+function filterSkills(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const kw = (card.dataset.keywords + ' ' + card.textContent).toLowerCase();
+    const topicMatch = activeTopicFilter === 'all' || card.dataset.topic === activeTopicFilter;
+    const streamOk = !card.classList.contains('skill-hidden');
+    card.style.display = (kw.includes(q) && topicMatch) ? '' : 'none';
+  });
+}
+
+function filterTopic(topic, btn) {
+  activeTopicFilter = topic;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const q = document.getElementById('skillSearch').value.toLowerCase();
+  filterSkills(q);
+}
+
+/* ═══════════════════════════════════════════
+   ON LOAD — restore stream choice
+═══════════════════════════════════════════ */
+window.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('g8stream');
+  if (saved) setStream(saved);
+});
+</script>
+</body>
+</html>

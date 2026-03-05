@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ISHCMC Mathematics Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --g6:#F4A0A8; --g7:#F7C27A; --g8:#EFE07A; --g9:#88D9A0; --g10:#7EC8F0;
+  --dp-applied:#5B8FD4;
+  --dp-ai-sl:#1A56A0; --dp-aa-sl:#1565C0; --dp-ai-hl:#0D47A1; --dp-aa-hl:#0A2F6B;
+  --ink:#111318; --ink-soft:#4A4F5E; --surface:#F0F6FF; --rule:#D4E4F7; --white:#FFFFFF;
+  --fd:'DM Serif Display',Georgia,serif; --fb:'DM Sans',sans-serif; --fm:'JetBrains Mono',monospace;
+  --r:16px; --sh:0 2px 12px rgba(0,0,0,.07),0 1px 3px rgba(0,0,0,.05);
+  --shh:0 8px 32px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.06);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:rgba(240,246,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);padding:0 clamp(1.5rem,5vw,4rem)}
+.hi{max-width:1200px;margin:0 auto;height:64px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:12px;text-decoration:none}
+.lm{width:36px;height:36px;border-radius:8px;background:var(--ink);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.lt{display:flex;flex-direction:column;line-height:1.1}
+.ls{font-family:var(--fm);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+.ln{font-family:var(--fd);font-size:1.05rem;color:var(--ink)}
+nav{display:flex;gap:2rem;align-items:center}
+nav a{font-size:.875rem;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .2s}
+nav a:hover{color:var(--ink)}
+
+/* HERO */
+.hero{max-width:1200px;margin:0 auto;padding:clamp(4rem,8vw,8rem) clamp(1.5rem,5vw,4rem) clamp(3rem,5vw,5rem);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+@media(max-width:768px){.hero{grid-template-columns:1fr;gap:2rem}.hv{display:none!important}}
+.hey{font-family:var(--fm);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:1rem}
+.ht{font-family:var(--fd);font-size:clamp(2.4rem,5vw,3.8rem);line-height:1.08;color:var(--ink);margin-bottom:1.5rem}
+.ht em{font-style:italic;color:var(--ink-soft)}
+.hb{font-size:1.05rem;color:var(--ink-soft);max-width:44ch;line-height:1.7;margin-bottom:2rem}
+.hcta{display:inline-flex;align-items:center;gap:8px;background:var(--ink);color:var(--white);padding:.75rem 1.5rem;border-radius:40px;font-size:.9rem;font-weight:500;text-decoration:none;transition:transform .2s,box-shadow .2s}
+.hcta:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(0,0,0,.2)}
+.hstats{display:flex;gap:2rem;margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--rule)}
+.stat{display:flex;flex-direction:column;gap:2px}
+.sn{font-family:var(--fd);font-size:1.8rem;line-height:1}
+.sl{font-size:.75rem;color:var(--ink-soft);font-weight:500}
+
+/* Spectrum bar */
+.hv{display:flex;flex-direction:column;gap:10px}
+.sbar{display:flex;border-radius:12px;overflow:hidden;height:48px;box-shadow:var(--sh)}
+.sbar .seg{flex:1;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.6rem;font-weight:500;letter-spacing:.05em;color:var(--ink);opacity:.85;transition:flex .3s,opacity .2s;cursor:default}
+.sbar .seg:hover{flex:2;opacity:1}
+.sbar .seg.dp{color:white}
+.plabel{font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;padding:0 4px}
+.pway{background:white;border:1px solid var(--rule);border-radius:10px;padding:1rem;font-size:.8rem}
+.pway-eye{font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;opacity:.5;margin-bottom:.35rem;text-transform:uppercase}
+.pway-row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ptag{border-radius:4px;padding:2px 8px;font-size:.72rem;font-weight:500}
+.ptag-g10{background:var(--g10)}
+.ptag-applied{background:var(--dp-applied);color:white}
+.ptag-ai-sl{background:var(--dp-ai-sl);color:white}
+.ptag-aa-sl{background:var(--dp-aa-sl);color:white}
+.ptag-ai-hl{background:var(--dp-ai-hl);color:white}
+.ptag-aa-hl{background:var(--dp-aa-hl);color:white}
+.sep{color:var(--ink-soft)}
+
+/* SECTION */
+.sh{max-width:1200px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);display:flex;align-items:baseline;gap:1rem;margin-bottom:2rem}
+.stitle{font-family:var(--fd);font-size:1.6rem}
+.stag{font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);padding:3px 8px;border:1px solid var(--rule);border-radius:20px}
+.gs{max-width:1200px;margin:0 auto;padding:0 clamp(1.5rem,5vw,4rem);margin-bottom:5rem}
+
+/* MYP GRID */
+.myp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:1.25rem}
+
+/* PORTAL CARD */
+.pc{background:var(--white);border-radius:var(--r);border:1px solid var(--rule);overflow:hidden;box-shadow:var(--sh);text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s;cursor:pointer}
+.pc:hover{transform:translateY(-4px);box-shadow:var(--shh)}
+.stripe{height:6px;width:100%}
+.cb{padding:1.5rem;flex:1;display:flex;flex-direction:column}
+.cmeta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem}
+.cgrade{font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+.cstreams{display:flex;gap:4px}
+.spip{font-family:var(--fm);font-size:.55rem;letter-spacing:.05em;padding:2px 6px;border-radius:20px;border:1px solid currentColor;opacity:.6}
+.pip-g8{color:#9a8a00} .pip-g9{color:#1a7a3a} .pip-g10{color:#0a4a8a}
+.ctitle{font-family:var(--fd);font-size:1.3rem;line-height:1.2;margin-bottom:.5rem;color:var(--ink)}
+.cdesc{font-size:.82rem;color:var(--ink-soft);line-height:1.55;flex:1;margin-bottom:1rem}
+.cunits{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:1.25rem}
+.uchip{font-size:.7rem;font-weight:500;padding:3px 10px;border-radius:20px;background:var(--surface);border:1px solid var(--rule);color:var(--ink-soft);white-space:nowrap}
+.cf{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px solid var(--rule)}
+.crits{display:flex;gap:4px}
+.cb2{width:22px;height:22px;border-radius:50%;background:var(--surface);border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.6rem;font-weight:500;color:var(--ink-soft)}
+.cb2.on{background:var(--ink);border-color:var(--ink);color:white}
+.carr{width:28px;height:28px;border-radius:50%;border:1px solid var(--rule);display:flex;align-items:center;justify-content:center;color:var(--ink-soft);transition:background .2s,color .2s,transform .2s}
+.pc:hover .carr{background:var(--ink);color:white;border-color:var(--ink);transform:rotate(45deg)}
+
+/* DP GRID */
+.dp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1.25rem}
+@media(max-width:1100px){.dp-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:700px){.dp-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.dp-grid{grid-template-columns:1fr}}
+.dpc{border-radius:var(--r);overflow:hidden;box-shadow:var(--sh);text-decoration:none;color:white;display:flex;flex-direction:column;transition:transform .22s,box-shadow .22s;cursor:pointer;min-height:200px}
+.dpc:hover{transform:translateY(-4px);box-shadow:var(--shh)}
+.dpi{flex:1;padding:1.5rem;display:flex;flex-direction:column;justify-content:space-between;position:relative;overflow:hidden}
+.dpi::before{content:'';position:absolute;top:-30px;right:-30px;width:100px;height:100px;border-radius:50%;background:rgba(255,255,255,.06);pointer-events:none}
+.dpi::after{content:'';position:absolute;bottom:-20px;left:-20px;width:70px;height:70px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none}
+.dpe{font-family:var(--fm);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6;margin-bottom:.5rem}
+.dpt{font-family:var(--fd);font-size:1.4rem;line-height:1.15}
+.dpd{font-size:.78rem;opacity:.7;line-height:1.5;margin-top:.75rem}
+.dpf{display:flex;align-items:center;justify-content:space-between;margin-top:1.5rem}
+.dptop{font-family:var(--fm);font-size:.6rem;opacity:.55;letter-spacing:.06em}
+.dparr{width:26px;height:26px;border-radius:50%;border:1px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+.dpc:hover .dparr{background:rgba(255,255,255,.15);transform:rotate(45deg)}
+
+/* DIVIDER */
+.sdiv{max-width:1200px;margin:0 auto 4rem;padding:0 clamp(1.5rem,5vw,4rem);display:flex;align-items:center;gap:1rem}
+.dline{flex:1;height:1px;background:var(--rule)}
+.dlabel{font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* HOW IT WORKS */
+.how{background:var(--ink);color:white;padding:clamp(3rem,6vw,6rem) clamp(1.5rem,5vw,4rem);margin-bottom:5rem}
+.how-in{max-width:1200px;margin:0 auto}
+.how-t{font-family:var(--fd);font-size:clamp(1.6rem,3vw,2.2rem);margin-bottom:.5rem}
+.how-s{font-size:.9rem;opacity:.5;margin-bottom:3rem}
+.how-g{display:grid;grid-template-columns:repeat(4,1fr);gap:2rem}
+@media(max-width:800px){.how-g{grid-template-columns:repeat(2,1fr)}}
+.hwi{display:flex;flex-direction:column;gap:.75rem}
+.hwn{font-family:var(--fm);font-size:.65rem;opacity:.35;letter-spacing:.1em}
+.hwt{font-family:var(--fd);font-size:1.1rem;line-height:1.2}
+.hwd{font-size:.82rem;opacity:.55;line-height:1.6}
+
+/* FOOTER */
+footer{max-width:1200px;margin:0 auto;padding:2rem clamp(1.5rem,5vw,4rem) 3rem;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--rule);gap:1rem;flex-wrap:wrap}
+.fl{font-size:.8rem;color:var(--ink-soft)}
+.fr{font-family:var(--fm);font-size:.65rem;color:var(--ink-soft);opacity:.5;letter-spacing:.08em}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fu{animation:fadeUp .6s ease both}
+.pc,.dpc{animation:fadeUp .5s ease both}
+.myp-grid .pc:nth-child(1){animation-delay:.05s}
+.myp-grid .pc:nth-child(2){animation-delay:.10s}
+.myp-grid .pc:nth-child(3){animation-delay:.15s}
+.myp-grid .pc:nth-child(4){animation-delay:.20s}
+.myp-grid .pc:nth-child(5){animation-delay:.25s}
+.dp-grid .dpc:nth-child(1){animation-delay:.10s}
+.dp-grid .dpc:nth-child(2){animation-delay:.17s}
+.dp-grid .dpc:nth-child(3){animation-delay:.24s}
+.dp-grid .dpc:nth-child(4){animation-delay:.31s}
+.dp-grid .dpc:nth-child(5){animation-delay:.38s}
+
+/* colour helpers */
+.bg-g6{background:var(--g6)} .bg-g7{background:var(--g7)} .bg-g8{background:var(--g8)}
+.bg-g9{background:var(--g9)} .bg-g10{background:var(--g10)}
+.bg-applied{background:var(--dp-applied)}
+.bg-ai-sl{background:var(--dp-ai-sl)} .bg-aa-sl{background:var(--dp-aa-sl)}
+.bg-ai-hl{background:var(--dp-ai-hl)} .bg-aa-hl{background:var(--dp-aa-hl)}
+
+/* arrow svg inline */
+.arrsm{width:12px;height:12px;display:block}
+.arrsm-dp{width:10px;height:10px;display:block}
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:radial-gradient(ellipse 80% 60% at 15% 10%,rgba(26,86,160,.10) 0%,transparent 60%),radial-gradient(ellipse 60% 50% at 85% 80%,rgba(26,86,160,.08) 0%,transparent 60%),radial-gradient(ellipse 40% 40% at 50% 50%,rgba(255,255,255,.95) 0%,transparent 100%);backdrop-filter:blur(0px)}
+
+.hero{position:relative;overflow:visible}
+
+.stream-picker{position:relative;overflow:hidden}
+
+
+body::after{
+  content:'';
+  position:fixed;
+  inset:0;
+  z-index:-1;
+  background:url('rhino.png') center/cover no-repeat;
+  opacity:0.18;
+  pointer-events:none;
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hi">
+    <a href="#" class="logo">
+      <div class="lm">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <path d="M3 10L8 5L13 10L18 5" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M3 15L8 10L13 15L18 10" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.5"/>
+        </svg>
+      </div>
+      <div class="lt">
+        <span class="ls">ISHCMC · 2025–26</span>
+        <span class="ln">Mathematics Hub</span>
+      </div>
+    </a>
+    <nav>
+      <a href="#myp">MYP</a>
+      <a href="#dp">DP</a>
+      <a href="ia-guide.html" style="display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:white;padding:.4rem .95rem;border-radius:20px;font-size:.8rem;font-weight:500;text-decoration:none;transition:opacity .2s" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+        IA Guide
+        <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section>
+  <div class="hero">
+    <div class="fu">
+      <p class="hey">ISHCMC · Mathematics Department</p>
+      <h1 class="ht">Your mathematics<br><em>journey, mapped.</em></h1>
+      <p class="hb">From Grade 6 patterns to DP calculus. Find your course, explore your units, understand what's expected — and see where it's all heading.</p>
+      <a href="#myp" class="hcta">
+        Find my course
+        <svg class="arrsm" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <div class="hstats">
+        <div class="stat"><span class="sn">10</span><span class="sl">Course portals</span></div>
+        <div class="stat"><span class="sn">5</span><span class="sl">MYP grades</span></div>
+        <div class="stat"><span class="sn">5</span><span class="sl">DP pathways</span></div>
+      </div>
+    </div>
+
+    <!-- Spectrum visual -->
+    <div class="hv fu" style="animation-delay:.15s;display:flex;flex-direction:column;gap:10px">
+      <div class="sbar">
+        <div class="seg bg-g6">G6</div>
+        <div class="seg bg-g7">G7</div>
+        <div class="seg bg-g8">G8</div>
+        <div class="seg bg-g9">G9</div>
+        <div class="seg bg-g10">G10</div>
+        <div class="seg bg-applied dp" style="font-size:.52rem">App</div>
+        <div class="seg bg-ai-sl dp" style="font-size:.52rem">AI SL</div>
+        <div class="seg bg-aa-sl dp" style="font-size:.52rem">AA SL</div>
+        <div class="seg bg-ai-hl dp" style="font-size:.52rem">AI HL</div>
+        <div class="seg bg-aa-hl dp" style="font-size:.52rem">AA HL</div>
+      </div>
+      <div class="plabel"><span>Grade 6</span><span>Your pathway →</span><span>IB Diploma</span></div>
+
+      <div style="display:flex;flex-direction:column;gap:8px;margin-top:1rem">
+        <div class="pway">
+          <div class="pway-eye">Typical pathway A</div>
+          <div class="pway-row">
+            <span class="ptag ptag-g10">G10 Standard</span>
+            <span class="sep">→</span>
+            <span class="ptag ptag-applied">Applied Maths</span>
+            <span class="sep" style="font-size:.75rem">or</span>
+            <span class="ptag ptag-ai-sl">Math AI SL</span>
+          </div>
+        </div>
+        <div class="pway">
+          <div class="pway-eye">Typical pathway B</div>
+          <div class="pway-row">
+            <span class="ptag ptag-g10">G10 Extended</span>
+            <span class="sep">→</span>
+            <span class="ptag ptag-aa-sl">Math AA SL</span>
+            <span class="sep" style="font-size:.75rem">or</span>
+            <span class="ptag ptag-ai-sl">Math AI SL</span>
+          </div>
+        </div>
+        <div class="pway">
+          <div class="pway-eye">Typical pathway C</div>
+          <div class="pway-row">
+            <span class="ptag ptag-g10">G10 Further</span>
+            <span class="sep">→</span>
+            <span class="ptag ptag-aa-hl">Math AA HL</span>
+            <span class="sep" style="font-size:.75rem">or</span>
+            <span class="ptag ptag-ai-hl">Math AI HL</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MYP PORTALS -->
+<section id="myp">
+  <div class="sh">
+    <h2 class="stitle">MYP Courses</h2>
+    <span class="stag">Grades 6 – 10</span>
+  </div>
+  <div class="gs">
+    <div class="myp-grid">
+
+      <!-- Grade 6 -->
+      <a href="grade6.html" class="pc">
+        <div class="stripe bg-g6"></div>
+        <div class="cb">
+          <div class="cmeta"><span class="cgrade">Grade 6</span></div>
+          <h3 class="ctitle">Grade 6 Mathematics</h3>
+          <p class="cdesc">Patterns in numbers, geometry, data, and fractions. Building the foundations of mathematical thinking.</p>
+          <div class="cunits">
+            <span class="uchip">How to Think Mathematically</span>
+            <span class="uchip">Designing a Park</span>
+            <span class="uchip">Managing the Roads</span>
+            <span class="uchip">Equity for All</span>
+          </div>
+          <div class="cf">
+            <div class="crits">
+              <span class="cb2 on">A</span><span class="cb2 on">B</span><span class="cb2 on">C</span><span class="cb2 on">D</span>
+            </div>
+            <div class="carr">
+              <svg class="arrsm" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Grade 7 -->
+      <a href="grade7.html" class="pc">
+        <div class="stripe bg-g7"></div>
+        <div class="cb">
+          <div class="cmeta"><span class="cgrade">Grade 7</span></div>
+          <h3 class="ctitle">Grade 7 Mathematics</h3>
+          <p class="cdesc">Ratios, algebra, Venn diagrams, geometry, and transformations. Connecting mathematics to real decisions.</p>
+          <div class="cunits">
+            <span class="uchip">More Money More Problems</span>
+            <span class="uchip">Let's Be Logical</span>
+            <span class="uchip">Social Entrepreneurs</span>
+            <span class="uchip">Sound Structures</span>
+          </div>
+          <div class="cf">
+            <div class="crits">
+              <span class="cb2 on">A</span><span class="cb2 on">B</span><span class="cb2 on">C</span><span class="cb2 on">D</span>
+            </div>
+            <div class="carr">
+              <svg class="arrsm" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Grade 8 -->
+      <a href="grade8.html" class="pc">
+        <div class="stripe bg-g8"></div>
+        <div class="cb">
+          <div class="cmeta">
+            <span class="cgrade">Grade 8</span>
+            <div class="cstreams">
+              <span class="spip pip-g8">Std</span>
+              <span class="spip pip-g8">Ext</span>
+              <span class="spip pip-g8">Fur</span>
+            </div>
+          </div>
+          <h3 class="ctitle">Grade 8 Mathematics</h3>
+          <p class="cdesc">Linear and quadratic algebra, Pythagoras, statistics, and geometry — across three streams. Includes the Carbon Conundrum IDU with Science.</p>
+          <div class="cunits">
+            <span class="uchip">Art of Maths 1</span>
+            <span class="uchip">Pack it In</span>
+            <span class="uchip">Carbon Conundrum</span>
+            <span class="uchip">Art of Maths 2</span>
+          </div>
+          <div class="cf">
+            <div class="crits">
+              <span class="cb2 on">A</span><span class="cb2 on">B</span><span class="cb2 on">C</span><span class="cb2 on">D</span>
+            </div>
+            <div class="carr">
+              <svg class="arrsm" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Grade 9 -->
+      <a href="grade9.html" class="pc">
+        <div class="stripe bg-g9"></div>
+        <div class="cb">
+          <div class="cmeta">
+            <span class="cgrade">Grade 9</span>
+            <div class="cstreams">
+              <span class="spip pip-g9">Std</span>
+              <span class="spip pip-g9">Ext</span>
+              <span class="spip pip-g9">Fur</span>
+            </div>
+          </div>
+          <h3 class="ctitle">Grade 9 Mathematics</h3>
+          <p class="cdesc">Quadratics, trigonometry, probability, and geometric proof. The year mathematical reasoning becomes essential.</p>
+          <div class="cunits">
+            <span class="uchip">The Shape of U</span>
+            <span class="uchip">Get Triggy With It</span>
+            <span class="uchip">What Are the Chances?</span>
+            <span class="uchip">We Like to Argue</span>
+          </div>
+          <div class="cf">
+            <div class="crits">
+              <span class="cb2 on">A</span><span class="cb2 on">B</span><span class="cb2 on">C</span><span class="cb2 on">D</span>
+            </div>
+            <div class="carr">
+              <svg class="arrsm" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Grade 10 -->
+      <a href="grade10.html" class="pc">
+        <div class="stripe bg-g10"></div>
+        <div class="cb">
+          <div class="cmeta">
+            <span class="cgrade">Grade 10</span>
+            <div class="cstreams">
+              <span class="spip pip-g10">Std</span>
+              <span class="spip pip-g10">Ext</span>
+              <span class="spip pip-g10">Fur</span>
+            </div>
+          </div>
+          <h3 class="ctitle">Grade 10 Mathematics</h3>
+          <p class="cdesc">Sequences, functions, statistics, and trigonometry. The final MYP year — and your bridge into the IB Diploma.</p>
+          <div class="cunits">
+            <span class="uchip">Finance Matters</span>
+            <span class="uchip">Functional Relationships</span>
+            <span class="uchip">Lies, Damned Lies…</span>
+            <span class="uchip">Triangles, Circles &amp; Periodicity</span>
+          </div>
+          <div class="cf">
+            <div class="crits">
+              <span class="cb2 on">A</span><span class="cb2 on">B</span><span class="cb2 on">C</span><span class="cb2 on">D</span>
+            </div>
+            <div class="carr">
+              <svg class="arrsm" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M7 2l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="sdiv">
+  <div class="dline"></div>
+  <span class="dlabel">IB Diploma Programme</span>
+  <div class="dline"></div>
+</div>
+
+<!-- DP PORTALS -->
+<section id="dp">
+  <div class="sh">
+    <h2 class="stitle">DP Courses</h2>
+    <span class="stag">Years 11 – 12 · 5 courses</span>
+  </div>
+  <div class="gs">
+    <div class="dp-grid">
+
+      <a href="dp-applied.html" class="dpc bg-applied">
+        <div class="dpi">
+          <div>
+            <p class="dpe">ISHCMC Applied Mathematics</p>
+            <h3 class="dpt">Applied<br>Mathematics</h3>
+            <p class="dpd">Foundational and practical mathematics for real-world problem solving. Non-IB pathway for confident, capable mathematicians.</p>
+          </div>
+          <div class="dpf">
+            <span class="dptop">ISHCMC course · non-IB</span>
+            <div class="dparr">
+              <svg class="arrsm-dp" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a href="dp-ai-sl.html" class="dpc bg-ai-sl">
+        <div class="dpi">
+          <div>
+            <p class="dpe">Applications &amp; Interpretation</p>
+            <h3 class="dpt">Math AI<br>Standard Level</h3>
+            <p class="dpd">Statistics, modelling, financial mathematics, and technology-driven problem solving.</p>
+          </div>
+          <div class="dpf">
+            <span class="dptop">5 topics · Paper 1 + 2</span>
+            <div class="dparr">
+              <svg class="arrsm-dp" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a href="dp-aa-sl.html" class="dpc bg-aa-sl">
+        <div class="dpi">
+          <div>
+            <p class="dpe">Analysis &amp; Approaches</p>
+            <h3 class="dpt">Math AA<br>Standard Level</h3>
+            <p class="dpd">Functions, algebra, trigonometry, calculus, and statistics with a focus on proof.</p>
+          </div>
+          <div class="dpf">
+            <span class="dptop">5 topics · Paper 1 + 2</span>
+            <div class="dparr">
+              <svg class="arrsm-dp" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a href="dp-ai-hl.html" class="dpc bg-ai-hl">
+        <div class="dpi">
+          <div>
+            <p class="dpe">Applications &amp; Interpretation</p>
+            <h3 class="dpt">Math AI<br>Higher Level</h3>
+            <p class="dpd">Extended statistical inference, complex modelling, graph theory, and calculus applications.</p>
+          </div>
+          <div class="dpf">
+            <span class="dptop">5 topics + HL ext · Paper 1 + 2 + 3</span>
+            <div class="dparr">
+              <svg class="arrsm-dp" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <a href="dp-aa-hl.html" class="dpc bg-aa-hl">
+        <div class="dpi">
+          <div>
+            <p class="dpe">Analysis &amp; Approaches</p>
+            <h3 class="dpt">Math AA<br>Higher Level</h3>
+            <p class="dpd">The most rigorous IB mathematics course. Proof, complex numbers, vectors, differential equations.</p>
+          </div>
+          <div class="dpf">
+            <span class="dptop">5 topics + HL ext · Paper 1 + 2 + 3</span>
+            <div class="dparr">
+              <svg class="arrsm-dp" viewBox="0 0 10 10" fill="none"><path d="M1.5 5h7M5 1.5L8.5 5 5 8.5" stroke="white" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="how">
+  <div class="how-in">
+    <h2 class="how-t">What's inside each portal</h2>
+    <p class="how-s">Every course portal has the same four sections.</p>
+    <div class="how-g">
+      <div class="hwi">
+        <span class="hwn">01</span>
+        <span class="hwt">Units</span>
+        <p class="hwd">Every unit for your course and stream. Skills lists, investigation scaffolds, and real-life task frames — tied to your actual unit names.</p>
+      </div>
+      <div class="hwi">
+        <span class="hwn">02</span>
+        <span class="hwt">Criteria Guide</span>
+        <p class="hwd">What A, B, C, and D actually mean in practice. Level 6 vs Level 8 shown with annotated examples, not just rubric language.</p>
+      </div>
+      <div class="hwi">
+        <span class="hwn">03</span>
+        <span class="hwt">Skills Bank</span>
+        <p class="hwd">Searchable skill cards — one concept, one worked example, one practice question. Find any skill without knowing which unit it lives in.</p>
+      </div>
+      <div class="hwi">
+        <span class="hwn">04</span>
+        <span class="hwt">DP Bridge</span>
+        <p class="hwd">Grade 9–10 only. Shows exactly how your MYP units connect to DP topics — and how Criterion D has been preparing you for the IA since Grade 7.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IA GUIDE BANNER -->
+<section style="padding:0 clamp(1.5rem,5vw,4rem) 4rem">
+  <div style="max-width:1200px;margin:0 auto">
+    <a href="ia-guide.html" style="display:flex;align-items:center;justify-content:space-between;gap:2rem;background:var(--ink);border-radius:16px;padding:2rem 2.5rem;text-decoration:none;color:white;transition:transform .2s,box-shadow .2s;box-shadow:0 4px 24px rgba(0,0,0,.12);flex-wrap:wrap" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 40px rgba(0,0,0,.18)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 24px rgba(0,0,0,.12)'">
+      <div style="flex:1;min-width:200px">
+        <p style="font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;opacity:.4;margin-bottom:.5rem">DP Internal Assessment</p>
+        <h3 style="font-family:'DM Serif Display',Georgia,serif;font-size:clamp(1.3rem,3vw,1.8rem);line-height:1.1;margin-bottom:.4rem">IA Guide — Score 17–20</h3>
+        <p style="font-size:.85rem;opacity:.55;max-width:48ch;line-height:1.6">All five criteria explained. What separates a 14 from a 20. Topic-finding, the iterative process, and a full submission checklist.</p>
+      </div>
+      <div style="display:flex;align-items:center;gap:1rem;flex-shrink:0">
+        <div style="display:flex;gap:.4rem">
+          <span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;color:rgba(255,255,255,.6)">A · 4</span>
+          <span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;color:rgba(255,255,255,.6)">B · 4</span>
+          <span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;color:rgba(255,255,255,.6)">C · 3</span>
+          <span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;color:rgba(255,255,255,.6)">D · 3</span>
+          <span style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:20px;font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;color:rgba(255,255,255,.6)">E · 6</span>
+        </div>
+        <div style="width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M7 2l5 5-5 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="fl">ISHCMC Mathematics Department · 2025–26</div>
+  <div class="fr">ISHCMC-MATH-HUB · v1.0</div>
+</footer>
+
+</body>
+</html>
