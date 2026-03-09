@@ -1,0 +1,950 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Criterion B — Pattern & Justification Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#0D1117; --ink-soft:#3D4450; --ink-muted:#7A8294;
+  --surface:#EBF2FA; --white:#FFFFFF; --rule:#C8DDEF;
+  --accent:#1A3A5C; --accent-light:#D4E8F7;
+  --gold:#B5860C; --gold-light:#FEF9E7;
+  --green:#166534; --green-light:#DCFCE7;
+  --red:#991B1B; --red-light:#FEE2E2;
+  --amber:#92400E; --amber-light:#FEF3C7;
+  --fd:'Fraunces',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:12px; --sh:0 2px 16px rgba(0,0,0,.07); --shh:0 8px 32px rgba(0,0,0,.12);
+  --max:1060px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+
+/* ══ HEADER ══ */
+header{position:sticky;top:0;z-index:300;background:rgba(235,242,250,.96);backdrop-filter:blur(14px);border-bottom:1px solid var(--rule)}
+.hi{max-width:var(--max);margin:0 auto;height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,2.5rem)}
+.back{display:flex;align-items:center;gap:7px;text-decoration:none;color:var(--ink-muted);font-size:.82rem;font-weight:500;transition:color .2s}
+.back:hover{color:var(--ink)}
+.h-badge{font-family:var(--fm);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-muted);display:flex;align-items:center;gap:8px}
+.h-dot{width:7px;height:7px;border-radius:50%;background:var(--accent)}
+
+/* ══ HERO ══ */
+.hero{padding:4rem clamp(1rem,4vw,2.5rem) 3rem;max-width:var(--max);margin:0 auto}
+.hero-kicker{font-family:var(--fm);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+.hero-kicker::before{content:'';display:inline-block;width:24px;height:2px;background:var(--accent)}
+.hero h1{font-family:var(--fd);font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;font-weight:700;margin-bottom:1rem;letter-spacing:-.02em}
+.hero h1 em{font-style:italic;font-weight:300;color:var(--accent)}
+.hero-sub{font-size:.95rem;color:var(--ink-soft);max-width:50ch;line-height:1.75;margin-bottom:2.5rem}
+
+/* ══ FOUR STEPS STRIP ══ */
+.steps-strip{background:var(--ink);color:white;padding:2rem clamp(1rem,4vw,2.5rem)}
+.steps-inner{max-width:var(--max);margin:0 auto}
+.steps-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;opacity:.4;margin-bottom:1.25rem}
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.08);border-radius:10px;overflow:hidden}
+.step{padding:1.25rem 1.1rem;background:var(--ink);cursor:pointer;transition:background .2s;position:relative}
+.step:hover{background:#1a2332}
+.step.active{background:#1A3A5C}
+.step-num{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;opacity:.4;margin-bottom:.5rem}
+.step-verb{font-family:var(--fd);font-size:1.15rem;font-weight:600;margin-bottom:.3rem;line-height:1.1}
+.step-desc{font-size:.75rem;opacity:.5;line-height:1.5}
+.step-arrow{position:absolute;right:-1px;top:50%;transform:translateY(-50%);width:20px;height:20px;background:var(--ink);z-index:1;clip-path:polygon(0 0,100% 50%,0 100%);opacity:.3}
+
+/* ══ PAGE NAV ══ */
+.page-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:56px;z-index:200}
+.page-nav-inner{max-width:var(--max);margin:0 auto;padding:0 clamp(1rem,4vw,2.5rem);display:flex;overflow-x:auto;scrollbar-width:none;gap:0}
+.page-nav-inner::-webkit-scrollbar{display:none}
+.pn-btn{padding:.85rem 1rem;font-size:.8rem;font-weight:500;color:var(--ink-muted);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:all .2s}
+.pn-btn:hover{color:var(--ink)}
+.pn-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+
+/* ══ MAIN ══ */
+.panel{display:none;max-width:var(--max);margin:0 auto;padding:3rem clamp(1rem,4vw,2.5rem) 6rem}
+.panel.active{display:block}
+
+/* ══ SHARED ══ */
+.section-title{font-family:var(--fd);font-size:clamp(1.6rem,3.5vw,2.2rem);font-weight:700;line-height:1.1;margin-bottom:.5rem;letter-spacing:-.01em}
+.section-sub{font-size:.875rem;color:var(--ink-soft);max-width:54ch;line-height:1.7;margin-bottom:2.5rem}
+.card{background:var(--white);border:1px solid var(--rule);border-radius:14px;padding:1.6rem;box-shadow:var(--sh)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-family:var(--fm);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;font-weight:500}
+.pill-blue{background:var(--accent-light);color:var(--accent)}
+.pill-amber{background:var(--amber-light);color:var(--amber)}
+.pill-green{background:var(--green-light);color:var(--green)}
+.pill-red{background:var(--red-light);color:var(--red)}
+
+/* ══ VERIFY vs JUSTIFY ══ */
+.vj-pair{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--rule);border-radius:14px;overflow:hidden;margin:1.5rem 0}
+.vj-box{padding:1.5rem;background:var(--white)}
+.vj-label{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.75rem;font-weight:600}
+.vj-verify .vj-label{color:var(--red)}
+.vj-justify .vj-label{color:var(--green)}
+.vj-text{font-size:.875rem;line-height:1.7;color:var(--ink-soft)}
+.vj-verdict{margin-top:1rem;padding:.65rem .9rem;border-radius:8px;font-size:.78rem;line-height:1.5;font-weight:500}
+.vj-verify .vj-verdict{background:var(--red-light);color:var(--red)}
+.vj-justify .vj-verdict{background:var(--green-light);color:var(--green)}
+
+/* ══ QUALITY BANDS ══ */
+.bands{display:flex;flex-direction:column;gap:0;border-radius:12px;overflow:hidden;border:1px solid var(--rule)}
+.band-row{display:grid;grid-template-columns:80px 1fr;gap:0;border-bottom:1px solid var(--rule)}
+.band-row:last-child{border-bottom:none}
+.band-score{display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.4rem;font-weight:700;border-right:1px solid var(--rule);padding:.9rem .5rem}
+.band-content{padding:1rem 1.1rem;font-size:.82rem;color:var(--ink-soft);line-height:1.6}
+.band-content strong{color:var(--ink);display:block;margin-bottom:.2rem;font-size:.85rem}
+.b1 .band-score{background:#FEF2F2;color:#991B1B}
+.b2 .band-score{background:#FFFBEB;color:#B45309}
+.b3 .band-score{background:#F0FDF4;color:#166534}
+.b4 .band-score{background:#EFF6FF;color:#1D4ED8;font-size:1.6rem}
+
+/* ══ PRACTICE TASKS ══ */
+.grade-tabs{display:flex;gap:.5rem;margin-bottom:2rem;flex-wrap:wrap}
+.gtab{padding:.45rem 1.1rem;border-radius:20px;border:1.5px solid var(--rule);background:var(--white);font-size:.8rem;font-weight:500;color:var(--ink-muted);cursor:pointer;transition:all .2s;font-family:var(--fb)}
+.gtab:hover{border-color:var(--accent);color:var(--accent)}
+.gtab.active{background:var(--accent);border-color:var(--accent);color:white}
+
+.grade-panel{display:none}
+.grade-panel.active{display:block}
+
+.task-card{background:var(--white);border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--sh);margin-bottom:1.5rem}
+.task-header{padding:1.25rem 1.5rem;border-bottom:1px solid var(--rule);background:var(--surface)}
+.task-header-top{display:flex;align-items:center;gap:.75rem;margin-bottom:.5rem;flex-wrap:wrap}
+.task-title{font-family:var(--fd);font-size:1.1rem;font-weight:600;line-height:1.2}
+.task-body{padding:1.5rem}
+.pattern-display{background:#F8F9FF;border:1px solid #E0E7FF;border-radius:10px;padding:1.25rem;margin-bottom:1.25rem;font-family:var(--fm);font-size:.875rem;line-height:1.8;color:var(--accent)}
+.pattern-label{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.5rem}
+
+.step-prompts{display:flex;flex-direction:column;gap:.75rem;margin-bottom:1.25rem}
+.step-prompt{border-radius:10px;padding:1rem 1.1rem;border:1.5px solid}
+.sp-observe{background:#FFF8E7;border-color:#FDE68A}
+.sp-conjecture{background:#F0F9FF;border-color:#BAE6FD}
+.sp-verify{background:#F0FDF4;border-color:#BBF7D0}
+.sp-justify{background:#F5F3FF;border-color:#DDD6FE}
+.sp-label{font-family:var(--fm);font-size:.56rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem;font-weight:600}
+.sp-observe .sp-label{color:#B45309}
+.sp-conjecture .sp-label{color:#0284C7}
+.sp-verify .sp-label{color:#166534}
+.sp-justify .sp-label{color:#5B21B6}
+.sp-text{font-size:.83rem;color:var(--ink-soft);line-height:1.6}
+.sp-partial{color:var(--ink);font-weight:500}
+
+.reveal-btn{display:inline-flex;align-items:center;gap:7px;padding:.55rem 1.1rem;border-radius:8px;border:1.5px solid var(--rule);background:var(--white);font-size:.8rem;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s;font-family:var(--fb)}
+.reveal-btn:hover{border-color:var(--accent);color:var(--accent)}
+.reveal-btn.shown{background:var(--accent);border-color:var(--accent);color:white}
+.model-answer{display:none;margin-top:1rem;border-radius:10px;overflow:hidden;border:1px solid var(--rule)}
+.model-answer.shown{display:block}
+.ma-band{padding:.6rem 1rem;font-family:var(--fm);font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600}
+.ma-1{background:#FEF2F2;color:#991B1B}
+.ma-2{background:#FFFBEB;color:#B45309}
+.ma-3{background:#F0FDF4;color:#166534}
+.ma-4{background:#EFF6FF;color:#1D4ED8}
+.ma-content{padding:.9rem 1rem;font-size:.82rem;line-height:1.65;color:var(--ink-soft);border-top:1px solid var(--rule);background:var(--white)}
+.ma-content+.ma-band{border-top:1px solid var(--rule)}
+
+/* ══ WRITE & CHECK ══ */
+.wc-task{background:var(--white);border:1px solid var(--rule);border-radius:14px;overflow:hidden;box-shadow:var(--sh);margin-bottom:1.75rem}
+.wc-task-header{padding:1.1rem 1.4rem;background:var(--accent);color:white;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+.wc-task-title{font-family:var(--fd);font-size:1.05rem;font-weight:600;line-height:1.2}
+.wc-task-meta{display:flex;gap:.5rem;flex-wrap:wrap}
+.wc-body{padding:1.4rem}
+.wc-prompt{background:var(--accent-light);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:1rem 1.1rem;margin-bottom:1.1rem;font-size:.875rem;color:var(--ink-soft);line-height:1.65}
+.wc-prompt strong{color:var(--accent);display:block;margin-bottom:.25rem;font-family:var(--fm);font-size:.6rem;letter-spacing:.09em;text-transform:uppercase}
+.wc-textarea{width:100%;border:1.5px solid var(--rule);border-radius:10px;padding:.9rem 1rem;font-family:var(--fb);font-size:.875rem;color:var(--ink);resize:vertical;min-height:130px;outline:none;line-height:1.65;background:var(--white);transition:border-color .2s}
+.wc-textarea:focus{border-color:var(--accent)}
+.wc-textarea::placeholder{color:var(--ink-muted)}
+.wc-actions{display:flex;align-items:center;gap:.75rem;margin-top:.85rem;flex-wrap:wrap}
+.wc-check-btn{display:inline-flex;align-items:center;gap:7px;padding:.55rem 1.2rem;border-radius:8px;background:var(--accent);color:white;font-family:var(--fb);font-size:.82rem;font-weight:600;border:none;cursor:pointer;transition:opacity .2s}
+.wc-check-btn:hover{opacity:.85}
+.wc-clear-btn{display:inline-flex;align-items:center;gap:5px;padding:.55rem .9rem;border-radius:8px;background:transparent;color:var(--ink-muted);font-family:var(--fb);font-size:.78rem;font-weight:500;border:1.5px solid var(--rule);cursor:pointer;transition:all .2s}
+.wc-clear-btn:hover{border-color:var(--ink-muted);color:var(--ink)}
+.wc-answer{display:none;margin-top:1.1rem;border-radius:10px;overflow:hidden;border:1px solid var(--rule)}
+.wc-answer.shown{display:block}
+.wc-answer-tabs{display:flex;border-bottom:1px solid var(--rule);background:var(--surface)}
+.wat{padding:.55rem 1rem;font-size:.75rem;font-weight:600;color:var(--ink-muted);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;font-family:var(--fb);transition:all .15s;white-space:nowrap}
+.wat.active{color:var(--accent);border-bottom-color:var(--accent);background:var(--white)}
+.wc-answer-content{padding:1rem 1.1rem;background:var(--white)}
+.wa-band-row{display:none}
+.wa-band-row.active{display:block}
+.wa-band-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;font-weight:600;margin-bottom:.5rem;padding:.35rem .7rem;border-radius:6px;display:inline-block}
+.wa-label-1{background:#FEF2F2;color:#991B1B}
+.wa-label-2{background:#FFFBEB;color:#B45309}
+.wa-label-3{background:#F0FDF4;color:#166534}
+.wa-label-4{background:#EFF6FF;color:#1D4ED8}
+.wa-text{font-size:.83rem;color:var(--ink-soft);line-height:1.7}
+.wa-text strong{color:var(--ink)}
+.wc-hint{font-size:.75rem;color:var(--ink-muted);margin-top:.5rem}
+
+/* ══ BENCHMARK TABLE ══ */
+.bench-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:1rem}
+.bench-table th{text-align:left;padding:.65rem .85rem;background:var(--ink);color:white;font-family:var(--fm);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;font-weight:500}
+.bench-table th:first-child{border-radius:8px 0 0 0}
+.bench-table th:last-child{border-radius:0 8px 0 0}
+.bench-table td{padding:.7rem .85rem;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.55;color:var(--ink-soft)}
+.bench-table tr:nth-child(even) td{background:rgba(240,246,255,.4)}
+.bench-table tr:last-child td{border-bottom:none}
+.grade-chip{display:inline-block;padding:2px 8px;border-radius:20px;font-family:var(--fm);font-size:.58rem;white-space:nowrap}
+.gc-6{background:#FEE2E2;color:#991B1B}
+.gc-7{background:#FEF3C7;color:#B45309}
+.gc-8{background:#D1FAE5;color:#166534}
+.gc-9{background:#DBEAFE;color:#1D4ED8}
+.gc-10{background:#EDE9FE;color:#5B21B6}
+
+@media(max-width:700px){
+  .steps-grid{grid-template-columns:1fr 1fr}
+  .two-col,.vj-pair{grid-template-columns:1fr}
+  .band-row{grid-template-columns:60px 1fr}
+  .step-arrow{display:none}
+}
+@media(max-width:480px){.steps-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" class="back">
+      <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Mathematics Hub
+    </a>
+    <div class="h-badge"><div class="h-dot"></div>MYP · Criterion B</div>
+  </div>
+</header>
+
+<!-- HERO -->
+<div style="max-width:var(--max);margin:0 auto;padding:4rem clamp(1rem,4vw,2.5rem) 3rem">
+  <p class="hero-kicker">MYP Mathematics · Criterion B</p>
+  <h1 style="font-family:var(--fd);font-size:clamp(2.2rem,5vw,3.8rem);line-height:1.05;font-weight:700;margin-bottom:1rem;letter-spacing:-.02em">Notice. Describe.<br>Generalise. <em style="font-style:italic;font-weight:300;color:var(--accent)">Justify.</em></h1>
+  <p style="font-size:.95rem;color:var(--ink-soft);max-width:50ch;line-height:1.75;margin-bottom:2rem">Most students can spot a pattern. Fewer can describe it precisely. The jump to <strong>justification</strong> — explaining why a pattern must always hold — is where Criterion B marks are won or lost.</p>
+  <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+    <span class="pill pill-blue">Grades 6–10</span>
+    <span class="pill pill-amber">Criterion B only</span>
+    <span style="font-family:var(--fm);font-size:.72rem;color:var(--ink-muted);display:flex;align-items:center;gap:.4rem">Write &amp; check your own justifications</span>
+  </div>
+</div>
+
+<!-- FOUR STEPS STRIP -->
+<div class="steps-strip">
+  <div class="steps-inner">
+    <p class="steps-label">The four moves of Criterion B</p>
+    <div class="steps-grid">
+      <div class="step active" onclick="highlightStep(this,0)">
+        <div class="step-num">01</div>
+        <div class="step-verb">Observe</div>
+        <div class="step-desc">Notice what's happening across examples</div>
+        <div class="step-arrow"></div>
+      </div>
+      <div class="step" onclick="highlightStep(this,1)">
+        <div class="step-num">02</div>
+        <div class="step-verb">Conjecture</div>
+        <div class="step-desc">State what you think is always true</div>
+        <div class="step-arrow"></div>
+      </div>
+      <div class="step" onclick="highlightStep(this,2)">
+        <div class="step-num">03</div>
+        <div class="step-verb">Verify</div>
+        <div class="step-desc">Test new cases you haven't seen</div>
+        <div class="step-arrow"></div>
+      </div>
+      <div class="step" onclick="highlightStep(this,3)">
+        <div class="step-num">04</div>
+        <div class="step-verb">Justify</div>
+        <div class="step-desc">Explain why it must always be true</div>
+      </div>
+    </div>
+    <p id="step-detail" style="margin-top:1.25rem;font-size:.82rem;opacity:.5;min-height:1.4em;transition:opacity .2s">Step 1 — Write down exactly what you notice. Be specific: "each term increases by 3" not "it goes up."</p>
+  </div>
+</div>
+
+<!-- PAGE NAV -->
+<nav class="page-nav">
+  <div class="page-nav-inner">
+    <button class="pn-btn active" onclick="switchPanel('understand',event)">Understanding Crit B</button>
+    <button class="pn-btn" onclick="switchPanel('verify-vs-justify',event)">Verify vs Justify</button>
+    <button class="pn-btn" onclick="switchPanel('practice',event)">Practice Tasks</button>
+    <button class="pn-btn" onclick="switchPanel('coach',event)">Write &amp; Check</button>
+    <button class="pn-btn" onclick="switchPanel('benchmarks',event)">Year Benchmarks</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════
+     PANEL 1 — UNDERSTANDING CRIT B
+══════════════════════════════════ -->
+<div class="panel active" id="panel-understand">
+  <h2 class="section-title">What Criterion B actually asks</h2>
+  <p class="section-sub">The four verbs — observe, conjecture, verify, justify — are not the same thing. Most students collapse them into one step. Here's what each one demands.</p>
+
+  <div class="two-col" style="margin-bottom:1.5rem">
+    <div class="card" style="border-top:3px solid #B45309">
+      <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#B45309;margin-bottom:.6rem">Step 1 · Observe</div>
+      <p style="font-family:var(--fd);font-size:1.05rem;font-weight:600;margin-bottom:.5rem">Write down exactly what you notice</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.75rem">Be precise and mathematical. "It goes up" scores 0. "Each term increases by 3" is an observation. "The difference between consecutive terms is constant" is a better one.</p>
+      <div style="background:var(--amber-light);border-radius:8px;padding:.75rem;font-size:.78rem;color:var(--amber);line-height:1.55"><strong>Try it:</strong> 1, 4, 9, 16, 25... What do you notice? (Write more than one thing.)</div>
+    </div>
+    <div class="card" style="border-top:3px solid #0284C7">
+      <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#0284C7;margin-bottom:.6rem">Step 2 · Conjecture</div>
+      <p style="font-family:var(--fd);font-size:1.05rem;font-weight:600;margin-bottom:.5rem">State what you think is always true</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.75rem">A conjecture is a claim about all cases, not just the ones you've seen. It must be falsifiable — you should be able to imagine (even if you can't find) a counterexample.</p>
+      <div style="background:var(--accent-light);border-radius:8px;padding:.75rem;font-size:.78rem;color:var(--accent);line-height:1.55"><strong>Weak:</strong> "The next term is 36."<br><strong>Strong:</strong> "The nth term is n², so all terms are perfect squares."</div>
+    </div>
+    <div class="card" style="border-top:3px solid #166534">
+      <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#166534;margin-bottom:.6rem">Step 3 · Verify</div>
+      <p style="font-family:var(--fd);font-size:1.05rem;font-weight:600;margin-bottom:.5rem">Test cases you haven't already seen</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.75rem">Verification means testing your conjecture on new examples — ones not used to form the conjecture. Five new cases that all work gives you confidence. But verification alone is <strong>never justification</strong>.</p>
+      <div style="background:var(--green-light);border-radius:8px;padding:.75rem;font-size:.78rem;color:var(--green);line-height:1.55"><strong>Remember:</strong> No number of examples proves a conjecture is always true. One counterexample disproves it entirely.</div>
+    </div>
+    <div class="card" style="border-top:3px solid #5B21B6">
+      <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#5B21B6;margin-bottom:.6rem">Step 4 · Justify</div>
+      <p style="font-family:var(--fd);font-size:1.05rem;font-weight:600;margin-bottom:.5rem">Explain why it must always hold</p>
+      <p style="font-size:.83rem;color:var(--ink-soft);line-height:1.65;margin-bottom:.75rem">Justification answers the question: <em>why can't there be a counterexample?</em> It uses the mathematical structure of the pattern — algebra, geometry, logical argument — not more examples.</p>
+      <div style="background:#F5F3FF;border-radius:8px;padding:.75rem;font-size:.78rem;color:#5B21B6;line-height:1.55"><strong>Ask yourself:</strong> If someone claimed my pattern breaks at n = 1000, could I prove them wrong without checking? If yes, you have a justification.</div>
+    </div>
+  </div>
+
+  <!-- THE CRITICAL MISCONCEPTION -->
+  <div style="background:var(--ink);color:white;border-radius:14px;padding:2rem;margin-bottom:2rem">
+    <p style="font-family:var(--fm);font-size:.58rem;letter-spacing:.13em;text-transform:uppercase;opacity:.4;margin-bottom:.75rem">The most common mistake</p>
+    <p style="font-family:var(--fd);font-size:1.4rem;font-weight:600;line-height:1.2;margin-bottom:.75rem">Checking ten cases is <em style="font-style:italic;font-weight:300">not</em> a justification.</p>
+    <p style="font-size:.875rem;opacity:.6;max-width:56ch;line-height:1.7">It never has been, and it never will be. No matter how many cases you check, you cannot check infinity. The conjecture "the sum of two odd numbers is always even" has infinitely many cases. Checking 1+3, 5+7, and 11+13 proves nothing about 100,000,001 + 99,999,999.</p>
+    <div style="margin-top:1.25rem;padding:1rem;background:rgba(255,255,255,.06);border-radius:10px;border:1px solid rgba(255,255,255,.1)">
+      <p style="font-size:.8rem;opacity:.5;font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;margin-bottom:.4rem">The actual justification</p>
+      <p style="font-size:.85rem;opacity:.8;line-height:1.65">Any odd number can be written as 2k + 1. Two odd numbers: (2a + 1) + (2b + 1) = 2a + 2b + 2 = 2(a + b + 1). Since 2(a + b + 1) is divisible by 2, it must be even — for every possible value of a and b, without exception.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 2 — VERIFY vs JUSTIFY
+══════════════════════════════════ -->
+<div class="panel" id="panel-verify-vs-justify">
+  <h2 class="section-title">Verify vs Justify</h2>
+  <p class="section-sub">Same conjecture. Four different responses. Can you tell which is which — and which band each earns?</p>
+
+  <!-- EXAMPLE 1 -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">Pattern to investigate</div>
+    <div class="pattern-display" style="margin-bottom:1.25rem">When you add any two consecutive integers, the result is always odd.<br>
+    e.g. 3 + 4 = 7 &nbsp;&nbsp; 10 + 11 = 21 &nbsp;&nbsp; 99 + 100 = 199</div>
+
+    <div class="bands">
+      <div class="band-row b1">
+        <div class="band-score">1–2</div>
+        <div class="band-content"><strong>Verification only — no conjecture stated</strong>"I tried 1+2=3 (odd), 4+5=9 (odd), 7+8=15 (odd), 20+21=41 (odd). It works every time." <br><span style="color:var(--red);font-size:.75rem;margin-top:.3rem;display:block">❌ No general claim. No reason why. More examples do not raise this score.</span></div>
+      </div>
+      <div class="band-row b2">
+        <div class="band-score">3–4</div>
+        <div class="band-content"><strong>Conjecture stated, verified, no justification</strong>"I think the sum of any two consecutive integers is always odd. I checked: 2+3=5, 15+16=31, 100+101=201, 1000+1001=2001. All odd. My conjecture is correct." <br><span style="color:var(--amber);font-size:.75rem;margin-top:.3rem;display:block">⚠ Conjecture is clear and verified. But "I checked many cases" is still not justification.</span></div>
+      </div>
+      <div class="band-row b3">
+        <div class="band-score">5–6</div>
+        <div class="band-content"><strong>Partial justification — reasoning present but incomplete</strong>"Consecutive integers are always one even and one odd. Even + odd = odd. So the sum must be odd." <br><span style="color:var(--green);font-size:.75rem;margin-top:.3rem;display:block">✓ Good reasoning. Uses mathematical structure. To reach 7–8, explain why even + odd must always equal odd.</span></div>
+      </div>
+      <div class="band-row b4">
+        <div class="band-score">7–8</div>
+        <div class="band-content"><strong>Full justification — structural, works for all cases</strong>"Let the smaller integer be n. Then the consecutive pair is n and n+1. Their sum is n + (n+1) = 2n + 1. Since 2n is always even (divisible by 2), adding 1 always gives an odd number. This holds for every integer n without exception." <br><span style="color:#1D4ED8;font-size:.75rem;margin-top:.3rem;display:block">✓ Uses algebra to represent all cases. Conclusion follows necessarily. Cannot be disproved.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EXAMPLE 2 — GEOMETRIC -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">Pattern to investigate · Geometric</div>
+    <div class="pattern-display" style="margin-bottom:1.25rem">The number of diagonals in a polygon seems to follow a pattern:<br>
+    Triangle (3 sides): 0 diagonals &nbsp;&nbsp; Square (4): 2 &nbsp;&nbsp; Pentagon (5): 5 &nbsp;&nbsp; Hexagon (6): 9</div>
+
+    <div class="bands">
+      <div class="band-row b1">
+        <div class="band-score">1–2</div>
+        <div class="band-content"><strong>Observation without generalisation</strong>"Each time you add a side, you get more diagonals. A hexagon has 9 diagonals."</div>
+      </div>
+      <div class="band-row b2">
+        <div class="band-score">3–4</div>
+        <div class="band-content"><strong>Conjecture with pattern rule, no justification</strong>"The differences are 2, 3, 4 — going up by 1 each time. So for n sides, the diagonals are 0, 2, 5, 9, 14... I predict a heptagon has 14. I checked by drawing — yes, 14."</div>
+      </div>
+      <div class="band-row b3">
+        <div class="band-score">5–6</div>
+        <div class="band-content"><strong>Formula derived, partial reasoning</strong>"The formula is n(n−3)/2. I found this by looking at the pattern differences and checking it works for all my cases. A 10-gon would have 10×7/2 = 35 diagonals."</div>
+      </div>
+      <div class="band-row b4">
+        <div class="band-score">7–8</div>
+        <div class="band-content"><strong>Formula derived from structure</strong>"In a polygon with n sides, each vertex connects to n−1 other vertices. Remove the 2 adjacent vertices (sides, not diagonals), leaving n−3 diagonals from each vertex. Total connections: n(n−3). Each diagonal is counted twice (once from each end), so total diagonals = n(n−3)/2. This formula is derived from the structure, not the pattern — it must hold for all n ≥ 3."</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 3 — PRACTICE TASKS
+══════════════════════════════════ -->
+<div class="panel" id="panel-practice">
+  <h2 class="section-title">Practice Tasks</h2>
+  <p class="section-sub">Tasks drawn from your actual ISHCMC units. Select your year group and work through the four steps. Reveal the model answer when you're ready.</p>
+
+  <div class="grade-tabs">
+    <button class="gtab active" onclick="switchGrade('g67',this)">Grades 6–7</button>
+    <button class="gtab" onclick="switchGrade('g89',this)">Grades 8–9</button>
+    <button class="gtab" onclick="switchGrade('g10',this)">Grade 10</button>
+  </div>
+
+  <!-- GRADES 6-7 -->
+  <div class="grade-panel active" id="gp-g67">
+
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-header-top">
+          <span class="pill pill-red" style="background:#FEE2E2;color:#991B1B">Grade 6</span>
+          <span class="pill" style="background:#F3F4F6;color:#374151">Unit 1 · How to Think Mathematically</span>
+          <span class="pill pill-blue">Number Patterns</span>
+        </div>
+        <div class="task-title">Square numbers and their differences</div>
+      </div>
+      <div class="task-body">
+        <div class="pattern-label">The pattern</div>
+        <div class="pattern-display">1² = 1<br>2² = 4 &nbsp;&nbsp; difference from previous: 3<br>3² = 9 &nbsp;&nbsp; difference from previous: 5<br>4² = 16 &nbsp; difference from previous: 7<br>5² = 25 &nbsp; difference from previous: 9</div>
+        <div class="step-prompts">
+          <div class="step-prompt sp-observe">
+            <div class="sp-label">01 · Observe</div>
+            <div class="sp-text">The differences between consecutive square numbers are <span class="sp-partial">3, 5, 7, 9...</span> What type of numbers are these? What else do you notice about them?</div>
+          </div>
+          <div class="step-prompt sp-conjecture">
+            <div class="sp-label">02 · Conjecture</div>
+            <div class="sp-text">Complete this statement: "The difference between consecutive square numbers is always <span class="sp-partial">__________</span>, and the differences form a <span class="sp-partial">__________</span> sequence."</div>
+          </div>
+          <div class="step-prompt sp-verify">
+            <div class="sp-label">03 · Verify</div>
+            <div class="sp-text">Check your conjecture for 6² and 7². Does the pattern hold? What is the difference between n² and (n+1)²?</div>
+          </div>
+          <div class="step-prompt sp-justify">
+            <div class="sp-label">04 · Justify</div>
+            <div class="sp-text">Can you write (n+1)² − n² and simplify it? What does your simplified expression tell you about why the differences must always be odd?</div>
+          </div>
+        </div>
+        <button class="reveal-btn" onclick="toggleModel('m-g6-1',this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Show model answer
+        </button>
+        <div class="model-answer" id="m-g6-1">
+          <div class="ma-band ma-2">Bands 3–4 (Verified, conjecture clear)</div>
+          <div class="ma-content">The differences are 3, 5, 7, 9 — all odd numbers. I think the differences between consecutive square numbers are always odd. I checked: 6²=36, 7²=49, difference=13 (odd) ✓. 10²=100, 11²=121, difference=21 (odd) ✓. The differences also form an arithmetic sequence going up by 2 each time.</div>
+          <div class="ma-band ma-4">Bands 7–8 (Justified algebraically)</div>
+          <div class="ma-content">Let the two consecutive square numbers be n² and (n+1)². Their difference is (n+1)² − n² = n² + 2n + 1 − n² = 2n + 1. Since 2n is always even, 2n + 1 is always odd — regardless of the value of n. This proves the difference between any two consecutive square numbers is always odd. The differences also form an arithmetic sequence because 2n + 1 increases by exactly 2 each time n increases by 1.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-header-top">
+          <span class="pill pill-amber" style="background:#FEF3C7;color:#92400E">Grade 7</span>
+          <span class="pill" style="background:#F3F4F6;color:#374151">Unit 4 · Sound Structures</span>
+          <span class="pill pill-blue">Geometry</span>
+        </div>
+        <div class="task-title">Interior angles of regular polygons</div>
+      </div>
+      <div class="task-body">
+        <div class="pattern-label">The pattern</div>
+        <div class="pattern-display">Equilateral triangle (3 sides): each interior angle = 60°<br>Square (4 sides): each interior angle = 90°<br>Regular pentagon (5 sides): each interior angle = 108°<br>Regular hexagon (6 sides): each interior angle = 120°</div>
+        <div class="step-prompts">
+          <div class="step-prompt sp-observe">
+            <div class="sp-label">01 · Observe</div>
+            <div class="sp-text">What happens to the interior angle as the number of sides increases? How much does it increase each time?</div>
+          </div>
+          <div class="step-prompt sp-conjecture">
+            <div class="sp-label">02 · Conjecture</div>
+            <div class="sp-text">Write a formula for the interior angle of a regular polygon with n sides. Hint: what is the total of all interior angles first?</div>
+          </div>
+          <div class="step-prompt sp-verify">
+            <div class="sp-label">03 · Verify</div>
+            <div class="sp-text">Use your formula to predict the interior angle of a regular octagon (8 sides). Verify by checking the angle sum of an octagon.</div>
+          </div>
+          <div class="step-prompt sp-justify">
+            <div class="sp-label">04 · Justify</div>
+            <div class="sp-text">Any polygon can be divided into triangles from one vertex. How many triangles does an n-sided polygon produce? Use this to explain where your formula comes from — not just that it works.</div>
+          </div>
+        </div>
+        <button class="reveal-btn" onclick="toggleModel('m-g7-1',this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Show model answer
+        </button>
+        <div class="model-answer" id="m-g7-1">
+          <div class="ma-band ma-2">Bands 3–4</div>
+          <div class="ma-content">Each time I add a side, the angle increases: 60°, 90°, 108°, 120°, 128.57°... The differences are 30°, 18°, 12°, 8.57° — decreasing. I predict the formula involves dividing by n. My conjecture: interior angle = (n−2) × 180° ÷ n. Check for octagon: (8−2)×180÷8 = 6×180÷8 = 135°.</div>
+          <div class="ma-band ma-4">Bands 7–8</div>
+          <div class="ma-content">From one vertex of an n-sided polygon, you can draw diagonals to create exactly n−2 triangles (you can't draw to adjacent vertices or to yourself). Each triangle has an angle sum of 180°, so the total interior angle sum of any n-sided polygon is (n−2) × 180°. Since the polygon is regular, all n angles are equal, so each interior angle = (n−2) × 180° ÷ n. This formula is derived from the triangle decomposition — it works for any n ≥ 3 because the decomposition always produces exactly n−2 triangles, regardless of the polygon's size or orientation.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GRADES 8-9 -->
+  <div class="grade-panel" id="gp-g89">
+
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-header-top">
+          <span class="pill pill-green" style="background:#DCFCE7;color:#166534">Grade 8</span>
+          <span class="pill" style="background:#F3F4F6;color:#374151">Unit 1 · Art of Maths</span>
+          <span class="pill pill-blue">Sequences</span>
+        </div>
+        <div class="task-title">Triangle numbers and their sums</div>
+      </div>
+      <div class="task-body">
+        <div class="pattern-label">The pattern</div>
+        <div class="pattern-display">T₁ = 1<br>T₂ = 1 + 2 = 3<br>T₃ = 1 + 2 + 3 = 6<br>T₄ = 1 + 2 + 3 + 4 = 10<br>T₅ = 1 + 2 + 3 + 4 + 5 = 15<br><br>What is a formula for Tₙ — the sum of the first n positive integers?</div>
+        <div class="step-prompts">
+          <div class="step-prompt sp-observe">
+            <div class="sp-label">01 · Observe</div>
+            <div class="sp-text">Look at the values 1, 3, 6, 10, 15. What are the differences? What happens when you double each triangle number?</div>
+          </div>
+          <div class="step-prompt sp-conjecture">
+            <div class="sp-label">02 · Conjecture</div>
+            <div class="sp-text">State a formula for Tₙ. Test it for T₆ and T₁₀ before moving on.</div>
+          </div>
+          <div class="step-prompt sp-justify">
+            <div class="sp-label">03–04 · Verify &amp; Justify</div>
+            <div class="sp-text">Gauss's method: write the sum forwards and backwards, then add them. What do you get? Use this to derive the formula — not just confirm it. Can you also draw a geometric justification using a rectangle made from two triangle arrangements?</div>
+          </div>
+        </div>
+        <button class="reveal-btn" onclick="toggleModel('m-g8-1',this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Show model answer
+        </button>
+        <div class="model-answer" id="m-g8-1">
+          <div class="ma-band ma-4">Bands 7–8 · Two methods of justification</div>
+          <div class="ma-content"><strong>Algebraic (Gauss's method):</strong><br>Let S = 1 + 2 + 3 + ... + n<br>Also S = n + (n−1) + (n−2) + ... + 1<br>Adding: 2S = (n+1) + (n+1) + ... + (n+1) [n times] = n(n+1)<br>Therefore S = n(n+1)/2 ✓<br><br><strong>Geometric justification:</strong><br>Arrange Tₙ dots in a triangle. Make a second identical triangle and rotate it 180°. The two triangles together form an n × (n+1) rectangle containing n(n+1) dots. Since each triangle has half the dots, Tₙ = n(n+1)/2. This works for every n — the rectangle always has dimensions n by n+1.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-header-top">
+          <span class="pill pill-blue">Grade 9</span>
+          <span class="pill" style="background:#F3F4F6;color:#374151">Unit 1 · The Shape of U</span>
+          <span class="pill pill-blue">Algebra</span>
+        </div>
+        <div class="task-title">The difference of two squares</div>
+      </div>
+      <div class="task-body">
+        <div class="pattern-label">The pattern</div>
+        <div class="pattern-display">5² − 3² = 25 − 9 = 16 = 8 × 2<br>7² − 5² = 49 − 25 = 24 = 12 × 2<br>10² − 6² = 100 − 36 = 64 = 16 × 4<br>9² − 4² = 81 − 16 = 65 = 13 × 5</div>
+        <div class="step-prompts">
+          <div class="step-prompt sp-observe">
+            <div class="sp-label">01 · Observe</div>
+            <div class="sp-text">In each case, how do the two factors of the result relate to the original two numbers? Look at 8×2 and 5,3. Look at 12×2 and 7,5. What do you notice?</div>
+          </div>
+          <div class="step-prompt sp-conjecture">
+            <div class="sp-label">02 · Conjecture</div>
+            <div class="sp-text">Complete: "a² − b² = (____) × (____)" where the blanks are expressions involving a and b.</div>
+          </div>
+          <div class="step-prompt sp-justify">
+            <div class="sp-label">03–04 · Verify &amp; Justify</div>
+            <div class="sp-text">Expand (a + b)(a − b) algebraically. What do you get? This is your justification — explain why it proves your conjecture for all values of a and b, including decimals and negatives.</div>
+          </div>
+        </div>
+        <button class="reveal-btn" onclick="toggleModel('m-g9-1',this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Show model answer
+        </button>
+        <div class="model-answer" id="m-g9-1">
+          <div class="ma-band ma-4">Bands 7–8</div>
+          <div class="ma-content">Conjecture: a² − b² = (a + b)(a − b)<br><br>Justification by expansion: (a + b)(a − b) = a² − ab + ab − b² = a² − b² ✓<br><br>This algebraic identity holds for all real values of a and b — not just integers. The middle terms (−ab and +ab) always cancel, leaving exactly a² − b². There is no restriction on a or b, so this cannot fail for any numerical case.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GRADE 10 -->
+  <div class="grade-panel" id="gp-g10">
+
+    <div class="task-card">
+      <div class="task-header">
+        <div class="task-header-top">
+          <span class="pill" style="background:#EDE9FE;color:#5B21B6">Grade 10</span>
+          <span class="pill" style="background:#F3F4F6;color:#374151">Unit 1 · Finance Matters</span>
+          <span class="pill pill-blue">Sequences · Further</span>
+        </div>
+        <div class="task-title">Geometric series and convergence</div>
+      </div>
+      <div class="task-body">
+        <div class="pattern-label">The pattern</div>
+        <div class="pattern-display">Consider the series: 1 + 1/2 + 1/4 + 1/8 + 1/16 + ...<br><br>Partial sums: S₁=1, S₂=1.5, S₃=1.75, S₄=1.875, S₅=1.9375...<br><br>What does Sₙ approach as n → ∞?</div>
+        <div class="step-prompts">
+          <div class="step-prompt sp-observe">
+            <div class="sp-label">01 · Observe</div>
+            <div class="sp-text">What value do the partial sums appear to approach? How much does each new term add? What is the common ratio r?</div>
+          </div>
+          <div class="step-prompt sp-conjecture">
+            <div class="sp-label">02 · Conjecture</div>
+            <div class="sp-text">Conjecture: S∞ = ____. State the formula for infinite geometric series and the condition required for it to converge.</div>
+          </div>
+          <div class="step-prompt sp-justify">
+            <div class="sp-label">03–04 · Verify &amp; Justify</div>
+            <div class="sp-text">Let S = a + ar + ar² + ar³ + ... Write rS. Subtract rS from S. What do you get? Use this to derive S∞ = a/(1−r) and explain why the condition |r| &lt; 1 is essential — what happens to the formula if r = 1 or r = −2?</div>
+          </div>
+        </div>
+        <button class="reveal-btn" onclick="toggleModel('m-g10-1',this)">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+          Show model answer
+        </button>
+        <div class="model-answer" id="m-g10-1">
+          <div class="ma-band ma-4">Bands 7–8 · Algebraic derivation with conditions</div>
+          <div class="ma-content">Let S = a + ar + ar² + ar³ + ...<br>Then rS = ar + ar² + ar³ + ar⁴ + ...<br>Subtracting: S − rS = a (all other terms cancel)<br>S(1 − r) = a, so S = a/(1−r)<br><br>For this series: a = 1, r = 1/2 → S∞ = 1/(1 − 0.5) = 2 ✓<br><br><strong>Why |r| &lt; 1 is essential:</strong> The subtraction step assumes the tail of the series vanishes as n → ∞. This only happens when |r| &lt; 1 — each term becomes smaller. If r = 1, the series is 1+1+1+... which diverges. If r = −2, terms grow in magnitude (1, −2, 4, −8...) and the formula gives 1/(1−(−2)) = 1/3, which is meaningless — the series doesn't converge to anything.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 4 — WRITE & CHECK
+══════════════════════════════════ -->
+<div class="panel" id="panel-coach">
+  <h2 class="section-title">Write &amp; Check</h2>
+  <p class="section-sub">Pick a pattern, write your own justification, then reveal the model answer at each band level. Compare honestly — which band does your response actually sit at?</p>
+
+  <!-- ── TASK 1 ── -->
+  <div class="wc-task">
+    <div class="wc-task-header">
+      <div class="wc-task-title">The sum of two consecutive integers is always odd</div>
+      <div class="wc-task-meta">
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Grades 7–8</span>
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Number</span>
+      </div>
+    </div>
+    <div class="wc-body">
+      <div class="wc-prompt">
+        <strong>The pattern</strong>
+        3 + 4 = 7 &nbsp;&nbsp; 10 + 11 = 21 &nbsp;&nbsp; 99 + 100 = 199 &nbsp;&nbsp; 0 + 1 = 1<br>
+        All results are odd. Write a justification that proves this must always be true — not just for these examples.
+      </div>
+      <textarea class="wc-textarea" id="wc1" placeholder="Write your justification here. Try to explain WHY the sum must always be odd, not just show that it works for a few cases.&#10;&#10;Hint: think about what 'consecutive integers' means algebraically..."></textarea>
+      <div class="wc-actions">
+        <button class="wc-check-btn" onclick="showAnswer('wc1-ans')">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Show model answers
+        </button>
+        <button class="wc-clear-btn" onclick="clearBox('wc1')">Clear</button>
+        <span class="wc-hint">Write your own attempt before revealing — that's the whole point.</span>
+      </div>
+      <div class="wc-answer" id="wc1-ans">
+        <div class="wc-answer-tabs">
+          <button class="wat active" onclick="switchWAT('wc1',1,this)">Bands 1–2</button>
+          <button class="wat" onclick="switchWAT('wc1',2,this)">Bands 3–4</button>
+          <button class="wat" onclick="switchWAT('wc1',3,this)">Bands 5–6</button>
+          <button class="wat" onclick="switchWAT('wc1',4,this)">Bands 7–8</button>
+        </div>
+        <div class="wc-answer-content">
+          <div class="wa-band-row active" id="wc1-b1">
+            <span class="wa-band-label wa-label-1">Bands 1–2 · Observation only</span>
+            <p class="wa-text">"I tried 3+4=7 (odd), 10+11=21 (odd), 50+51=101 (odd). It always seems to work."<br><br><strong>Why this scores 1–2:</strong> No conjecture is stated for all cases. No reason is given. More examples cannot raise this score — you need to say something about why it must always happen.</p>
+          </div>
+          <div class="wa-band-row" id="wc1-b2">
+            <span class="wa-band-label wa-label-2">Bands 3–4 · Conjecture stated, verified</span>
+            <p class="wa-text">"I think the sum of any two consecutive integers is always odd. I tested: 7+8=15, 20+21=41, 100+101=201, 1000+1001=2001. All odd. My conjecture holds for all cases I checked."<br><br><strong>Why this scores 3–4:</strong> Conjecture is clear and applies to all cases. Verified with new examples. But checking more examples is still not justification — you haven't explained why it must be true.</p>
+          </div>
+          <div class="wa-band-row" id="wc1-b3">
+            <span class="wa-band-label wa-label-3">Bands 5–6 · Partial justification</span>
+            <p class="wa-text">"Consecutive integers always include one even and one odd number. When you add an even and an odd number, you always get an odd number. So the sum of two consecutive integers must be odd."<br><br><strong>Why this scores 5–6:</strong> Uses mathematical structure — not just examples. The reasoning is sound. To reach 7–8, you need to explain why even + odd always equals odd, not just assert it.</p>
+          </div>
+          <div class="wa-band-row" id="wc1-b4">
+            <span class="wa-band-label wa-label-4">Bands 7–8 · Full justification</span>
+            <p class="wa-text">"Let the smaller integer be n. The consecutive pair is n and n+1. Their sum is n + (n+1) = 2n + 1. Since 2n is always divisible by 2 (and therefore even), adding 1 always produces an odd number. This holds for every integer n — positive, negative, or zero — without exception."<br><br><strong>Why this scores 7–8:</strong> Uses algebra to represent all cases simultaneously. The conclusion follows necessarily from the algebra. No counterexample is possible because the argument covers all integers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TASK 2 ── -->
+  <div class="wc-task">
+    <div class="wc-task-header">
+      <div class="wc-task-title">The difference between consecutive square numbers is always odd</div>
+      <div class="wc-task-meta">
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Grades 6–8</span>
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Number · Algebra</span>
+      </div>
+    </div>
+    <div class="wc-body">
+      <div class="wc-prompt">
+        <strong>The pattern</strong>
+        2² − 1² = 3 &nbsp;&nbsp; 3² − 2² = 5 &nbsp;&nbsp; 4² − 3² = 7 &nbsp;&nbsp; 5² − 4² = 9<br>
+        The differences are 3, 5, 7, 9 — all odd. Justify why this must always be the case.
+      </div>
+      <textarea class="wc-textarea" id="wc2" placeholder="Write your justification here.&#10;&#10;Hint: try expanding (n+1)² − n² algebraically. What do you get?"></textarea>
+      <div class="wc-actions">
+        <button class="wc-check-btn" onclick="showAnswer('wc2-ans')">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Show model answers
+        </button>
+        <button class="wc-clear-btn" onclick="clearBox('wc2')">Clear</button>
+      </div>
+      <div class="wc-answer" id="wc2-ans">
+        <div class="wc-answer-tabs">
+          <button class="wat active" onclick="switchWAT('wc2',1,this)">Bands 1–2</button>
+          <button class="wat" onclick="switchWAT('wc2',2,this)">Bands 3–4</button>
+          <button class="wat" onclick="switchWAT('wc2',3,this)">Bands 5–6</button>
+          <button class="wat" onclick="switchWAT('wc2',4,this)">Bands 7–8</button>
+        </div>
+        <div class="wc-answer-content">
+          <div class="wa-band-row active" id="wc2-b1">
+            <span class="wa-band-label wa-label-1">Bands 1–2</span>
+            <p class="wa-text">"The differences go 3, 5, 7, 9 which are all odd numbers. The next difference should be 11."<br><br><strong>Why 1–2:</strong> Continues the pattern but makes no general claim. No attempt to say why or for how many cases.</p>
+          </div>
+          <div class="wa-band-row" id="wc2-b2">
+            <span class="wa-band-label wa-label-2">Bands 3–4</span>
+            <p class="wa-text">"I think the difference between any two consecutive square numbers is always odd. I checked: 6²−5²=11, 10²−9²=19, 20²−19²=39. All odd. My conjecture is correct."<br><br><strong>Why 3–4:</strong> Clear conjecture, verified with new cases. Still no structural reason.</p>
+          </div>
+          <div class="wa-band-row" id="wc2-b3">
+            <span class="wa-band-label wa-label-3">Bands 5–6</span>
+            <p class="wa-text">"The differences between consecutive squares are 3, 5, 7, 9 — they form an arithmetic sequence of odd numbers going up by 2. The nth difference appears to be 2n+1, which is always odd because it equals an even number plus 1."<br><br><strong>Why 5–6:</strong> Formula identified from the pattern. Partially justified (2n+1 is odd). To reach 7–8, derive the formula algebraically rather than reading it from the sequence.</p>
+          </div>
+          <div class="wa-band-row" id="wc2-b4">
+            <span class="wa-band-label wa-label-4">Bands 7–8</span>
+            <p class="wa-text">"Let the two consecutive square numbers be n² and (n+1)². Their difference is:<br>(n+1)² − n² = n² + 2n + 1 − n² = 2n + 1<br>Since 2n is always even, 2n + 1 is always odd — for every integer n. The differences also increase by 2 each time because when n increases by 1, 2n+1 increases by 2."<br><br><strong>Why 7–8:</strong> Algebraic derivation from first principles. The formula 2n+1 is not read from the pattern — it is derived by expanding the brackets. Covers all integers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TASK 3 ── -->
+  <div class="wc-task">
+    <div class="wc-task-header">
+      <div class="wc-task-title">Interior angle of a regular polygon</div>
+      <div class="wc-task-meta">
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Grade 7</span>
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Geometry</span>
+      </div>
+    </div>
+    <div class="wc-body">
+      <div class="wc-prompt">
+        <strong>The pattern</strong>
+        Triangle: 60° &nbsp;&nbsp; Square: 90° &nbsp;&nbsp; Pentagon: 108° &nbsp;&nbsp; Hexagon: 120°<br>
+        The formula appears to be (n−2) × 180° ÷ n. Justify where this formula comes from — not just that it works.
+      </div>
+      <textarea class="wc-textarea" id="wc3" placeholder="Write your justification here.&#10;&#10;Hint: from one vertex of an n-sided polygon, how many triangles can you draw? What does each triangle contribute?"></textarea>
+      <div class="wc-actions">
+        <button class="wc-check-btn" onclick="showAnswer('wc3-ans')">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Show model answers
+        </button>
+        <button class="wc-clear-btn" onclick="clearBox('wc3')">Clear</button>
+      </div>
+      <div class="wc-answer" id="wc3-ans">
+        <div class="wc-answer-tabs">
+          <button class="wat active" onclick="switchWAT('wc3',1,this)">Bands 1–2</button>
+          <button class="wat" onclick="switchWAT('wc3',2,this)">Bands 3–4</button>
+          <button class="wat" onclick="switchWAT('wc3',3,this)">Bands 5–6</button>
+          <button class="wat" onclick="switchWAT('wc3',4,this)">Bands 7–8</button>
+        </div>
+        <div class="wc-answer-content">
+          <div class="wa-band-row active" id="wc3-b1">
+            <span class="wa-band-label wa-label-1">Bands 1–2</span>
+            <p class="wa-text">"A triangle has 60°, a square has 90°, a pentagon has 108°. The angles get bigger as you add more sides."</p>
+          </div>
+          <div class="wa-band-row" id="wc3-b2">
+            <span class="wa-band-label wa-label-2">Bands 3–4</span>
+            <p class="wa-text">"The formula is (n−2)×180÷n. For a heptagon (7 sides): (7−2)×180÷7 = 900÷7 ≈ 128.6°. I verified this by drawing and measuring — it looks right."<br><br><strong>Why 3–4:</strong> Formula stated and verified. But "it looks right" is not a reason. Where does the formula come from?</p>
+          </div>
+          <div class="wa-band-row" id="wc3-b3">
+            <span class="wa-band-label wa-label-3">Bands 5–6</span>
+            <p class="wa-text">"You can split any polygon into triangles. A triangle makes 1 triangle, a square makes 2, a pentagon makes 3. So an n-sided polygon makes n−2 triangles. Total angle sum = (n−2)×180°. Since all angles in a regular polygon are equal, each angle = (n−2)×180°÷n."<br><br><strong>Why 5–6:</strong> Correct reasoning about the triangle decomposition. To reach 7–8, explain why a polygon always produces exactly n−2 triangles — not just observe the pattern 1, 2, 3...</p>
+          </div>
+          <div class="wa-band-row" id="wc3-b4">
+            <span class="wa-band-label wa-label-4">Bands 7–8</span>
+            <p class="wa-text">"From one vertex of an n-sided polygon, you can draw diagonals to all non-adjacent vertices. You cannot draw to the 2 adjacent vertices (those are sides) or to yourself — that leaves n−3 diagonals, creating n−2 triangles. Each triangle has an interior angle sum of 180°, so the total angle sum of any n-sided polygon is (n−2)×180°. Since it is a regular polygon, all n angles are equal: each = (n−2)×180°÷n. This works for any n ≥ 3."<br><br><strong>Why 7–8:</strong> The n−2 is derived, not observed. The exclusion of adjacent vertices is explained. The condition n≥3 is stated. Full structural justification.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TASK 4 ── -->
+  <div class="wc-task">
+    <div class="wc-task-header">
+      <div class="wc-task-title">The difference of two squares: a² − b² = (a+b)(a−b)</div>
+      <div class="wc-task-meta">
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Grade 9</span>
+        <span class="pill" style="background:rgba(255,255,255,.15);color:white">Algebra</span>
+      </div>
+    </div>
+    <div class="wc-body">
+      <div class="wc-prompt">
+        <strong>The pattern</strong>
+        5²−3² = 16 = 8×2 &nbsp;&nbsp; 7²−4² = 33 = 11×3 &nbsp;&nbsp; 10²−6² = 64 = 16×4<br>
+        In each case the two factors are (a+b) and (a−b). Justify this algebraic identity for all values.
+      </div>
+      <textarea class="wc-textarea" id="wc4" placeholder="Write your justification here.&#10;&#10;Hint: expand (a+b)(a−b) and see what happens to the middle terms."></textarea>
+      <div class="wc-actions">
+        <button class="wc-check-btn" onclick="showAnswer('wc4-ans')">
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6h8M6 2l4 4-4 4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Show model answers
+        </button>
+        <button class="wc-clear-btn" onclick="clearBox('wc4')">Clear</button>
+      </div>
+      <div class="wc-answer" id="wc4-ans">
+        <div class="wc-answer-tabs">
+          <button class="wat active" onclick="switchWAT('wc4',1,this)">Bands 1–2</button>
+          <button class="wat" onclick="switchWAT('wc4',2,this)">Bands 3–4</button>
+          <button class="wat" onclick="switchWAT('wc4',3,this)">Bands 5–6</button>
+          <button class="wat" onclick="switchWAT('wc4',4,this)">Bands 7–8</button>
+        </div>
+        <div class="wc-answer-content">
+          <div class="wa-band-row active" id="wc4-b1">
+            <span class="wa-band-label wa-label-1">Bands 1–2</span>
+            <p class="wa-text">"5²−3²=16 and (5+3)(5−3)=8×2=16. It works."<br><br><strong>Why 1–2:</strong> One example confirmed. No conjecture, no claim about all cases.</p>
+          </div>
+          <div class="wa-band-row" id="wc4-b2">
+            <span class="wa-band-label wa-label-2">Bands 3–4</span>
+            <p class="wa-text">"I think a²−b² always equals (a+b)(a−b). I checked: 9²−4²=65=(13)(5)✓, 12²−7²=95=(19)(5)✓, 20²−3²=391=(23)(17)✓. The pattern holds every time I test it."<br><br><strong>Why 3–4:</strong> Clear conjecture, multiple verifications including larger numbers. No structural reason given.</p>
+          </div>
+          <div class="wa-band-row" id="wc3-b3" style="display:none"><!-- placeholder --></div>
+          <div class="wa-band-row" id="wc4-b3">
+            <span class="wa-band-label wa-label-3">Bands 5–6</span>
+            <p class="wa-text">"(a+b)(a−b) = a×a − a×b + b×a − b×b = a² − ab + ab − b² = a² − b². The two middle terms cancel."<br><br><strong>Why 5–6:</strong> Correct algebraic expansion. The answer follows logically. To reach 7–8, explain what the cancellation tells you and confirm it holds for all real values of a and b including negative and equal values.</p>
+          </div>
+          <div class="wa-band-row" id="wc4-b4">
+            <span class="wa-band-label wa-label-4">Bands 7–8</span>
+            <p class="wa-text">"Expand (a+b)(a−b) using the distributive law:<br>(a+b)(a−b) = a(a−b) + b(a−b) = a²−ab+ba−b² = a²−b²<br>The terms −ab and +ba are equal and opposite, so they always cancel — regardless of the values of a and b. This means a²−b² = (a+b)(a−b) for all real numbers a and b, including negative values (e.g. a=−3, b=5: 9−25=−16=(2)(−8)✓) and when a=b (both sides equal zero)."<br><br><strong>Why 7–8:</strong> Derivation from the distributive law — not just FOIL without explanation. The cancellation is explained, not just observed. Edge cases (negative values, a=b) are explicitly tested.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════════════════════
+     PANEL 5 — YEAR BENCHMARKS
+══════════════════════════════════ -->
+<div class="panel" id="panel-benchmarks">
+  <h2 class="section-title">Year-Level Benchmarks</h2>
+  <p class="section-sub">What a Level 7–8 Criterion B response looks like changes across the MYP years. The expectation escalates — here's exactly how.</p>
+
+  <div class="card" style="margin-bottom:1.5rem">
+    <table class="bench-table">
+      <thead>
+        <tr>
+          <th>Grade</th>
+          <th>What "Justify" means at this level</th>
+          <th>Example of acceptable justification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="grade-chip gc-6">Grade 6</span></td>
+          <td>A clear reason using words and/or a diagram. Does not need to be algebraic. Shows the student understands why — not just that — the pattern holds.</td>
+          <td>"Triangles tessellate because each interior angle is 60°. Six triangles meeting at a point give 6×60°=360°, which fills the space exactly without gaps."</td>
+        </tr>
+        <tr>
+          <td><span class="grade-chip gc-7">Grade 7</span></td>
+          <td>Reasoning that addresses all cases, not just drawn examples. May use simple algebraic notation. Geometric justifications should reference angle properties by name.</td>
+          <td>"Vertically opposite angles must be equal because both pairs of angles on a straight line sum to 180°. If a+b=180° and a+c=180°, then b=c."</td>
+        </tr>
+        <tr>
+          <td><span class="grade-chip gc-8">Grade 8</span></td>
+          <td>Algebraic argument expected where the pattern is numerical. "Let n represent..." language. Justification should work for negative numbers and zero where relevant.</td>
+          <td>"Let the even number be 2m and the odd number be 2k+1. Their sum is 2m+2k+1 = 2(m+k)+1, which is always odd for any integers m and k."</td>
+        </tr>
+        <tr>
+          <td><span class="grade-chip gc-9">Grade 9</span></td>
+          <td>Full algebraic derivation. Justification connects to the mathematical structure — not just the result. Student should anticipate and address edge cases or conditions.</td>
+          <td>"(a+b)(a−b) = a²−ab+ab−b² = a²−b². The middle terms always cancel, so this identity holds for all real a and b, including a=b (giving 0=0) and negative values."</td>
+        </tr>
+        <tr>
+          <td><span class="grade-chip gc-10">Grade 10</span></td>
+          <td>Derivation from first principles. Conditions stated and explained. Justification should demonstrate why the formula fails outside stated conditions — not just that it works within them.</td>
+          <td>"S∞ = a/(1−r) is derived by subtracting rS from S. This requires the series to have a finite limit, which only occurs when |r|&lt;1 — otherwise the rⁿ term does not vanish as n→∞, and the derivation is invalid."</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="card">
+    <p style="font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted);margin-bottom:.75rem">The thread across all years</p>
+    <div style="display:flex;flex-direction:column;gap:.75rem">
+      <div style="display:flex;gap:.75rem;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.65rem;flex-shrink:0">6–7</div>
+        <div style="font-size:.83rem;color:var(--ink-soft);line-height:1.6;padding-top:.3rem">Justification uses <strong style="color:var(--ink)">words, diagrams, and geometric reasoning</strong>. The key is showing the student understands the structure — not just the result.</div>
+      </div>
+      <div style="display:flex;gap:.75rem;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.65rem;flex-shrink:0">8–9</div>
+        <div style="font-size:.83rem;color:var(--ink-soft);line-height:1.6;padding-top:.3rem">Justification uses <strong style="color:var(--ink)">algebraic variables</strong>. "Let n represent any integer" is the move that separates Grades 8–9 justification from Grades 6–7.</div>
+      </div>
+      <div style="display:flex;gap:.75rem;align-items:flex-start">
+        <div style="width:36px;height:36px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.65rem;flex-shrink:0">10</div>
+        <div style="font-size:.83rem;color:var(--ink-soft);line-height:1.6;padding-top:.3rem">Justification uses <strong style="color:var(--ink)">derivation and conditions</strong>. A Grade 10 justification doesn't just prove the formula — it explains when the formula fails and why. This is the beginning of mathematical maturity.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<script>
+// ── Panel navigation ──
+function switchPanel(name, e) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.pn-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  e.currentTarget.classList.add('active');
+  window.scrollTo({top: document.querySelector('.page-nav').offsetTop - 10, behavior: 'smooth'});
+}
+
+// ── Steps strip ──
+const stepDetails = [
+  "Step 1 — Write down exactly what you notice. Be specific: 'each term increases by 3' not 'it goes up.'",
+  "Step 2 — State a claim about ALL cases, not just the examples you've seen. Use the word 'always' or 'never.'",
+  "Step 3 — Test your conjecture on new examples you didn't use to form it. If it fails, revise your conjecture.",
+  "Step 4 — Explain WHY the pattern cannot break. This is not more examples — it's a reason using mathematical structure."
+];
+function highlightStep(el, i) {
+  document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('step-detail').textContent = stepDetails[i];
+}
+
+// ── Grade tabs ──
+function switchGrade(id, btn) {
+  document.querySelectorAll('.grade-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.gtab').forEach(b => b.classList.remove('active'));
+  document.getElementById('gp-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ── Model answers ──
+function toggleModel(id, btn) {
+  const el = document.getElementById(id);
+  const showing = el.classList.toggle('shown');
+  btn.classList.toggle('shown', showing);
+  btn.innerHTML = showing
+    ? '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Hide model answer'
+    : '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v10M1 6h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg> Show model answer';
+}
+
+// ── Write & Check ──
+function showAnswer(id) {
+  const el = document.getElementById(id);
+  el.classList.add('shown');
+}
+function clearBox(id) {
+  document.getElementById(id).value = '';
+}
+function switchWAT(taskId, band, btn) {
+  const content = btn.closest('.wc-answer').querySelector('.wc-answer-content');
+  content.querySelectorAll('.wa-band-row').forEach(r => r.classList.remove('active'));
+  btn.closest('.wc-answer-tabs').querySelectorAll('.wat').forEach(b => b.classList.remove('active'));
+  const target = content.querySelector(`#${taskId}-b${band}`);
+  if (target) target.classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
