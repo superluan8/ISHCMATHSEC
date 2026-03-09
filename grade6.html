@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 6 Mathematics — ISHCMC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --g6:#FCA5A5; --g6-dark:#991b1b; --g6-light:#fef2f2;
+  --ink:#111318; --ink-soft:#4A4F5E; --ink-muted:#8A8F9E;
+  --surface:#F0F6FF; --white:#FFFFFF; --rule:#D4E4F7;
+  --fd:'DM Serif Display',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:14px; --sh:0 2px 12px rgba(0,0,0,.07); --shh:0 6px 24px rgba(0,0,0,.11);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(ellipse 80% 60% at 15% 10%,rgba(26,86,160,.10) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 50% at 85% 80%,rgba(26,86,160,.08) 0%,transparent 60%),
+  #F0F6FF}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:url('rhino.png') center/cover no-repeat;opacity:0.18;pointer-events:none}
+
+/* ═══ HEADER ═══ */
+header{position:sticky;top:0;z-index:200;background:rgba(240,246,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.hi{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-soft);font-size:.85rem;font-weight:500;transition:color .2s}
+.back:hover{color:var(--ink)}
+.back svg{width:16px;height:16px}
+.hbadge{display:flex;align-items:center;gap:10px}
+.grade-dot{width:12px;height:12px;border-radius:50%;background:var(--g6)}
+.hgrade{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ═══ HERO ═══ */
+.hero{background:var(--ink);color:white;padding:3rem clamp(1rem,4vw,3rem);position:relative;overflow:hidden}
+.hero-inner{max-width:1200px;margin:0 auto}
+.hero-label{font-family:var(--fm);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:1.25rem}
+.hero-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;margin-bottom:.5rem}
+.hero-sub{font-size:.9rem;opacity:.55;max-width:52ch;line-height:1.6;margin-bottom:1.5rem}
+.hero-soi{font-size:.78rem;opacity:.35;font-style:italic;max-width:55ch;line-height:1.6;border-left:2px solid rgba(255,255,255,.15);padding-left:.85rem}
+.rhino-hero{position:absolute;right:-10px;bottom:-15px;width:200px;height:auto;opacity:.12;pointer-events:none;filter:grayscale(20%) brightness(1.8)}
+
+/* ═══ WELCOME BANNER ═══ */
+.welcome{background:var(--g6-light);border-bottom:1px solid #fecaca;padding:1.25rem clamp(1rem,4vw,3rem)}
+.welcome-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:1rem;font-size:.85rem;color:var(--g6-dark);line-height:1.55}
+.welcome-icon{font-size:1.4rem;flex-shrink:0}
+
+/* ═══ TAB NAV ═══ */
+.tab-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:60px;z-index:100}
+.tab-nav-inner{max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem);display:flex;overflow-x:auto;scrollbar-width:none}
+.tab-nav-inner::-webkit-scrollbar{display:none}
+.tab-btn{padding:1rem 1.25rem;font-size:.875rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--g6-dark)}
+
+main{max-width:1200px;margin:0 auto;padding:2.5rem clamp(1rem,4vw,3rem) 5rem}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ═══ SHARED ═══ */
+.section-head{margin-bottom:1.75rem}
+.section-head h2{font-family:var(--fd);font-size:1.6rem;margin-bottom:.3rem}
+.section-head p{font-size:.875rem;color:var(--ink-soft);max-width:56ch;line-height:1.6}
+
+/* ═══ IDU BADGE ═══ */
+.idu-badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-family:var(--fm);font-size:.58rem;letter-spacing:.07em;text-transform:uppercase;background:#EDE9FE;color:#5B21B6;border:1px solid #DDD6FE}
+
+/* ═══ UNITS ═══ */
+.units-grid{display:flex;flex-direction:column;gap:1.5rem}
+.unit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+.unit-header{padding:1.5rem 1.5rem 1rem;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.unit-header:hover .unit-toggle{background:var(--ink);color:white;border-color:var(--ink)}
+.unit-header-left{flex:1}
+.unit-meta{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap}
+.unit-num{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+.unit-concept{font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;padding:2px 8px;border-radius:20px;background:var(--g6-light);color:var(--g6-dark);border:1px solid var(--g6)}
+.unit-title{font-family:var(--fd);font-size:1.35rem;line-height:1.2;margin-bottom:.4rem}
+.unit-soi{font-size:.82rem;color:var(--ink-soft);font-style:italic;line-height:1.5;max-width:60ch}
+.unit-toggle{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;color:var(--ink-soft)}
+.unit-toggle svg{transition:transform .25s}
+.unit-card.open .unit-toggle svg{transform:rotate(180deg)}
+.unit-crits{display:flex;gap:4px;margin-top:.75rem}
+.uc{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.62rem;font-weight:500;background:var(--surface);border:1px solid var(--rule);color:var(--ink-muted)}
+.uc.on{background:var(--ink);border-color:var(--ink);color:white}
+
+.unit-body{display:none;border-top:1px solid var(--rule)}
+.unit-card.open .unit-body{display:block}
+
+.unit-content{padding:1.5rem}
+.skills-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+.skills-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.875rem;color:var(--ink-soft);line-height:1.5}
+.skills-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g6-dark);flex-shrink:0;margin-top:.5rem}
+
+.expand-btn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:500;color:var(--g6-dark);background:none;border:none;cursor:pointer;padding:0;transition:opacity .2s}
+.expand-btn:hover{opacity:.7}
+.expand-btn svg{width:12px;height:12px;transition:transform .2s}
+.expand-btn.open svg{transform:rotate(180deg)}
+.skills-full{display:none;margin-top:.75rem}
+.skills-full.open{display:block}
+.skills-full ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.skills-full li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--ink-muted);line-height:1.5;padding-left:.5rem;border-left:2px solid var(--rule)}
+.ext-item{border-left-color:var(--g6-dark) !important}
+.ext-label{display:inline-block;font-family:var(--fm);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:20px;background:var(--g6-light);color:var(--g6-dark);margin-bottom:.25rem}
+
+.unit-meta-strip{display:flex;flex-wrap:wrap;gap:.75rem;padding:1rem 1.5rem;background:rgba(240,246,255,.7);border-top:1px solid var(--rule);font-size:.75rem;color:var(--ink-muted)}
+.meta-key{font-family:var(--fm);letter-spacing:.05em;text-transform:uppercase;font-size:.6rem}
+
+.connects-to{background:#FFF7ED;border:1px solid #FED7AA;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;font-size:.82rem;color:#7C2D12;line-height:1.6}
+.connects-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#C2410C;margin-bottom:.3rem}
+
+/* ═══ IDU card styling ═══ */
+.unit-card.idu-card{border-color:#DDD6FE}
+.unit-card.idu-card .unit-header{background:linear-gradient(135deg,#F5F3FF 0%,#EDE9FE 100%)}
+
+/* ═══ CRITERIA ═══ */
+.crit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+.crit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh)}
+.crit-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.crit-letter{width:40px;height:40px;border-radius:10px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;flex-shrink:0}
+.crit-name{font-family:var(--fd);font-size:1rem;line-height:1.2}
+.crit-subtitle{font-size:.72rem;color:var(--ink-muted)}
+.crit-body{font-size:.83rem;color:var(--ink-soft);line-height:1.65}
+.crit-body p{margin-bottom:.6rem}
+.crit-body strong{color:var(--ink);font-weight:600}
+.level-compare{margin-top:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.level-box{border-radius:8px;padding:.75rem;font-size:.78rem;line-height:1.5}
+.level-box.l6{background:#FEF3C7;border:1px solid #FDE68A;color:#78350F}
+.level-box.l8{background:#D1FAE5;border:1px solid #6EE7B7;color:#064E3B}
+.level-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;opacity:.7}
+
+/* ═══ SKILLS BANK ═══ */
+.search-bar{display:flex;align-items:center;gap:.75rem;background:var(--white);border:1.5px solid var(--rule);border-radius:40px;padding:.6rem 1.25rem;margin-bottom:2rem;max-width:480px;box-shadow:var(--sh)}
+.search-bar svg{color:var(--ink-muted);flex-shrink:0;width:16px;height:16px}
+.search-bar input{border:none;background:transparent;font-family:var(--fb);font-size:.9rem;color:var(--ink);flex:1;outline:none}
+.search-bar input::placeholder{color:var(--ink-muted)}
+.skill-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:.35rem .9rem;border-radius:20px;border:1.5px solid var(--rule);background:var(--white);font-size:.75rem;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--g6-dark);color:var(--g6-dark)}
+.filter-btn.active{background:var(--g6-dark);border-color:var(--g6-dark);color:white}
+.skills-bank-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.skill-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh);transition:box-shadow .2s}
+.skill-card:hover{box-shadow:var(--shh)}
+.skill-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.skill-topic{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.skill-card h4{font-size:.95rem;font-weight:600;margin-bottom:.4rem;line-height:1.3}
+.skill-card .skill-desc{font-size:.8rem;color:var(--ink-soft);line-height:1.55;margin-bottom:.75rem}
+.skill-example{background:var(--surface);border-radius:8px;padding:.75rem;font-size:.78rem;border-left:3px solid var(--g6-dark)}
+.skill-example .ex-label{font-family:var(--fm);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g6-dark);margin-bottom:.3rem}
+
+@media(max-width:600px){.level-compare{grid-template-columns:1fr}.crit-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" class="back">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Mathematics Hub
+    </a>
+    <div class="hbadge">
+      <div class="grade-dot"></div>
+      <span class="hgrade">Grade 6 · 2025–26</span>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-label">Grade 6 Mathematics · MYP Year 1</p>
+    <h1 class="hero-title">Where it all begins.</h1>
+    <p class="hero-sub">Number patterns, geometry, data, and fractions. Your first year of MYP Mathematics builds the foundations that every future unit — and every DP course — depends on.</p>
+    <p class="hero-soi">"Every expert was once a beginner. Every pattern was once a mystery."</p>
+  </div>
+  <img src="rhino.png" class="rhino-hero" alt="">
+</div>
+
+<div class="welcome">
+  <div class="welcome-inner">
+    <span class="welcome-icon">👋</span>
+    <span><strong>Welcome to MYP Mathematics.</strong> Grade 6 is where you learn to think like a mathematician — not just to calculate, but to notice patterns, ask questions, and explain your reasoning. Every skill you build this year will reappear, in harder forms, across every year that follows.</span>
+  </div>
+</div>
+
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('units',event)">Units</button>
+    <button class="tab-btn" onclick="switchTab('criteria',event)">Criteria Guide</button>
+    <button class="tab-btn" onclick="switchTab('skills',event)">Skills Bank</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════
+     TAB 1 — UNITS
+══════════════════════════ -->
+<div class="tab-panel active" id="tab-units">
+  <div class="section-head">
+    <h2>Your Units</h2>
+    <p>Five units across the year — including one interdisciplinary unit (IDU) shared with another subject. No streaming in Grade 6.</p>
+  </div>
+  <div class="units-grid">
+
+    <!-- ═══ UNIT 1 ═══ -->
+    <div class="unit-card" id="unit1">
+      <div class="unit-header" onclick="toggleUnit('unit1')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 1</span>
+            <span class="unit-concept">Relationships</span>
+          </div>
+          <h3 class="unit-title">How to Think Mathematically</h3>
+          <p class="unit-soi">Exploring patterns can help our understanding of relationships and support the categorising of objects.</p>
+          <div class="unit-crits">
+            <span class="uc on">A</span><span class="uc">B</span><span class="uc">C</span><span class="uc">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Identify and describe patterns in sets of whole numbers; identify square numbers, odds, evens, and prime numbers</li>
+            <li>Find the Highest Common Factor (HCF) and Least Common Multiple (LCM) of a set of whole numbers; express numbers as a product of prime factors using exponent form</li>
+            <li>Perform long multiplication and long division with whole numbers; apply order of operations (PEDMAS) to evaluate numerical expressions</li>
+            <li>Represent integers on a number line; calculate with integers (+, −, ×, ÷); understand and use absolute value; write inequality statements</li>
+            <li>Plot and identify coordinates in four quadrants</li>
+          </ul>
+          <button class="expand-btn" onclick="toggleFull('u1-f',this)">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Show full skills list
+          </button>
+          <div class="skills-full" id="u1-f">
+            <ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Use prime factor decomposition to solve HCF and LCM problems</li>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Perform long multiplication and long division with decimal numbers</li>
+            </ul>
+          </div>
+          <div class="connects-to">
+            <div class="connects-label">↗ Connects to</div>
+            Prime factorisation and HCF/LCM underpin fraction operations in Unit 4. Integer operations and coordinate geometry are used in every algebraic unit from Grade 7 onward. Order of operations (PEDMAS) is tested in every DP paper — getting it right in Grade 6 saves marks for the next six years.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Pattern</div>
+          <div><span class="meta-key">Global Context:</span> Identities and Relationships</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 2 ═══ -->
+    <div class="unit-card" id="unit2">
+      <div class="unit-header" onclick="toggleUnit('unit2')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 2</span>
+            <span class="unit-concept">Form</span>
+          </div>
+          <h3 class="unit-title">Designing a Park</h3>
+          <p class="unit-soi">We can pursue our culture and creativity through different forms of representation.</p>
+          <div class="unit-crits">
+            <span class="uc on">A</span><span class="uc on">B</span><span class="uc">C</span><span class="uc">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Identify and name angles in geometric figures; identify and name polygons up to decagons; use a protractor correctly</li>
+            <li>Determine congruent, supplementary, complementary, and vertically opposite angles; apply angle rules at a point, on a straight line, and vertically opposite</li>
+            <li>Recognise types of triangles and their properties; calculate angle sums within triangles</li>
+            <li>Introduction to algebra — collecting like terms, and forming and solving simple equations (e.g. A + 30 = 180 or B + 2B = 90)</li>
+            <li>Calculate perimeter and area of triangles, quadrilaterals, and composite shapes; use coordinates to describe polygon vertices</li>
+            <li>Draw and find surface area of nets; draw 2D representations and 3D sketches of 3D shapes; calculate volume of cuboids and composite cuboid shapes</li>
+          </ul>
+          <button class="expand-btn" onclick="toggleFull('u2-f',this)">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Show full skills list
+          </button>
+          <div class="skills-full" id="u2-f">
+            <ul>
+              <li>Draw 3D shapes freehand using isometric conventions</li>
+            </ul>
+          </div>
+          <div class="connects-to">
+            <div class="connects-label">↗ Connects to</div>
+            Angle rules return in Grade 7 (Sound Structures) and Grade 9 (We Like to Argue). Area and volume grow through every MYP year, culminating in Grade 10 coordinate geometry and Grade 8 3D work. The first taste of algebra here — forming equations from angle facts — is where algebraic thinking begins.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Representation</div>
+          <div><span class="meta-key">Global Context:</span> Personal and Cultural Expression</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 3 ═══ -->
+    <div class="unit-card" id="unit3">
+      <div class="unit-header" onclick="toggleUnit('unit3')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 3</span>
+            <span class="unit-concept">Logic</span>
+          </div>
+          <h3 class="unit-title">Managing the Roads</h3>
+          <p class="unit-soi">Representations through equivalent forms allow students to adapt numerical values to find ingenious solutions to real life problems.</p>
+          <div class="unit-crits">
+            <span class="uc">A</span><span class="uc">B</span><span class="uc on">C</span><span class="uc on">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Identify types of data — ordinal, nominal, categorical qualitative, quantitative, discrete, continuous, primary, and secondary</li>
+            <li>Identify types of data collection — observation, survey, questionnaire, interview</li>
+            <li>Select, create, and interpret pictorial representations — dot plots, pie charts, bar graphs, histograms, and line graphs</li>
+            <li>Calculate and interpret measures of central tendency (mean, median, mode) and range</li>
+            <li>Calculate simple probabilities; use correct probability language (certain, likely, unlikely, impossible) and a number line to represent probability estimates</li>
+            <li>Calculate relative frequencies; understand experimental vs theoretical probability; convert between fractions, decimals, and percentages</li>
+          </ul>
+          <div class="connects-to">
+            <div class="connects-label">↗ Connects to</div>
+            Data types, statistical displays, and probability language are the foundations of every statistics unit from Grade 7 onward. The conversion between fractions, decimals, and percentages introduced here is used in every numerical context through to DP. Mean, median, mode, and range reappear in Grade 8, Grade 10, and DP AI SL Topic 4.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Generalisation · Justification</div>
+          <div><span class="meta-key">Global Context:</span> Globalisation and Sustainability</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 4 IDU ═══ -->
+    <div class="unit-card idu-card" id="unit4a">
+      <div class="unit-header" onclick="toggleUnit('unit4a')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 4 · Part 1</span>
+            <span class="unit-concept">Globalisation &amp; Sustainability</span>
+            <span class="idu-badge">IDU</span>
+          </div>
+          <h3 class="unit-title">Equity for All <span style="font-family:var(--fb);font-size:.85rem;font-weight:400;color:var(--ink-muted)">— Interdisciplinary</span></h3>
+          <p class="unit-soi">Modelling development can reveal inequity and difference and enhance our understanding of fairness.</p>
+          <div class="unit-crits">
+            <span class="uc on">A</span><span class="uc on">B</span><span class="uc on">C</span><span class="uc">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <div style="background:#EDE9FE;border-radius:8px;padding:.75rem 1rem;font-size:.8rem;color:#4C1D95;margin-bottom:1rem;line-height:1.55">
+            <strong>Interdisciplinary Unit:</strong> This unit is shared with another subject. You will apply mathematical thinking to investigate real-world questions about equity, fairness, and development alongside your other class.
+          </div>
+          <ul class="skills-list">
+            <li>Summarise numerical data sets in context — describe the nature of the attribute, how it was measured, and its units; describe overall patterns and striking deviations</li>
+            <li>Use proportional relationships to solve multi-step ratio and percent problems — percentage of an amount, percent increase and decrease</li>
+            <li>Use a Venn diagram as a compare-and-contrast model to organise and represent information</li>
+          </ul>
+          <div class="connects-to">
+            <div class="connects-label">↗ Connects to</div>
+            The IDU introduces you to using mathematics to examine real social questions — this is exactly what Criterion D asks you to do across all six MYP years. Percent increase/decrease and Venn diagrams both deepen in Grade 7 (More Money More Problems and Let's Be Logical).
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Equity</div>
+          <div><span class="meta-key">Global Context:</span> Fairness and Development</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 4 PART 2 ═══ -->
+    <div class="unit-card" id="unit4b">
+      <div class="unit-header" onclick="toggleUnit('unit4b')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 4 · Part 2</span>
+            <span class="unit-concept">Form</span>
+          </div>
+          <h3 class="unit-title">Equity for All <span style="font-family:var(--fb);font-size:.85rem;font-weight:400;color:var(--ink-muted)">— Fractions &amp; Rationals</span></h3>
+          <p class="unit-soi">Developing our understanding of equitable relationships through different representations of information can increase choice and opportunities.</p>
+          <div class="unit-crits">
+            <span class="uc">A</span><span class="uc">B</span><span class="uc on">C</span><span class="uc on">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Convert freely between fractions, decimals, and percentages; perform operations with decimals and fractions</li>
+            <li>Divide a fraction by a fraction; solve worded problems involving fractions</li>
+            <li>Understand terminating and non-terminating decimals (created by fraction-to-decimal conversion using long division)</li>
+            <li>Use the language of rational numbers — numerator, denominator; represent rational numbers as points on a number line; use the number line to order rational numbers; locate rational numbers inside a coordinate system</li>
+          </ul>
+          <div class="connects-to">
+            <div class="connects-label">↗ Connects to</div>
+            Rational numbers and fraction operations are the numerical foundation of every algebraic manipulation in Grades 7–10 and DP. Students who can work fluently with fractions — rather than reaching for a calculator — have a significant advantage in every subsequent year. Terminating and non-terminating decimals connect to surds and irrational numbers later in MYP.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Representations</div>
+          <div><span class="meta-key">Global Context:</span> Fairness and Development</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     TAB 2 — CRITERIA GUIDE
+══════════════════════════ -->
+<div class="tab-panel" id="tab-criteria">
+  <div class="section-head">
+    <h2>Criteria Guide</h2>
+    <p>In Grade 6, you're meeting the MYP criteria for the first time. Here's what each one actually asks you to do — and how to move from good to excellent.</p>
+  </div>
+
+  <div style="background:#EFF6FF;border:1px solid #BFDBFE;border-radius:12px;padding:1.1rem 1.4rem;margin-bottom:2rem;font-size:.84rem;color:#1E3A8A;line-height:1.65">
+    <strong>A note for Grade 6:</strong> You are assessed on all four criteria this year, but not every criterion is assessed in every unit — the dots on each unit card show which criteria apply. In Grade 6, the most important habit to build is <strong>showing your working clearly</strong>. A correct answer with no working shown can score zero on Criteria A, B, and C.
+  </div>
+
+  <div class="crit-grid">
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">A</div><div><p class="crit-name">Knowing &amp; Understanding</p><p class="crit-subtitle">Know it, select it, apply it</p></div></div>
+      <div class="crit-body">
+        <p>Criterion A tests whether you can <strong>correctly select and apply mathematical knowledge</strong>. In Grade 6, this means knowing your number rules, angle facts, and fraction operations accurately — and applying them to questions you might not have seen before.</p>
+        <p>The key word at Level 7–8 is <strong>unfamiliar</strong>. A question that combines two things you know separately — like using prime factorisation to simplify a fraction — is unfamiliar. Can you still apply what you know?</p>
+        <p><strong>Common mistake:</strong> Students who memorise procedures but can't adapt them to new contexts score Level 3–4. Students who understand why a rule works can apply it flexibly.</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Correctly applies mathematics to familiar problems. Some errors on more complex questions. Method is mostly clear.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Accurately applies mathematics to both familiar and unfamiliar problems. Method is always clear. Answer includes correct units and is expressed appropriately.</div>
+      </div>
+    </div>
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">B</div><div><p class="crit-name">Investigating Patterns</p><p class="crit-subtitle">Notice, describe, generalise</p></div></div>
+      <div class="crit-body">
+        <p>Criterion B is about <strong>mathematical curiosity</strong>. You're given some examples, and you have to figure out what's happening — and then describe it in a way that works for all cases, not just the ones you've seen.</p>
+        <p>In Grade 6, Crit B appears in Unit 1 (number patterns) and Unit 2 (geometric patterns). The progression is: <strong>notice → describe → generalise → justify</strong>. Most Grade 6 students get the first two. The jump to Level 7–8 requires a genuine attempt at a general rule.</p>
+        <p><strong>Example:</strong> Noticing that "the sum of two odd numbers is even" is Level 3–4. Writing a general rule — "if two numbers are both odd, their sum is always even" — and explaining why (an odd number is 2k+1, so their sum is 2k+2m+2 = 2(k+m+1), which is always even) is Level 7–8.</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Pattern identified and described clearly. A general rule is stated. Verified with at least one new example.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Pattern described precisely. General rule stated correctly. Verified with multiple examples. Justification attempted — explains why the pattern works, not just that it does.</div>
+      </div>
+    </div>
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">C</div><div><p class="crit-name">Communicating</p><p class="crit-subtitle">Write mathematics, not just answers</p></div></div>
+      <div class="crit-body">
+        <p>Criterion C is about <strong>how you express your mathematical thinking</strong>. In Grade 6, this is where many students lose marks unnecessarily — not because their mathematics is wrong, but because it isn't communicated clearly.</p>
+        <p>Three non-negotiables for every piece of work assessed on Crit C:</p>
+        <p><strong>1. Show all working.</strong> Don't skip steps. Each line should follow logically from the previous one.</p>
+        <p><strong>2. Label everything.</strong> Graphs need axes labelled with variables and units. Diagrams need measurements marked. Tables need headings.</p>
+        <p><strong>3. State your conclusion.</strong> Don't end with a number — end with a sentence that answers the question in context.</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Working is mostly present. Some labels on diagrams. Conclusions present but may be incomplete or lack context.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>All working shown with no unexplained jumps. All diagrams fully labelled. Conclusions mathematically precise and expressed in the context of the problem.</div>
+      </div>
+    </div>
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">D</div><div><p class="crit-name">Applying in Real Life</p><p class="crit-subtitle">Mathematics that means something</p></div></div>
+      <div class="crit-body">
+        <p>Criterion D is about using mathematics to <strong>make sense of the real world</strong>. In Grade 6, this appears most clearly in Units 3 and 4 — managing data to make decisions, understanding equity through percentages and ratios.</p>
+        <p>The four things Crit D always asks you to do: <strong>identify the mathematical problem</strong> in a real situation, <strong>select and apply</strong> appropriate mathematics, <strong>interpret your answer</strong> in context (not just write a number), and <strong>reflect</strong> on what the result means and whether it makes sense.</p>
+        <p><strong>In Grade 6, focus on interpretation.</strong> After you calculate, ask yourself: "What does this number actually mean for the situation?" That sentence is often the difference between Level 5 and Level 7.</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Applies correct mathematics to the real-life context. Interprets the answer in context. Solution is mostly complete.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Identifies the correct mathematical structure of the problem. Applies and completes the model. Interprets results precisely in context. Identifies at least one assumption or limitation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     TAB 3 — SKILLS BANK
+══════════════════════════ -->
+<div class="tab-panel" id="tab-skills">
+  <div class="section-head">
+    <h2>Skills Bank</h2>
+    <p>Search or filter for any Grade 6 skill. Each card has a worked example — use them to check your understanding before assessments.</p>
+  </div>
+  <div class="search-bar">
+    <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <input type="text" id="skillSearch" placeholder="Search skills…" oninput="filterSkills(this.value)">
+  </div>
+  <div class="skill-filters">
+    <button class="filter-btn active" onclick="filterTopic('all',this)">All topics</button>
+    <button class="filter-btn" onclick="filterTopic('number',this)">Number</button>
+    <button class="filter-btn" onclick="filterTopic('geometry',this)">Geometry</button>
+    <button class="filter-btn" onclick="filterTopic('data',this)">Data &amp; Probability</button>
+    <button class="filter-btn" onclick="filterTopic('fractions',this)">Fractions &amp; Rationals</button>
+  </div>
+  <div class="skills-bank-grid" id="skillsGrid">
+
+    <!-- NUMBER -->
+    <div class="skill-card" data-topic="number" data-keywords="prime factor HCF LCM highest common factor least common multiple decomposition">
+      <div class="skill-card-meta"><span class="skill-topic">Number</span></div>
+      <h4>Prime Factor Decomposition</h4>
+      <p class="skill-desc">Every whole number can be written as a product of primes. Use a factor tree to break the number down until all branches are prime. Write using exponent form.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        72 = 8 × 9 = 2³ × 3²<br>
+        HCF(72, 48): 72=2³×3², 48=2⁴×3<br>
+        HCF = 2³×3 = <strong>24</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="number" data-keywords="PEDMAS order of operations brackets exponents">
+      <div class="skill-card-meta"><span class="skill-topic">Number</span></div>
+      <h4>Order of Operations (PEDMAS)</h4>
+      <p class="skill-desc">Parentheses → Exponents → Division/Multiplication (left to right) → Addition/Subtraction (left to right). Never add before you multiply.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        3 + 4 × 2² − (6 ÷ 3)<br>
+        = 3 + 4 × 4 − 2<br>
+        = 3 + 16 − 2 = <strong>17</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="number" data-keywords="integer negative number line add subtract multiply divide absolute value">
+      <div class="skill-card-meta"><span class="skill-topic">Number</span></div>
+      <h4>Integer Operations</h4>
+      <p class="skill-desc">Adding a negative = subtracting. Two negatives multiplied = positive. Absolute value |x| = distance from zero — always positive. −|−5| = −5, but |−5| = 5.</p>
+      <div class="skill-example"><div class="ex-label">Quick rules</div>
+        (−3) × (−4) = <strong>+12</strong><br>
+        (−3) × (+4) = <strong>−12</strong><br>
+        |−7| = <strong>7</strong> · −|−7| = <strong>−7</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="number" data-keywords="inequality greater less than number line represent">
+      <div class="skill-card-meta"><span class="skill-topic">Number</span></div>
+      <h4>Inequality Statements</h4>
+      <p class="skill-desc">&gt; means greater than, &lt; means less than, ≥ means greater than or equal to, ≤ means less than or equal to. The arrow on the number line points in the direction of solutions.</p>
+      <div class="skill-example"><div class="ex-label">Reading inequalities</div>
+        x &gt; 3: all numbers to the right of 3 (open circle at 3)<br>
+        x ≤ −1: all numbers left of −1 (closed circle at −1)
+      </div>
+    </div>
+
+    <!-- GEOMETRY -->
+    <div class="skill-card" data-topic="geometry" data-keywords="angle protractor complementary supplementary vertically opposite">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Angle Types &amp; Rules</h4>
+      <p class="skill-desc">Complementary: sum = 90°. Supplementary: sum = 180°. Angles on a straight line = 180°. Angles at a point = 360°. Vertically opposite angles are always equal.</p>
+      <div class="skill-example"><div class="ex-label">Finding a missing angle</div>
+        Supplementary pair: one angle = 65°<br>
+        Other = 180° − 65° = <strong>115°</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="geometry" data-keywords="triangle types angles sum equilateral isosceles scalene right obtuse">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Triangles &amp; Angle Sum</h4>
+      <p class="skill-desc">All triangle interior angles sum to 180°. Equilateral: three equal angles (60° each). Isosceles: two equal angles. Right-angled: one angle = 90°. The largest angle is always opposite the longest side.</p>
+      <div class="skill-example"><div class="ex-label">Finding a missing angle</div>
+        Triangle with angles 40° and 75°:<br>
+        Third angle = 180° − 40° − 75° = <strong>65°</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="geometry" data-keywords="area perimeter triangle quadrilateral rectangle composite shape">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Area &amp; Perimeter</h4>
+      <p class="skill-desc">Rectangle: A = l × w. Triangle: A = ½ × b × h. Composite shapes: split into simpler shapes, add areas. Perimeter = total distance around the outside. Always include units.</p>
+      <div class="skill-example"><div class="ex-label">Composite shape</div>
+        L-shape = large rectangle − small rectangle<br>
+        Or split into two separate rectangles and add.
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="geometry" data-keywords="volume surface area cuboid net 3D shape">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Volume &amp; Surface Area of Cuboids</h4>
+      <p class="skill-desc">Volume = l × w × h (units³). Surface area = sum of all six face areas = 2(lw + lh + wh) (units²). Nets show all faces unfolded flat — great for visualising surface area.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Cuboid 3cm × 4cm × 5cm:<br>
+        V = 60 cm³<br>
+        SA = 2(12+15+20) = <strong>94 cm²</strong>
+      </div>
+    </div>
+
+    <!-- DATA & PROBABILITY -->
+    <div class="skill-card" data-topic="data" data-keywords="data types discrete continuous qualitative quantitative nominal ordinal primary secondary">
+      <div class="skill-card-meta"><span class="skill-topic">Data &amp; Probability</span></div>
+      <h4>Types of Data</h4>
+      <p class="skill-desc">Quantitative data is numerical (discrete = countable, continuous = measurable). Qualitative data is categorical (nominal = no order, ordinal = has order). Primary = collected by you; secondary = collected by someone else.</p>
+      <div class="skill-example"><div class="ex-label">Quick examples</div>
+        Discrete: number of students (can't have 2.5)<br>
+        Continuous: height in cm (can be any value)<br>
+        Ordinal: satisfaction ratings (1–5 in order)
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="data" data-keywords="mean median mode range central tendency average">
+      <div class="skill-card-meta"><span class="skill-topic">Data &amp; Probability</span></div>
+      <h4>Mean, Median, Mode &amp; Range</h4>
+      <p class="skill-desc">Mean = sum ÷ count. Median = middle value when ordered. Mode = most frequent value. Range = max − min. Median and mode are better measures when there are extreme outliers.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Data: 3, 7, 7, 9, 14<br>
+        Mean = 40÷5 = <strong>8</strong> · Median = <strong>7</strong><br>
+        Mode = <strong>7</strong> · Range = 14−3 = <strong>11</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="data" data-keywords="probability experimental theoretical relative frequency certain impossible">
+      <div class="skill-card-meta"><span class="skill-topic">Data &amp; Probability</span></div>
+      <h4>Probability Basics</h4>
+      <p class="skill-desc">Theoretical probability = favourable outcomes ÷ total outcomes. Relative frequency = number of times it happened ÷ total trials. As trials increase, relative frequency approaches theoretical probability.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Rolled a die 60 times, got 6 exactly 12 times.<br>
+        Relative frequency = 12/60 = <strong>0.2</strong><br>
+        Theoretical P(6) = 1/6 ≈ 0.167
+      </div>
+    </div>
+
+    <!-- FRACTIONS & RATIONALS -->
+    <div class="skill-card" data-topic="fractions" data-keywords="fraction decimal percentage convert equivalent">
+      <div class="skill-card-meta"><span class="skill-topic">Fractions &amp; Rationals</span></div>
+      <h4>Converting: Fractions, Decimals, Percentages</h4>
+      <p class="skill-desc">Fraction → decimal: divide numerator by denominator. Decimal → percentage: multiply by 100. Percentage → fraction: write over 100 and simplify. Memorise common ones: ½=0.5=50%, ¼=0.25=25%, ⅓≈0.333=33.3%.</p>
+      <div class="skill-example"><div class="ex-label">Quick conversions</div>
+        3/8 = 3 ÷ 8 = 0.375 = <strong>37.5%</strong><br>
+        0.64 = 64/100 = <strong>16/25</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="fractions" data-keywords="divide fraction by fraction multiply reciprocal">
+      <div class="skill-card-meta"><span class="skill-topic">Fractions &amp; Rationals</span></div>
+      <h4>Dividing Fractions</h4>
+      <p class="skill-desc">To divide by a fraction, multiply by its reciprocal (flip it). Keep the first fraction, Change the ÷ to ×, Flip the second fraction. (KCF)</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        3/4 ÷ 2/5 = 3/4 × 5/2 = 15/8 = <strong>1⅞</strong><br>
+        Always simplify your final answer.
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="fractions" data-keywords="rational number number line ordering denominator numerator">
+      <div class="skill-card-meta"><span class="skill-topic">Fractions &amp; Rationals</span></div>
+      <h4>Rational Numbers on a Number Line</h4>
+      <p class="skill-desc">Rational numbers are any number that can be written as a fraction p/q where q ≠ 0. To order fractions, convert to a common denominator or to decimals, then place on the number line.</p>
+      <div class="skill-example"><div class="ex-label">Ordering</div>
+        Order: 2/3, 3/4, 5/8<br>
+        → 16/24, 18/24, 15/24<br>
+        → <strong>5/8 &lt; 2/3 &lt; 3/4</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="fractions" data-keywords="terminating non-terminating recurring decimal fraction long division">
+      <div class="skill-card-meta"><span class="skill-topic">Fractions &amp; Rationals</span></div>
+      <h4>Terminating vs Non-Terminating Decimals</h4>
+      <p class="skill-desc">Terminating: the decimal ends (e.g. 1/4 = 0.25). Non-terminating recurring: the decimal repeats forever (e.g. 1/3 = 0.333…). A fraction terminates only if its denominator (in lowest terms) has no prime factors other than 2 and 5.</p>
+      <div class="skill-example"><div class="ex-label">Quick test</div>
+        1/8 → denominator = 2³ → <strong>terminates</strong> (0.125)<br>
+        1/6 → denominator = 2×3 → <strong>recurring</strong> (0.1666…)
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+function toggleUnit(id) { document.getElementById(id).classList.toggle('open'); }
+
+function toggleFull(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  for (let n of btn.childNodes) {
+    if (n.nodeType === 3) { n.textContent = ' ' + (open ? 'Show less' : 'Show full skills list'); break; }
+  }
+}
+
+function switchTab(name, e) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+
+let activeTopicFilter = 'all';
+function filterSkills(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const kw = (card.dataset.keywords + ' ' + card.textContent).toLowerCase();
+    const topicMatch = activeTopicFilter === 'all' || card.dataset.topic === activeTopicFilter;
+    card.style.display = (kw.includes(q) && topicMatch) ? '' : 'none';
+  });
+}
+function filterTopic(topic, btn) {
+  activeTopicFilter = topic;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterSkills(document.getElementById('skillSearch').value.toLowerCase());
+}
+</script>
+</body>
+</html>
