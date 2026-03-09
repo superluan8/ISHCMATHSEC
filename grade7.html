@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 7 Mathematics — ISHCMC</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --g7:#F9A8D4; --g7-dark:#9d174d; --g7-light:#fdf2f8;
+  --ink:#111318; --ink-soft:#4A4F5E; --ink-muted:#8A8F9E;
+  --surface:#F0F6FF; --white:#FFFFFF; --rule:#D4E4F7;
+  --fd:'DM Serif Display',Georgia,serif;
+  --fb:'DM Sans',sans-serif;
+  --fm:'JetBrains Mono',monospace;
+  --r:14px; --sh:0 2px 12px rgba(0,0,0,.07); --shh:0 6px 24px rgba(0,0,0,.11);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--fb);background:var(--surface);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;z-index:-2;
+  background:radial-gradient(ellipse 80% 60% at 15% 10%,rgba(26,86,160,.10) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 50% at 85% 80%,rgba(26,86,160,.08) 0%,transparent 60%),
+  #F0F6FF}
+body::after{content:'';position:fixed;inset:0;z-index:-1;background:url('rhino.png') center/cover no-repeat;opacity:0.18;pointer-events:none}
+
+/* ═══ HEADER ═══ */
+header{position:sticky;top:0;z-index:200;background:rgba(240,246,255,.94);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule)}
+.hi{max-width:1200px;margin:0 auto;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(1rem,4vw,3rem)}
+.back{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink-soft);font-size:.85rem;font-weight:500;transition:color .2s}
+.back:hover{color:var(--ink)}
+.back svg{width:16px;height:16px}
+.hbadge{display:flex;align-items:center;gap:10px}
+.grade-dot{width:12px;height:12px;border-radius:50%;background:var(--g7)}
+.hgrade{font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* ═══ HERO ═══ */
+.hero{background:var(--ink);color:white;padding:3rem clamp(1rem,4vw,3rem);position:relative;overflow:hidden}
+.hero-inner{max-width:1200px;margin:0 auto}
+.hero-label{font-family:var(--fm);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;opacity:.5;margin-bottom:1.25rem}
+.hero-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;margin-bottom:.5rem}
+.hero-sub{font-size:.9rem;opacity:.55;max-width:52ch;line-height:1.6;margin-bottom:1.5rem}
+.hero-soi{font-size:.78rem;opacity:.35;font-style:italic;max-width:55ch;line-height:1.6;border-left:2px solid rgba(255,255,255,.15);padding-left:.85rem}
+.rhino-hero{position:absolute;right:-10px;bottom:-15px;width:200px;height:auto;opacity:.12;pointer-events:none;filter:grayscale(20%) brightness(1.8)}
+
+/* ═══ TAB NAV ═══ */
+.tab-nav{background:var(--white);border-bottom:1px solid var(--rule);position:sticky;top:60px;z-index:100}
+.tab-nav-inner{max-width:1200px;margin:0 auto;padding:0 clamp(1rem,4vw,3rem);display:flex;overflow-x:auto;scrollbar-width:none}
+.tab-nav-inner::-webkit-scrollbar{display:none}
+.tab-btn{padding:1rem 1.25rem;font-size:.875rem;font-weight:500;color:var(--ink-soft);border:none;background:transparent;cursor:pointer;border-bottom:2.5px solid transparent;white-space:nowrap;transition:color .2s,border-color .2s}
+.tab-btn:hover{color:var(--ink)}
+.tab-btn.active{color:var(--ink);border-bottom-color:var(--g7-dark)}
+
+main{max-width:1200px;margin:0 auto;padding:2.5rem clamp(1rem,4vw,3rem) 5rem}
+.tab-panel{display:none}
+.tab-panel.active{display:block}
+
+/* ═══ SHARED ═══ */
+.section-head{margin-bottom:1.75rem}
+.section-head h2{font-family:var(--fd);font-size:1.6rem;margin-bottom:.3rem}
+.section-head p{font-size:.875rem;color:var(--ink-soft);max-width:56ch;line-height:1.6}
+
+/* ═══ UNITS ═══ */
+.units-grid{display:flex;flex-direction:column;gap:1.5rem}
+.unit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh)}
+.unit-header{padding:1.5rem 1.5rem 1rem;cursor:pointer;display:flex;align-items:flex-start;justify-content:space-between;gap:1rem}
+.unit-header:hover .unit-toggle{background:var(--ink);color:white;border-color:var(--ink)}
+.unit-header-left{flex:1}
+.unit-meta{display:flex;align-items:center;gap:.5rem;margin-bottom:.6rem;flex-wrap:wrap}
+.unit-num{font-family:var(--fm);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-muted)}
+.unit-concept{font-family:var(--fm);font-size:.6rem;letter-spacing:.06em;padding:2px 8px;border-radius:20px;background:var(--g7-light);color:var(--g7-dark);border:1px solid var(--g7)}
+.unit-title{font-family:var(--fd);font-size:1.35rem;line-height:1.2;margin-bottom:.4rem}
+.unit-soi{font-size:.82rem;color:var(--ink-soft);font-style:italic;line-height:1.5;max-width:60ch}
+.unit-toggle{width:30px;height:30px;border-radius:50%;border:1.5px solid var(--rule);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s;color:var(--ink-soft)}
+.unit-toggle svg{transition:transform .25s}
+.unit-card.open .unit-toggle svg{transform:rotate(180deg)}
+.unit-crits{display:flex;gap:4px;margin-top:.75rem}
+.uc{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--fm);font-size:.62rem;font-weight:500;background:var(--surface);border:1px solid var(--rule);color:var(--ink-muted)}
+.uc.on{background:var(--ink);border-color:var(--ink);color:white}
+
+.unit-body{display:none;border-top:1px solid var(--rule)}
+.unit-card.open .unit-body{display:block}
+
+.unit-content{padding:1.5rem}
+.skills-list{list-style:none;display:flex;flex-direction:column;gap:.5rem;margin-bottom:1rem}
+.skills-list li{display:flex;align-items:flex-start;gap:.6rem;font-size:.875rem;color:var(--ink-soft);line-height:1.5}
+.skills-list li::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--g7-dark);flex-shrink:0;margin-top:.5rem}
+
+.expand-btn{display:inline-flex;align-items:center;gap:6px;font-size:.78rem;font-weight:500;color:var(--g7-dark);background:none;border:none;cursor:pointer;padding:0;transition:opacity .2s}
+.expand-btn:hover{opacity:.7}
+.expand-btn svg{width:12px;height:12px;transition:transform .2s}
+.expand-btn.open svg{transform:rotate(180deg)}
+.skills-full{display:none;margin-top:.75rem}
+.skills-full.open{display:block}
+.skills-full ul{list-style:none;display:flex;flex-direction:column;gap:.4rem}
+.skills-full li{display:flex;align-items:flex-start;gap:.6rem;font-size:.82rem;color:var(--ink-muted);line-height:1.5;padding-left:.5rem;border-left:2px solid var(--rule)}
+.ext-item{border-left-color:var(--g7-dark) !important}
+.ext-label{display:inline-block;font-family:var(--fm);font-size:.55rem;letter-spacing:.06em;text-transform:uppercase;padding:1px 6px;border-radius:20px;background:var(--g7-light);color:var(--g7-dark);margin-bottom:.25rem}
+
+.unit-meta-strip{display:flex;flex-wrap:wrap;gap:.75rem;padding:1rem 1.5rem;background:rgba(240,246,255,.7);border-top:1px solid var(--rule);font-size:.75rem;color:var(--ink-muted)}
+.meta-key{font-family:var(--fm);letter-spacing:.05em;text-transform:uppercase;font-size:.6rem}
+
+/* G8 bridge callout */
+.g8-bridge{background:#FDF9E7;border:1px solid #FDE68A;border-radius:10px;padding:1rem 1.25rem;margin-top:1rem;font-size:.82rem;color:#78350F;line-height:1.6}
+.g8-bridge-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;color:#D97706;margin-bottom:.3rem}
+
+/* ═══ CRITERIA ═══ */
+.crit-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-bottom:2rem}
+.crit-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.5rem;box-shadow:var(--sh)}
+.crit-header{display:flex;align-items:center;gap:.75rem;margin-bottom:1rem}
+.crit-letter{width:40px;height:40px;border-radius:10px;background:var(--ink);color:white;display:flex;align-items:center;justify-content:center;font-family:var(--fd);font-size:1.3rem;flex-shrink:0}
+.crit-name{font-family:var(--fd);font-size:1rem;line-height:1.2}
+.crit-subtitle{font-size:.72rem;color:var(--ink-muted)}
+.crit-body{font-size:.83rem;color:var(--ink-soft);line-height:1.65}
+.crit-body p{margin-bottom:.6rem}
+.crit-body strong{color:var(--ink);font-weight:600}
+.level-compare{margin-top:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.level-box{border-radius:8px;padding:.75rem;font-size:.78rem;line-height:1.5}
+.level-box.l6{background:#FEF3C7;border:1px solid #FDE68A;color:#78350F}
+.level-box.l8{background:#D1FAE5;border:1px solid #6EE7B7;color:#064E3B}
+.level-label{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:.3rem;opacity:.7}
+
+/* ═══ SKILLS BANK ═══ */
+.search-bar{display:flex;align-items:center;gap:.75rem;background:var(--white);border:1.5px solid var(--rule);border-radius:40px;padding:.6rem 1.25rem;margin-bottom:2rem;max-width:480px;box-shadow:var(--sh)}
+.search-bar svg{color:var(--ink-muted);flex-shrink:0;width:16px;height:16px}
+.search-bar input{border:none;background:transparent;font-family:var(--fb);font-size:.9rem;color:var(--ink);flex:1;outline:none}
+.search-bar input::placeholder{color:var(--ink-muted)}
+.skill-filters{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:1.5rem}
+.filter-btn{padding:.35rem .9rem;border-radius:20px;border:1.5px solid var(--rule);background:var(--white);font-size:.75rem;font-weight:500;color:var(--ink-soft);cursor:pointer;transition:all .2s}
+.filter-btn:hover{border-color:var(--g7-dark);color:var(--g7-dark)}
+.filter-btn.active{background:var(--g7-dark);border-color:var(--g7-dark);color:white}
+.skills-bank-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem}
+.skill-card{background:var(--white);border:1px solid var(--rule);border-radius:var(--r);padding:1.25rem;box-shadow:var(--sh);transition:box-shadow .2s}
+.skill-card:hover{box-shadow:var(--shh)}
+.skill-card-meta{display:flex;align-items:center;justify-content:space-between;margin-bottom:.6rem}
+.skill-topic{font-family:var(--fm);font-size:.58rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-muted)}
+.skill-card h4{font-size:.95rem;font-weight:600;margin-bottom:.4rem;line-height:1.3}
+.skill-card .skill-desc{font-size:.8rem;color:var(--ink-soft);line-height:1.55;margin-bottom:.75rem}
+.skill-example{background:var(--surface);border-radius:8px;padding:.75rem;font-size:.78rem;border-left:3px solid var(--g7-dark)}
+.skill-example .ex-label{font-family:var(--fm);font-size:.55rem;letter-spacing:.08em;text-transform:uppercase;color:var(--g7-dark);margin-bottom:.3rem}
+
+@media(max-width:600px){.level-compare{grid-template-columns:1fr}.crit-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="hi">
+    <a href="index.html" class="back">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 12L6 8l4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Mathematics Hub
+    </a>
+    <div class="hbadge">
+      <div class="grade-dot"></div>
+      <span class="hgrade">Grade 7 · 2025–26</span>
+    </div>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-label">Grade 7 Mathematics · MYP Year 2</p>
+    <h1 class="hero-title">Four big ideas.<br>One year to explore them.</h1>
+    <p class="hero-sub">Percentages and ratios, logic and sets, algebra and graphs, geometry and space. Each unit builds the mathematical language you'll use across every MYP year.</p>
+    <p class="hero-soi">"Mathematics is not about numbers, equations, or algorithms — it is about understanding."</p>
+  </div>
+  <img src="rhino.png" class="rhino-hero" alt="">
+</div>
+
+<nav class="tab-nav">
+  <div class="tab-nav-inner">
+    <button class="tab-btn active" onclick="switchTab('units',event)">Units</button>
+    <button class="tab-btn" onclick="switchTab('criteria',event)">Criteria Guide</button>
+    <button class="tab-btn" onclick="switchTab('skills',event)">Skills Bank</button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════
+     TAB 1 — UNITS
+══════════════════════════ -->
+<div class="tab-panel active" id="tab-units">
+  <div class="section-head">
+    <h2>Your Units</h2>
+    <p>Four units across the year. No streaming in Grade 7 — everyone works through the same content, with extension challenges along the way.</p>
+  </div>
+  <div class="units-grid">
+
+    <!-- ═══ UNIT 1 ═══ -->
+    <div class="unit-card" id="unit1">
+      <div class="unit-header" onclick="toggleUnit('unit1')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 1</span>
+            <span class="unit-concept">Relationships</span>
+          </div>
+          <h3 class="unit-title">More Money More Problems</h3>
+          <p class="unit-soi">Quantifying the relationship between variables can support our decision making which can impact the wellbeing of ourselves and the world around us.</p>
+          <div class="unit-crits">
+            <span class="uc on">A</span><span class="uc">B</span><span class="uc on">C</span><span class="uc on">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Calculate percent increase and decrease; convert freely between percentages, fractions, and decimals</li>
+            <li>Calculate simple and compound interest on an amount; convert between cents and dollars; use exchange rates</li>
+            <li>Determine and simplify equivalent ratios; use the unitary method; divide a quantity into a given ratio</li>
+            <li>Convert measurements within the metric system; calculate rates of conversion</li>
+            <li>Solve direct proportion problems through logical reasoning</li>
+          </ul>
+          <button class="expand-btn" onclick="toggleFull('u1-f',this)">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Show full skills list
+          </button>
+          <div class="skills-full" id="u1-f">
+            <ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Direct proportion using k (the proportionality constant) to solve problems; formal y = kx approach</li>
+            </ul>
+          </div>
+          <div class="g8-bridge">
+            <div class="g8-bridge-label">↗ Connects to</div>
+            Compound interest and proportional reasoning return in Grade 10 (Finance Matters) and underpin AI SL Topic 1. The unitary method and ratio skills built here are the foundation of every real-life Criterion D task in MYP.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Equivalence · Quantity</div>
+          <div><span class="meta-key">Global Context:</span> Globalisation and Sustainability</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 2 ═══ -->
+    <div class="unit-card" id="unit2">
+      <div class="unit-header" onclick="toggleUnit('unit2')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 2</span>
+            <span class="unit-concept">Logic</span>
+          </div>
+          <h3 class="unit-title">Let's Be Logical</h3>
+          <p class="unit-soi">Representing groups through logical methods helps develop our understanding of connections which supports innovation.</p>
+          <div class="unit-crits">
+            <span class="uc on">A</span><span class="uc on">B</span><span class="uc">C</span><span class="uc">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Read and organise information using Venn diagrams; determine union and intersection of sets</li>
+            <li>Interpret and use symbolic set notation — set, curly braces, element of (∈), complement (A'), union (∪), intersection (∩), empty set (∅), universal set (ξ), cardinality</li>
+            <li>Shade a Venn diagram to represent a given set expression (e.g. A'∪B); use symbolic notation to describe a shaded region</li>
+            <li>Probability of single and combined events (revision from G6); probability of complementary events; use of probability language</li>
+            <li>Use Venn diagrams to solve probability problems (not conditional probability)</li>
+          </ul>
+          <button class="expand-btn" onclick="toggleFull('u2-f',this)">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Show full skills list
+          </button>
+          <div class="skills-full" id="u2-f">
+            <ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Use and interpret 3-set Venn diagrams</li>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Visual proofs using Venn diagrams</li>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Additional notation — given, subset (⊂), proper subset, not an element of (∉)</li>
+            </ul>
+          </div>
+          <div class="g8-bridge">
+            <div class="g8-bridge-label">↗ Connects to</div>
+            Set notation and Venn diagrams return in Grade 9 (What Are the Chances?) and are used throughout DP probability in both AI SL and AA SL Topic 4. The symbolic notation learned here — P(A∪B), P(A') — is used verbatim in DP exam questions.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Patterns · Representation</div>
+          <div><span class="meta-key">Global Context:</span> Scientific &amp; Technical Innovation</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 3 ═══ -->
+    <div class="unit-card" id="unit3">
+      <div class="unit-header" onclick="toggleUnit('unit3')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 3</span>
+            <span class="unit-concept">Relationships</span>
+          </div>
+          <h3 class="unit-title">Social Entrepreneurs</h3>
+          <p class="unit-soi">Social entrepreneurs create solutions by modelling and analysing the relationships amongst information.</p>
+          <div class="unit-crits">
+            <span class="uc on">A</span><span class="uc">B</span><span class="uc on">C</span><span class="uc on">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Represent an unknown with a letter; combine like terms in algebraic expressions (e.g. 3x² + 2x + 5x² + 3xy − 9)</li>
+            <li>Distribute simple expressions — monomials with polynomials; factor simple expressions</li>
+            <li>Solve equations with one variable (unknown on one side, and on two sides, requiring expansion and collection of like terms); solve equations involving negatives</li>
+            <li>Rearrange formulas to change the subject; substitute into a formula</li>
+            <li>Represent a point in a four-quadrant coordinate plane; identify, name, and draw horizontal and vertical lines</li>
+            <li>Determine slopes and y-intercepts of linear equations; determine the linear equation based on a set of data points; determine the equation of a straight line (y = mx + c)</li>
+          </ul>
+          <button class="expand-btn" onclick="toggleFull('u3-f',this)">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Show full skills list
+          </button>
+          <div class="skills-full" id="u3-f">
+            <ul>
+              <li>Understand that polynomials form a system analogous to the integers; understand that the graph of an equation is the set of all solutions</li>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Prove if a point lies on an equation; prove if lines are parallel</li>
+            </ul>
+          </div>
+          <div class="g8-bridge">
+            <div class="g8-bridge-label">↗ Connects to</div>
+            The linear equation work here — y = mx + c, slope, rearranging formulas — is the foundation of every function unit in Grades 8–10. DP courses begin with functions in Topic 2; this unit is where that language begins. Formula rearrangement is a critical DP skill tested in every paper.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Model · Representation</div>
+          <div><span class="meta-key">Global Context:</span> Scientific &amp; Technical Innovation</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ UNIT 4 ═══ -->
+    <div class="unit-card" id="unit4">
+      <div class="unit-header" onclick="toggleUnit('unit4')">
+        <div class="unit-header-left">
+          <div class="unit-meta">
+            <span class="unit-num">Unit 4</span>
+            <span class="unit-concept">Form</span>
+          </div>
+          <h3 class="unit-title">Sound Structures</h3>
+          <p class="unit-soi">Analysing patterns help mathematical thinkers understand geometric structures.</p>
+          <div class="unit-crits">
+            <span class="uc">A</span><span class="uc on">B</span><span class="uc">C</span><span class="uc">D</span>
+          </div>
+        </div>
+        <div class="unit-toggle"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="unit-body">
+        <div class="unit-content">
+          <ul class="skills-list">
+            <li>Solve problems using angle properties — angles at a point, on a straight line, complementary, supplementary, and vertically opposite</li>
+            <li>Perform translations, reflections, rotations, and enlargements; determine if the image is congruent to the object after a transformation</li>
+            <li>Draw tessellating patterns; identify types of polygons and calculate their interior and exterior angles; calculate interior angles of a triangle given some information</li>
+            <li>Identify and use angle properties related to parallel lines (corresponding, alternate, co-interior) to solve problems</li>
+            <li>Calculate volumes of cuboids and prisms (not cylinders); calculate surface area of cuboids in real-life contexts</li>
+          </ul>
+          <button class="expand-btn" onclick="toggleFull('u4-f',this)">
+            <svg viewBox="0 0 12 12" fill="none"><path d="M3 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+            Show full skills list
+          </button>
+          <div class="skills-full" id="u4-f">
+            <ul>
+              <li class="ext-item"><span class="ext-label">Extension</span><br>Identify when a shape will tessellate and explain why using angle reasoning</li>
+            </ul>
+          </div>
+          <div class="g8-bridge">
+            <div class="g8-bridge-label">↗ Connects to</div>
+            Angle properties and parallel line theorems return in Grade 9 (We Like to Argue) and Grade 10 circle theorem work. Transformations are the geometric foundation of function transformations in DP — the same language (translate, reflect, stretch) applies to graphs in every DP course.
+          </div>
+        </div>
+        <div class="unit-meta-strip">
+          <div><span class="meta-key">Related:</span> Pattern · Space</div>
+          <div><span class="meta-key">Global Context:</span> Scientific &amp; Technical Innovation</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     TAB 2 — CRITERIA GUIDE
+══════════════════════════ -->
+<div class="tab-panel" id="tab-criteria">
+  <div class="section-head">
+    <h2>Criteria Guide</h2>
+    <p>Grade 7 is the year you build your mathematical habits. The criteria aren't just about marks — they're about how you think, communicate, and make sense of mathematics.</p>
+  </div>
+  <div class="crit-grid">
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">A</div><div><p class="crit-name">Knowing &amp; Understanding</p><p class="crit-subtitle">Select and apply with confidence</p></div></div>
+      <div class="crit-body">
+        <p>Crit A in Grade 7 is about <strong>accurately applying the right technique to the right problem</strong>. With four units covering percentages, sets, algebra, and geometry, you're building a toolkit — Criterion A tests whether you can reach for the right tool.</p>
+        <p>The key difference between Level 5–6 and Level 7–8 at this stage is <strong>consistency and accuracy across unfamiliar contexts</strong>. A problem that looks like a ratio question but is actually about compound interest is unfamiliar. A geometry question in an architectural context is unfamiliar. Can you adapt what you know?</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Solves familiar problems correctly most of the time. Some errors in more complex multi-step questions. Generally selects an appropriate method.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Accurately solves both familiar and unfamiliar problems. Selects the most efficient method. Answers are complete, correctly stated, and include appropriate units.</div>
+      </div>
+    </div>
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">B</div><div><p class="crit-name">Investigating Patterns</p><p class="crit-subtitle">Predict, generalise, and justify</p></div></div>
+      <div class="crit-body">
+        <p>Crit B is the <strong>main criterion for Unit 2 (Logic) and Unit 4 (Geometry)</strong>. You're expected to look at examples, identify what's happening, and describe the pattern in a way that works for all cases — not just the ones you've seen.</p>
+        <p>In Grade 7, "justification" is beginning to emerge as a requirement. At Level 7–8, you're expected to explain <strong>why</strong> a pattern works — not just state what it is. For example, in tessellations: it's not enough to say "triangles tessellate." You need to explain why — interior angles sum to 180°, and three triangles meeting at a point sum to 360°.</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Identifies the pattern correctly. States a general rule. Verifies with additional examples. Some attempt at justification.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Pattern identified and described precisely. General rule stated correctly for all cases. Justified — not just verified. Explanation addresses why the pattern must hold, not just that it does.</div>
+      </div>
+    </div>
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">C</div><div><p class="crit-name">Communicating</p><p class="crit-subtitle">Clear, precise, and mathematical</p></div></div>
+      <div class="crit-body">
+        <p>Criterion C in Grade 7 focuses on <strong>using the correct mathematical language and notation</strong> for the first time across several new symbol systems — set notation, algebraic notation, and coordinate geometry.</p>
+        <p>A common mistake: writing answers in words when mathematical notation is expected. <strong>Write P(A∪B) not "the probability of A or B."</strong> Write y = 2x + 3 not "the line goes up by 2 each time and starts at 3." Precision in notation is a habit you build now and use for the rest of your mathematical education.</p>
+        <p>Also: <strong>every diagram needs labels</strong>. A Venn diagram without a universal set boundary and labelled sets, or a coordinate graph without axis labels, loses Crit C marks.</div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Mostly uses correct notation. Working is present and generally clear. Some diagrams labelled. Conclusions present.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Precise notation throughout. All diagrams fully labelled. Working is complete with no unexplained jumps. Conclusions are mathematically stated and reference the context.</div>
+      </div>
+    </div>
+
+    <div class="crit-card">
+      <div class="crit-header"><div class="crit-letter">D</div><div><p class="crit-name">Applying in Real Life</p><p class="crit-subtitle">Model, solve, interpret, reflect</p></div></div>
+      <div class="crit-body">
+        <p>Crit D in Grade 7 introduces the four-stage process you'll use for the next six years: <strong>identify a real-life problem → build a mathematical model → apply it → reflect on the results</strong>. Units 1 and 3 are the primary Crit D units.</p>
+        <p>The most important thing at this level: <strong>interpret your answer in context</strong>. If you calculate that an exchange rate gives you 2.3 million Vietnamese dong for $100 AUD, don't just write "2,300,000." Write: "This means $100 AUD is worth approximately 2.3 million VND, which is enough to buy [X] in Vietnam."</p>
+        <p>Level 7–8 also requires you to <strong>identify at least one limitation of your model</strong> — what assumption did you make, and what might be different in reality?</p>
+      </div>
+      <div class="level-compare">
+        <div class="level-box l6"><div class="level-label">Level 5–6</div>Applies mathematics to a real-life context. Interprets the answer in context. Solution is mostly complete.</div>
+        <div class="level-box l8"><div class="level-label">Level 7–8</div>Identifies the mathematical structure of the problem. Applies an appropriate and complete model. Interprets results precisely in context. Identifies at least one limitation or assumption of the model.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     TAB 3 — SKILLS BANK
+══════════════════════════ -->
+<div class="tab-panel" id="tab-skills">
+  <div class="section-head">
+    <h2>Skills Bank</h2>
+    <p>Find any Grade 7 skill by topic or keyword — no need to remember which unit it came from.</p>
+  </div>
+  <div class="search-bar">
+    <svg viewBox="0 0 16 16" fill="none"><circle cx="7" cy="7" r="4.5" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13 13" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <input type="text" id="skillSearch" placeholder="Search skills…" oninput="filterSkills(this.value)">
+  </div>
+  <div class="skill-filters">
+    <button class="filter-btn active" onclick="filterTopic('all',this)">All topics</button>
+    <button class="filter-btn" onclick="filterTopic('number',this)">Number &amp; Ratio</button>
+    <button class="filter-btn" onclick="filterTopic('sets',this)">Sets &amp; Probability</button>
+    <button class="filter-btn" onclick="filterTopic('algebra',this)">Algebra</button>
+    <button class="filter-btn" onclick="filterTopic('geometry',this)">Geometry</button>
+  </div>
+  <div class="skills-bank-grid" id="skillsGrid">
+
+    <!-- NUMBER & RATIO -->
+    <div class="skill-card" data-topic="number" data-keywords="percent increase decrease percentage fraction decimal convert">
+      <div class="skill-card-meta"><span class="skill-topic">Number &amp; Ratio</span></div>
+      <h4>Percent Increase &amp; Decrease</h4>
+      <p class="skill-desc">Percent change = (change ÷ original) × 100. Increase: multiply by (1 + r/100). Decrease: multiply by (1 − r/100).</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        A shirt costs $40, reduced by 15%:<br>
+        $40 × 0.85 = <strong>$34</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="number" data-keywords="simple compound interest principal rate time">
+      <div class="skill-card-meta"><span class="skill-topic">Number &amp; Ratio</span></div>
+      <h4>Simple vs Compound Interest</h4>
+      <p class="skill-desc">Simple: I = Prt (interest is always on the original principal). Compound: A = P(1 + r)ⁿ (interest earns interest each period).</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        $1000 at 5% for 3 years:<br>
+        Simple: I = 1000 × 0.05 × 3 = <strong>$150</strong><br>
+        Compound: A = 1000 × 1.05³ = <strong>$1157.63</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="number" data-keywords="ratio simplify unitary method divide quantity proportion">
+      <div class="skill-card-meta"><span class="skill-topic">Number &amp; Ratio</span></div>
+      <h4>Ratios &amp; the Unitary Method</h4>
+      <p class="skill-desc">Simplify ratios by dividing by the HCF. Unitary method: find the value of 1 unit, then scale up. To divide in a ratio, find total parts first.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Divide $120 in ratio 3:5:<br>
+        Total parts = 8 · Each part = $15<br>
+        → <strong>$45 and $75</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="number" data-keywords="exchange rate convert currency metric measurement">
+      <div class="skill-card-meta"><span class="skill-topic">Number &amp; Ratio</span></div>
+      <h4>Exchange Rates &amp; Metric Conversion</h4>
+      <p class="skill-desc">Multiply or divide by the conversion factor. For exchange rates, identify whether you are buying or selling and which direction the rate applies.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        1 USD = 25,000 VND. Convert $80 USD:<br>
+        80 × 25,000 = <strong>2,000,000 VND</strong>
+      </div>
+    </div>
+
+    <!-- SETS & PROBABILITY -->
+    <div class="skill-card" data-topic="sets" data-keywords="venn diagram union intersection complement set notation">
+      <div class="skill-card-meta"><span class="skill-topic">Sets &amp; Probability</span></div>
+      <h4>Set Notation &amp; Venn Diagrams</h4>
+      <p class="skill-desc">∪ = union (in A or B or both). ∩ = intersection (in both A and B). A' = complement (not in A). ∅ = empty set. |A| = cardinality (number of elements).</p>
+      <div class="skill-example"><div class="ex-label">Reading a Venn diagram</div>
+        n(A∪B) = n(A) + n(B) − n(A∩B)<br>
+        If n(A)=10, n(B)=8, n(A∩B)=3:<br>
+        n(A∪B) = 10+8−3 = <strong>15</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="sets" data-keywords="probability complementary event single combined">
+      <div class="skill-card-meta"><span class="skill-topic">Sets &amp; Probability</span></div>
+      <h4>Probability &amp; Complementary Events</h4>
+      <p class="skill-desc">P(event) = favourable outcomes ÷ total outcomes. Complementary: P(A') = 1 − P(A). All probabilities sum to 1.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        P(rolling a 6) = 1/6<br>
+        P(not rolling a 6) = 1 − 1/6 = <strong>5/6</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="sets" data-keywords="shading venn region notation describe complement union intersection">
+      <div class="skill-card-meta"><span class="skill-topic">Sets &amp; Probability</span></div>
+      <h4>Shading Venn Regions</h4>
+      <p class="skill-desc">To shade A'∪B: shade everything NOT in A, then also shade everything in B. Work step by step — first apply the complement, then the union or intersection.</p>
+      <div class="skill-example"><div class="ex-label">Strategy</div>
+        A'∪B: shade outside A ∪ shade inside B<br>
+        (A∩B)': shade everything outside A∩B<br>
+        = everything except the overlap
+      </div>
+    </div>
+
+    <!-- ALGEBRA -->
+    <div class="skill-card" data-topic="algebra" data-keywords="like terms simplify expand distribute monomial polynomial">
+      <div class="skill-card-meta"><span class="skill-topic">Algebra</span></div>
+      <h4>Collecting Like Terms &amp; Expanding</h4>
+      <p class="skill-desc">Like terms have the same variable and power. Collect them by adding or subtracting coefficients. Expand brackets by multiplying each term inside.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        3x² + 2x + 5x² + 3xy − 9 = <strong>8x² + 2x + 3xy − 9</strong><br>
+        3(2x − 4) = 6x − 12
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="algebra" data-keywords="solve equation one variable unknown both sides balance">
+      <div class="skill-card-meta"><span class="skill-topic">Algebra</span></div>
+      <h4>Solving Equations</h4>
+      <p class="skill-desc">Keep the equation balanced — whatever you do to one side, do to the other. Expand brackets first, then collect like terms, then isolate the unknown.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        3(2x − 1) = 2x + 9<br>
+        6x − 3 = 2x + 9<br>
+        4x = 12 → <strong>x = 3</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="algebra" data-keywords="rearrange formula subject change substitute">
+      <div class="skill-card-meta"><span class="skill-topic">Algebra</span></div>
+      <h4>Rearranging Formulas</h4>
+      <p class="skill-desc">To change the subject, use inverse operations in reverse order — treat the formula like an equation and isolate the target variable.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Make r the subject of A = πr²:<br>
+        r² = A/π → <strong>r = √(A/π)</strong>
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="algebra" data-keywords="linear equation gradient slope y-intercept y=mx+c graph">
+      <div class="skill-card-meta"><span class="skill-topic">Algebra</span></div>
+      <h4>Linear Equations &amp; y = mx + c</h4>
+      <p class="skill-desc">m = gradient (slope) — how much y changes per unit increase in x. c = y-intercept — where the line crosses the y-axis. A steeper line has a larger |m|.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Line through (0, 3) and (2, 7):<br>
+        m = (7−3)/(2−0) = 2 · c = 3<br>
+        → <strong>y = 2x + 3</strong>
+      </div>
+    </div>
+
+    <!-- GEOMETRY -->
+    <div class="skill-card" data-topic="geometry" data-keywords="angle properties straight line point vertically opposite complementary supplementary">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Angle Properties</h4>
+      <p class="skill-desc">Angles at a point = 360°. Angles on a straight line = 180°. Complementary = sum to 90°. Supplementary = sum to 180°. Vertically opposite angles are equal.</p>
+      <div class="skill-example"><div class="ex-label">Quick reference</div>
+        a + b = 180° (straight line)<br>
+        a + b + c + d = 360° (at a point)<br>
+        Vertically opposite: equal, always
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="geometry" data-keywords="parallel lines corresponding alternate co-interior angles">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Parallel Line Angle Properties</h4>
+      <p class="skill-desc">Corresponding angles are equal (F shape). Alternate angles are equal (Z shape). Co-interior angles are supplementary — they add to 180° (C shape).</p>
+      <div class="skill-example"><div class="ex-label">Memory trick</div>
+        F = corresponding (equal)<br>
+        Z = alternate (equal)<br>
+        C = co-interior (add to 180°)
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="geometry" data-keywords="transformation translation reflection rotation enlargement congruent">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Transformations</h4>
+      <p class="skill-desc">Translation (slide), reflection (flip), rotation (turn), enlargement (scale). Translations, reflections, and rotations preserve size and shape — the image is congruent to the object. Enlargements change size.</p>
+      <div class="skill-example"><div class="ex-label">Congruence check</div>
+        Translation → congruent ✓<br>
+        Reflection → congruent ✓<br>
+        Rotation → congruent ✓<br>
+        Enlargement → similar, not congruent
+      </div>
+    </div>
+
+    <div class="skill-card" data-topic="geometry" data-keywords="volume surface area cuboid prism">
+      <div class="skill-card-meta"><span class="skill-topic">Geometry</span></div>
+      <h4>Volume &amp; Surface Area</h4>
+      <p class="skill-desc">Volume of cuboid = l × w × h. Volume of prism = cross-sectional area × length. Surface area = sum of all face areas. Always state units² for area and units³ for volume.</p>
+      <div class="skill-example"><div class="ex-label">Worked example</div>
+        Cuboid 4cm × 3cm × 5cm:<br>
+        Volume = 4×3×5 = <strong>60 cm³</strong><br>
+        Surface area = 2(12+20+15) = <strong>94 cm²</strong>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</main>
+
+<script>
+function toggleUnit(id) { document.getElementById(id).classList.toggle('open'); }
+
+function toggleFull(id, btn) {
+  const el = document.getElementById(id);
+  const open = el.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  for (let n of btn.childNodes) {
+    if (n.nodeType === 3) { n.textContent = ' ' + (open ? 'Show less' : 'Show full skills list'); break; }
+  }
+}
+
+function switchTab(name, e) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + name).classList.add('active');
+  e.currentTarget.classList.add('active');
+}
+
+let activeTopicFilter = 'all';
+function filterSkills(query) {
+  const q = query.toLowerCase();
+  document.querySelectorAll('.skill-card').forEach(card => {
+    const kw = (card.dataset.keywords + ' ' + card.textContent).toLowerCase();
+    const topicMatch = activeTopicFilter === 'all' || card.dataset.topic === activeTopicFilter;
+    card.style.display = (kw.includes(q) && topicMatch) ? '' : 'none';
+  });
+}
+function filterTopic(topic, btn) {
+  activeTopicFilter = topic;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  filterSkills(document.getElementById('skillSearch').value.toLowerCase());
+}
+</script>
+</body>
+</html>
